@@ -2682,7 +2682,6 @@ system_ext/etc/sysconfig/android.telephony.satellite.xml
 system_ext/etc/sysconfig/initial-package-stopped-states-DebugLoggerUI.xml
 system_ext/etc/sysconfig/com.motorola.mobiledesktop.core-powersave.xml
 system_ext/etc/vintf/manifest.xml
-system_ext/etc/vintf/manifest/android.hidl.allocator@1.0-service.xml
 system_ext/etc/vintf/manifest/mtk-mbrainj-default.xml
 system_ext/etc/permissions/system-ext-permissions-mediatek.xml
 system_ext/etc/permissions/privapp-permissions-com.android.systemui.xml
