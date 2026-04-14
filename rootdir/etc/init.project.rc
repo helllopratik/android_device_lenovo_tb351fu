@@ -1,0 +1,188 @@
+import /vendor/etc/init/hw/init.mtkgki.rc
+
+# MTK project .rc configure
+
+on init
+    mkdir /mnt/media_rw/usbotg 0700 media_rw media_rw
+    mkdir /storage/usbotg 0700 root root
+
+on post-fs-data
+
+#Camera
+    chmod 0660 /dev/MAINAF
+    chown system camera /dev/MAINAF
+
+    chmod 0660 /dev/MAINAF2
+    chown system camera /dev/MAINAF2
+
+    chmod 0660 /dev/SUBAF
+    chown system camera /dev/SUBAF
+
+    chmod 0660 /dev/GAF001AF
+    chown system camera /dev/GAF001AF
+
+    chmod 0660 /dev/DW9714AF
+    chown system camera /dev/DW9714AF
+
+    chmod 0660 /dev/LC898212AF
+    chown system camera /dev/LC898212AF
+
+    chmod 0660 /dev/BU64745GWZAF
+    chown system camera /dev/BU64745GWZAF
+
+#SMB
+    chown system system /proc/smb/ScreenComm
+    chmod 0660 /proc/smb/ScreenComm
+
+    chmod 0660 /dev/spm
+    chown system system /dev/spm
+#TN Begin modify To add chmod early for audio hal rw. by lianjie.chen 20231204 OCALLA-384.
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/2-0034/re
+#TN End modify To add chmod early for audio hal rw. by lianjie.chen 20231204 OCALLA-384.
+
+on init
+    # Refer to http://source.android.com/devices/tech/storage/index.html
+    # It said, "Starting in Android 4.4, multiple external storage devices are surfaced to developers through
+    #           Context.getExternalFilesDirs(), Context.getExternalCacheDirs(), and Context.getObbDirs().
+    #           External storage devices surfaced through these APIs must be a semi-permanent part of the device (such as an SD card slot in a battery compartment).
+    #           Developers expect data stored in these locations to be available over long periods of time."
+    # Therefore, if the target doesn't support sd hot-plugging (Ex: the SD card slot in a battery compartment), we need to export SECONDARY_STORAGE in 'boot' section
+    #
+    # export SECONDARY_STORAGE /storage/sdcard1
+
+# start mmstat
+on property:sys.boot_completed=1
+    mkdir /sys/kernel/tracing/instances/mmstat 711
+    write /sys/kernel/tracing/instances/mmstat/tracing_on 0
+    write /sys/kernel/tracing/instances/mmstat/buffer_size_kb 16
+    write /sys/kernel/tracing/instances/mmstat/events/mmstat/enable 1
+    write /sys/kernel/tracing/instances/mmstat/tracing_on 1
+# for aw883xx cali
+on property:sys.boot_completed=1
+# TN Begin modify for smartpa mmi&cqa test. by lianjie.chen 20231121 TIAIAA-8.
+    mkdir /mnt/vendor/nvcfg/audio_calibration_data 0771 system system
+#TN Begin modify To add chmod early for audio hal rw. by lianjie.chen 20231204 OCALLA-384.
+    #chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/2-0034/re
+#TN End modify To add chmod early for audio hal rw. by lianjie.chen 20231204 OCALLA-384.
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/2-0034/f0
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/2-0034/dsp_re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/2-0035/re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/2-0035/f0
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/2-0035/dsp_re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/2-0036/re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/2-0036/f0
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/2-0036/dsp_re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/2-0037/re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/2-0037/f0
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/2-0037/dsp_re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/6-0034/re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/6-0034/f0
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/6-0034/dsp_re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/6-0035/re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/6-0035/f0
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/6-0035/dsp_re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/6-0036/re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/6-0036/f0
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/6-0036/dsp_re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/6-0037/re
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/6-0037/f0
+    chmod 0666 /sys/bus/i2c/drivers/aw883xx_smartpa/6-0037/dsp_re
+# TN Begin modify to obtain smartpa cali value by linzhi 20231215 OCALLA-624
+    chmod 0666 /mnt/vendor/nvcfg/audio_calibration_data/aw_cali_data
+# TN End modify to obtain smartpa cali value by linzhi 20231215 OCALLA-624
+
+# add aw_cali for CQA&MMI
+on property:vendor.awcali.status.all=true
+    start cqa_awcali_start_all
+
+# TN Begin modify for smartpa cqa cali cmd test. by lianjie.chen 20231124 OCALLA-191.
+on property:vendor.awcali.status.all.f0=true
+    start cqa_awcali_start_all_f0
+# TN End modify for smartpa cqa cali cmd test. by lianjie.chen 20231124 OCALLA-191.
+
+on property:vendor.awcali.status.dev0=true
+    start cqa_awcali_start_dev0
+
+on property:vendor.awcali.status.dev1=true
+    start cqa_awcali_start_dev1
+
+on property:vendor.awcali.status.dev2=true
+    start cqa_awcali_start_dev2
+
+on property:vendor.awcali.status.dev3=true
+    start cqa_awcali_start_dev3
+
+on property:vendor.awcali.status.dev4=true
+    start cqa_awcali_start_dev4
+
+on property:vendor.awcali.status.dev5=true
+    start cqa_awcali_start_dev5
+
+on property:vendor.awcali.status.dev6=true
+    start cqa_awcali_start_dev6
+
+on property:vendor.awcali.status.dev7=true
+    start cqa_awcali_start_dev7
+
+service cqa_awcali_start_all /vendor/bin/aw_cali start_cali
+    user root
+    group root shell media_rw system audio
+    oneshot
+    disabled
+
+# TN Begin modify for smartpa cqa cali cmd test. by lianjie.chen 20231124 OCALLA-191.
+service cqa_awcali_start_all_f0 /vendor/bin/aw_cali cali_f0
+    user root
+    group root shell media_rw system audio
+    oneshot
+    disabled
+# TN End modify for smartpa cqa cali cmd test. by lianjie.chen 20231124 OCALLA-191.
+
+service cqa_awcali_start_dev0 /vendor/bin/aw_cali dev0 cali_re
+    user root
+    group root shell media_rw system audio
+    oneshot
+    disabled
+
+service cqa_awcali_start_dev1 /vendor/bin/aw_cali dev1 cali_re
+    user root
+    group root shell media_rw system audio
+    oneshot
+    disabled
+
+service cqa_awcali_start_dev2 /vendor/bin/aw_cali dev2 cali_re
+    user root
+    group root shell media_rw system audio
+    oneshot
+    disabled
+
+service cqa_awcali_start_dev3 /vendor/bin/aw_cali dev3 cali_re
+    user root
+    group root shell media_rw system audio
+    oneshot
+    disabled
+
+service cqa_awcali_start_dev4 /vendor/bin/aw_cali dev4 cali_re
+    user root
+    group root shell media_rw system audio
+    oneshot
+    disabled
+
+service cqa_awcali_start_dev5 /vendor/bin/aw_cali dev5 cali_re
+    user root
+    group root shell media_rw system audio
+    oneshot
+    disabled
+
+service cqa_awcali_start_dev6 /vendor/bin/aw_cali dev6 cali_re
+    user root
+    group root shell media_rw system audio
+    oneshot
+    disabled
+
+service cqa_awcali_start_dev7 /vendor/bin/aw_cali dev7 cali_re
+    user root
+    group root shell media_rw system audio
+    oneshot
+    disabled
+# TN End modify for smartpa mmi&cqa test. by lianjie.chen 20231121 TIAIAA-8.

@@ -1,0 +1,673 @@
+#  start
+####################################
+# from generate-common-build-props
+# These properties identify this partition image.
+####################################
+ro.product.system.brand=Lenovo
+ro.product.system.device=TB351FU
+ro.product.system.manufacturer=LENOVO
+ro.product.system.model=TB351FU
+ro.product.system.name=TB351FU
+ro.system.product.cpu.abilist=arm64-v8a
+ro.system.product.cpu.abilist32=
+ro.system.product.cpu.abilist64=arm64-v8a
+ro.system.build.date=Fri Feb 13 21:04:01 CST 2026
+ro.system.build.date.utc=1770987841
+ro.system.build.fingerprint=Lenovo/TB351FU/TB351FU:16/BP2A.250605.031.A3/ZUI_17.5.10.073_260213_ROW:user/release-keys
+ro.system.build.id=BP2A.250605.031.A3
+ro.system.build.tags=release-keys
+ro.system.build.type=user
+ro.system.build.version.incremental=17.5.10.073_260213
+ro.system.build.version.release=16
+ro.system.build.version.release_or_codename=16
+ro.system.build.version.sdk=36
+ro.system.build.version.sdk_full=36.0
+####################################
+# from gen_build_prop.py:generate_build_info
+####################################
+# begin build properties
+ro.build.id=BP2A.250605.031.A3
+ro.config.lgsi.sw.version=TB351FU_RF01_260213
+ro.config.lgsi.fp.incremental=ZUI_17.5.10.073_260213_ROW
+ro.build.display.id=TB351FU_ROW_OPEN_USER_M15125.2_A16_ZUI_17.5.10.073_ST_260213
+ro.build.version.incremental=TB351FU_ROW_OPEN_USER_M15125.2_A16_ZUI_17.5.10.073_ST_260213
+ro.build.version.sdk=36
+ro.build.version.sdk_full=36.0
+ro.build.version.preview_sdk=0
+ro.build.version.preview_sdk_fingerprint=REL
+ro.build.version.codename=REL
+ro.build.version.all_codenames=REL
+ro.build.version.known_codenames=Base,Base11,Cupcake,Donut,Eclair,Eclair01,EclairMr1,Froyo,Gingerbread,GingerbreadMr1,Honeycomb,HoneycombMr1,HoneycombMr2,IceCreamSandwich,IceCreamSandwichMr1,JellyBean,JellyBeanMr1,JellyBeanMr2,Kitkat,KitkatWatch,Lollipop,LollipopMr1,M,N,NMr1,O,OMr1,P,Q,R,S,Sv2,Tiramisu,UpsideDownCake,VanillaIceCream,Baklava
+ro.build.version.release=16
+ro.build.version.release_or_codename=16
+ro.build.version.release_or_preview_display=16
+ro.build.version.security_patch=2026-01-05
+ro.build.version.base_os=
+ro.build.version.min_supported_target_sdk=28
+ro.build.date=Fri Feb 13 21:04:01 CST 2026
+ro.build.date.utc=1770987841
+ro.build.type=user
+ro.build.user=buildslave
+ro.build.host=tlslave001
+ro.build.tags=release-keys
+ro.build.flavor=vext_t808aa-user
+# ro.product.cpu.abi and ro.product.cpu.abi2 are obsolete,
+# use ro.product.cpu.abilist instead.
+ro.product.cpu.abi=arm64-v8a
+ro.wifi.channels=
+# ro.build.product is obsolete; use ro.product.device
+ro.build.product=t808aa
+# Do not try to parse description or thumbprint
+ro.build.description=TB351FU-user 16 BP2A.250605.031.A3 17.5.10.073_260213 release-keys
+# end build properties
+####################################
+# from variable ADDITIONAL_SYSTEM_PROPERTIES
+####################################
+ro.treble.enabled=true
+ro.llndk.api_level=202504
+ro.actionable_compatible_property.enabled=true
+ro.postinstall.fstab.prefix=/system
+ro.secure=1
+security.perf_harden=1
+ro.adb.secure=1
+ro.allow.mock.location=0
+ro.debuggable=0
+net.bt.name=Android
+ro.force.debuggable=0
+####################################
+# from variable PRODUCT_SYSTEM_PROPERTIES
+####################################
+ro.apex.updatable=true
+####################################
+# from variable PRODUCT_SYSTEM_DEFAULT_PROPERTIES
+####################################
+ro.config.lgsi.aod.support=0
+ro.config.aod.support=0
+ro.config.lgsi.aod.support=0
+ro.config.aod.support=0
+ro.sys.zui.enable_new381=true
+persist.debug.S381_count=30
+ro.config.lgsi.aod.support=0
+ro.config.aod.support=0
+persist.sys.colormode_modes=0:standard;1:native;
+persist.sys.colormode_api=mtk
+ro.config.wallpaper=system/media/wallpapers/default_wallpaper.png
+ro.surface_flinger.supports_background_blur=0
+ro.sys.zui.theme.list=mostbeautiful,magiccolortimemirror,softlighttransparency,interstellartravel,tabui,lime,grace,pink,blue,golden,thin,paintingr
+persist.sys.zui.theme=mostbeautiful
+persist.sysui.notification.ongoing_dismissal=false
+ro.config.lgsi.graffitinotes.aicard=true
+ro.config.lgsi.ovbase_enabled=true
+ro.config.lgsi.ov_split.lunch_xt=1
+ro.com.google.lens.oem_camera_package=com.zui.camera
+ro.sys.zui.enable_new381=true
+persist.debug.S381_count=30
+ro.com.zui.version=17.5
+persist.logd.size.main=2M
+persist.logd.size.system=2M
+persist.logd.size.radio=2M
+persist.logd.size.events=2M
+persist.sys.enableTraceRename=true
+ro.config.zuk.face_mask_detect.enabled=1
+ro.config.vc_call_vol_steps=15
+ro.surface_flinger.set_idle_timer_ms=2000
+ro.surface_flinger.display_update_imminent_timeout_ms=1000
+ro.surface_flinger.set_touch_timer_ms=2000
+ro.surface_flinger.set_pen_timer_ms=10000
+ro.surface_flinger.set_refresh_timer_ms=200
+ro.surface_flinger.set_launcher_timer_ms=30000
+ro.surface_flinger.game_default_frame_rate_override=60
+ro.config.lgsi.input_fling.boost_velocity=100
+ro.config.lgsi.input_scroll.boost_distance=100
+ro.config.lgsi.low_power_mode_require_fps=60
+ro.config.lgsi.reading_mode_require_fps=60
+ro.config.lgsi.aod_require_fps=60
+ro.config.lgsi.default_refreshrate=90
+ro.config.lgsi.surface_flinger.available_refreshrates=60
+ro.config.lgsi.surface_flinger.widen_range_default=60
+ro.config.lgsi.surface_flinger.widen_range_altered=90
+ro.product.csdk.otgnode.a=/sys/devices/platform/soc/mt_usb/otgenable
+ro.product.csdk.otgnode.b=/sys/devices/platform/soc/11211000.usb1/otg_enable
+####################################
+# Adding footer from :applied_backported_fixes
+# with path out/soong/.intermediates/build/make/backported_fixes/applied_backported_fixes/gen/applied_backported_fixes.prop
+####################################
+# The following backported fixes have been applied
+# https://issuetracker.google.com/issues/350037023 with alias 1
+# https://issuetracker.google.com/issues/385124056 with alias 4
+ro.build.backported_fixes.alias_bitset.long_list=18
+# end of file
+####################################
+# from generate-common-build-props
+# These properties identify this partition image.
+####################################
+ro.product.vendor.brand=Lenovo
+ro.product.vendor.device=TB351FU
+ro.product.vendor.manufacturer=LENOVO
+ro.product.vendor.model=TB351FU
+ro.vendor.product.cpu.abilist=arm64-v8a
+ro.vendor.product.cpu.abilist32=
+ro.vendor.product.cpu.abilist64=arm64-v8a
+ro.vendor.config.lgsi.hw.version=TB351FU
+ro.vendor.build.date=Fri Feb 13 21:04:01 CST 2026
+ro.vendor.build.date.utc=1770987841
+ro.vendor.build.id=BP2A.250605.031.A3
+ro.vendor.build.tags=release-keys
+ro.vendor.build.type=user
+ro.vendor.build.version.incremental=17.5.10.073_260213
+ro.vendor.build.version.release=16
+ro.vendor.build.version.release_or_codename=16
+ro.vendor.build.version.sdk=36
+ro.vendor.build.version.sdk_full=36.0
+####################################
+# from device/lenovo/calla_row_wifi/vendor.prop
+####################################
+# should change this by project
+ro.vendor.config.lgsi.market_name=Lenovo Tab Plus
+ro.vendor.config.lgsi.short_market_name=Lenovo Tab Plus
+ro.config.lgsi.market_name=Lenovo Tab Plus
+ro.config.lgsi.short_market_name=Lenovo Tab Plus
+# olympia keyboard bluetooth name
+ro.vendor.config.lgsi.olympia_kb.name=Lenovo Wireless KB
+# olympia keyboard display name for ROW
+ro.vendor.config.lgsi.olympia_kb.name.row=Lenovo Multi-Device Wireless Keyboard
+# olympia keyboard display name for PRC
+ro.vendor.config.lgsi.olympia_kb.name.prc=联想小新无线键盘Air
+# olympia keyboard display name for PRC Commercial
+ro.vendor.config.lgsi.olympia_kb.name.prc_com=联想昭阳蓝牙键盘
+# should change this by project
+# btpen real name
+ro.vendor.config.lgsi.btpen.name.row=Lenovo Tab Pen Plus
+# bt pen
+ro.vendor.config.lgsi.pen.bluetooth_key.support=1
+ro.vendor.config.lgsi.pen.event.name=NVTCapacitivePen
+ro.vendor.config.lgsi.pen_info=0x617F:0x17EF:Lenovo Tab Pen Plus
+ro.vendor.config.lgsi.pen.compat.project=1
+# define cpu info of this product
+ro.vendor.config.lgsi.cpuinfo=MediaTek Helio G99 Octa Core
+ro.config.lgsi.cpuinfo=MediaTek Helio G99 Octa Core
+# define camera info of this product
+#ro.vendor.config.lgsi.camerainfo=
+ro.config.lgsi.hw.version=TB351FU
+ro.odm.lenovo.supported_csr_type=tee
+####################################
+# from android-info.prop
+####################################
+####################################
+# from variable ADDITIONAL_VENDOR_PROPERTIES
+####################################
+ro.bionic.arch=arm64
+ro.bionic.cpu_variant=cortex-a55
+ro.bionic.2nd_arch=
+ro.bionic.2nd_cpu_variant=
+persist.sys.dalvik.vm.lib.2=libart.so
+dalvik.vm.isa.arm64.variant=cortex-a55
+dalvik.vm.isa.arm64.features=default
+ro.minui.pixel_format=BGRA_8888
+ro.boot.dynamic_partitions=true
+ro.product.first_api_level=10000
+ro.board.first_api_level=31
+ro.board.api_level=202504
+ro.board.api_frozen=true
+ro.vendor.build.security_patch=2026-01-05
+ro.product.board=t808aa
+ro.board.platform=mt6789
+ro.hwui.use_vulkan=true
+ro.sf.lcd_density=240
+ro.build.ab_update=true
+ro.vendor.build.ab_ota_partitions=boot,product,system,vendor
+####################################
+# from variable PRODUCT_VENDOR_PROPERTIES
+####################################
+ro.vendor.config.lgsi.project=calla
+ro.vendor.config.lgsi.ota.model=TB351FU_ROW
+ro.vendor.config.lgsi.device.type=pad
+ro.vendor.config.lgsi.device.nettype=wifi
+ro.vendor.config.lgsi.platform=mtk
+ro.vendor.config.lgsi.carrier=open
+ro.vendor.config.lgsi.bqb_cert=pass
+ro.vendor.config.lgsi.wfa_cert=pass
+ro.vendor.config.lgsi.screen_size=11.5
+ro.vendor.config.lgsi.cmitid=CMIT_ID-LGSIU-2023
+ro.vendor.config.lgsi.aod.support=1
+ro.virtual_ab.compression.threads=true
+ro.virtual_ab.batch_writes=true
+ro.virtual_ab.enabled=true
+ro.virtual_ab.compression.enabled=true
+ro.virtual_ab.userspace.snapshots.enabled=true
+ro.virtual_ab.batch_writes=true
+ro.virtual_ab.io_uring.enabled=true
+ro.virtual_ab.compression.xor.enabled=true
+external_storage.projid.enabled=1
+external_storage.casefold.enabled=1
+external_storage.sdcardfs.enabled=0
+ro.recovery.usb.vid=18D1
+ro.recovery.usb.adb.pid=D001
+ro.recovery.usb.fastboot.pid=4EE0
+ro.zygote=zygote64
+dalvik.vm.dex2oat64.enabled=true
+####################################
+# from variable PRODUCT_DEFAULT_PROPERTY_OVERRIDES
+####################################
+ro.vendor.rc=/vendor/etc/init/hw/
+ro.oem_unlock_supported=1
+ro.surface_flinger.protected_contents=true
+debug.sf.enable_hwc_vds=0
+ro.vendor.composer_version=3.4
+debug.sf.late.sf.duration=15600000
+debug.sf.late.app.duration=16600000
+debug.sf.early.sf.duration=15600000
+debug.sf.early.app.duration=16600000
+debug.sf.earlyGl.sf.duration=15600000
+debug.sf.earlyGl.app.duration=16600000
+vendor.debug.sf.dynamic_duration.switch=0
+vendor.debug.sf.dynamic_duration.sf.late=14600000
+vendor.debug.sf.dynamic_duration.app.late=18000000
+vendor.debug.sf.dynamic_duration.sf.early=14600000
+vendor.debug.sf.dynamic_duration.app.early=18000000
+vendor.debug.sf.dynamic_duration.sf.earlyGl=14600000
+vendor.debug.sf.dynamic_duration.app.earlyGl=18000000
+vendor.debug.sf.dynamic_duration.sf.decouple=27600000
+vendor.debug.sf.dynamic_duration.app.decouple=20000000
+vendor.debug.sf.dynamic_duration.sf.late.60=15600000
+vendor.debug.sf.dynamic_duration.app.late.60=16600000
+vendor.debug.sf.dynamic_duration.sf.early.60=15600000
+vendor.debug.sf.dynamic_duration.app.early.60=16600000
+vendor.debug.sf.dynamic_duration.sf.earlyGl.60=15600000
+vendor.debug.sf.dynamic_duration.app.earlyGl.60=16600000
+vendor.debug.sf.dynamic_duration.sf.late.90=13100000
+vendor.debug.sf.dynamic_duration.app.late.90=19200000
+vendor.debug.sf.dynamic_duration.sf.early.90=13100000
+vendor.debug.sf.dynamic_duration.app.early.90=19200000
+vendor.debug.sf.dynamic_duration.sf.earlyGl.90=13100000
+vendor.debug.sf.dynamic_duration.app.earlyGl.90=19200000
+vendor.debug.sf.dynamic_duration.sf.late.120=12300000
+vendor.debug.sf.dynamic_duration.app.late.120=11600000
+vendor.debug.sf.dynamic_duration.sf.early.120=12300000
+vendor.debug.sf.dynamic_duration.app.early.120=11600000
+vendor.debug.sf.dynamic_duration.sf.earlyGl.120=12300000
+vendor.debug.sf.dynamic_duration.app.earlyGl.120=11600000
+vendor.debug.sf.cpupolicy.upbound_uclamp_min=350
+vendor.debug.sf.cpupolicy.max_correct_offset=150
+vendor.debug.sf.cpupolicy.rt_bl_min=300
+vendor.debug.sf.cpupolicy.base_min_bl=310
+vendor.debug.sf.cpupolicy.sf_cpu_thres=290
+vendor.debug.sf.cpupolicy.upbound_uclamp_max_ll=262
+vendor.debug.sf.cpupolicy.hw_comp_suspend=1
+vendor.debug.sf.cpupolicy.hw_hfr_suspend=1
+vendor.debug.sf.cpupolicy.xgf_min=25
+vendor.debug.sf.cpupolicy.min_60_mml=165
+vendor.debug.sf.cpupolicy.min_30_mml=165
+vendor.debug.sf.cpupolicy.lowbound_uclamp_min=165
+vendor.debug.sf.cpupolicy.upbound_uclamp_ret_sys=210
+vendor.debug.sf.cpupolicy.min_60=130
+vendor.debug.sf.cpupolicy.min_90=165
+vendor.debug.sf.cpupolicy.min_120=165
+vendor.debug.sf.cpupolicy.min_boost=165
+vendor.debug.sf.cpupolicy.power_up_120=-300000
+vendor.debug.sf.cpupolicy.power_down_120=300000
+vendor.debug.sf.cpupolicy.re_hfr=0
+####################################
+# from variable PRODUCT_PROPERTY_OVERRIDES
+####################################
+ro.vendor.mtk_f2fs_enable=1
+ro.bluetooth.a2dp_offload.supported=true
+persist.bluetooth.a2dp_offload.cap=sbc-aac
+persist.bluetooth.a2dp_offload.disabled=true
+ro.frp.pst=/dev/block/by-name/frp
+ro.opengles.version=196610
+# Removed by post_process_props.py because overridden by ro.hardware.egl?=meow
+#ro.hardware.egl?=mali
+ro.hardware.vulkan=mali
+# Removed by post_process_props.py because overridden by ro.hardware.egl?=meow
+#ro.hardware.egl?=mali
+ro.vendor.mtk.gpu.sw3d=0
+graphics.gpu.profiler.support=true
+ro.vendor.arm.egl.configs.r8_g8_b8_a8_32bit_fixed.hal_format=0x1
+ro.vendor.arm.egl.configs.r8_g8_b8_a8_32bit_fixed.recordable=true
+ro.vendor.arm.egl.configs.r8_g8_b8_a8_32bit_fixed.framebuffer_target=false
+ro.vendor.arm.egl.configs.r8_g8_b8_a0_32bit_fixed.hal_format=0x2
+ro.vendor.arm.egl.configs.r8_g8_b8_a0_32bit_fixed.recordable=false
+ro.vendor.arm.egl.configs.r8_g8_b8_a0_32bit_fixed.framebuffer_target=false
+ro.vendor.arm.egl.configs.r8_g8_b8_a0_24bit_fixed.hal_format=0x3
+ro.vendor.arm.egl.configs.r8_g8_b8_a0_24bit_fixed.recordable=false
+ro.vendor.arm.egl.configs.r8_g8_b8_a0_24bit_fixed.framebuffer_target=false
+ro.vendor.arm.egl.configs.r5_g6_b5_a0_16bit_fixed.hal_format=0x4
+ro.vendor.arm.egl.configs.r5_g6_b5_a0_16bit_fixed.recordable=false
+ro.vendor.arm.egl.configs.r5_g6_b5_a0_16bit_fixed.framebuffer_target=false
+ro.vendor.arm.egl.configs.r10_g10_b10_a2_32bit_fixed.hal_format=0x2b
+ro.vendor.arm.egl.configs.r10_g10_b10_a2_32bit_fixed.recordable=false
+ro.vendor.arm.egl.configs.r10_g10_b10_a2_32bit_fixed.framebuffer_target=false
+ro.vendor.arm.egl.configs.r16_g16_b16_a16_64bit_float.hal_format=0x16
+ro.vendor.arm.egl.configs.r16_g16_b16_a16_64bit_float.recordable=false
+ro.vendor.arm.egl.configs.r16_g16_b16_a16_64bit_float.framebuffer_target=false
+ro.vendor.arm.egl.configs.r8_g8_b8_a0_24bit_yuv_special.hal_format=0x23
+ro.vendor.arm.egl.configs.r8_g8_b8_a0_24bit_yuv_special.framebuffer_target=false
+ro.vendor.arm.egl.configs.yuyv.hal_format=0x202
+ro.vendor.arm.egl.configs.yuyv.recordable=true
+ro.vendor.arm.egl.configs.nv12.hal_format=0x200
+ro.vendor.arm.egl.configs.nv12.recordable=true
+ro.vendor.arm.egl.configs.nv21.hal_format=0x201
+ro.vendor.arm.egl.configs.nv21.recordable=true
+ro.vendor.arm.egl.configs.nv16.hal_format=0x10
+ro.vendor.arm.egl.configs.nv16.recordable=true
+ro.vendor.arm.egl.configs.yuv420.hal_format=0x208
+ro.vendor.arm.egl.configs.yuv420.recordable=true
+ro.vendor.arm.egl.configs.yvu420.hal_format=0x20e
+ro.vendor.arm.egl.configs.yvu420.recordable=true
+ro.vendor.arm.egl.configs.y410.hal_format=0x207
+ro.vendor.arm.egl.configs.y410.recordable=true
+ro.vendor.arm.egl.configs.y210.hal_format=0x206
+ro.vendor.arm.egl.configs.y210.recordable=true
+ro.vendor.arm.egl.configs.y0l2.hal_format=0x203
+ro.vendor.arm.egl.configs.y0l2.recordable=true
+ro.vendor.arm.egl.configs.p210.hal_format=0x205
+ro.vendor.arm.egl.configs.p210.recordable=true
+ro.vendor.arm.egl.configs.p010.hal_format=0x204
+ro.vendor.arm.egl.configs.p010.recordable=true
+ro.vendor.arm.egl.configs.q410.hal_format=0x20a
+ro.vendor.arm.egl.configs.q410.recordable=true
+ro.vendor.arm.gralloc.no_afbc_usage_flags=0x200000000000000
+ro.vendor.arm.gralloc.no_afbc_usage_mask=0x1200000000000000
+ro.vendor.arm.gralloc.force_back_buffer_usage_flags=0x40000000000000
+ro.vendor.arm.gralloc.force_back_buffer_usage_mask=0x40000000000000
+ro.vendor.arm.gralloc.shared_access_usage_flags=0x10000000
+ro.vendor.arm.gralloc.shared_access_usage_mask=0x50000000
+ro.vendor.arm.gralloc.afrc_rgba_usage_flags=0x1400000000000000,0x1200000000000000,0x1000000000000000
+ro.vendor.arm.gralloc.afrc_rgba_usage_mask=0x1600000000000000
+ro.vendor.arm.gralloc.afrc_luma_usage_flags=0x1400000000000000,0x1200000000000000,0x1000000000000000
+ro.vendor.arm.gralloc.afrc_luma_usage_mask=0x1600000000000000
+ro.vendor.arm.gralloc.afrc_chroma_usage_flags=0x100000000000000,0x80000000000000,0x180000000000000
+ro.vendor.arm.gralloc.afrc_chroma_usage_mask=0x180000000000000
+vendor.camera.mdp.dre.enable=1
+vendor.camera.mdp.cz.enable=1
+vendor.mtk.camera.app.fd.video=1
+ro.vendor.mtk_mcf_incapable=1
+dalvik.vm.mtk-stack-trace-file=/data/anr/mtk_traces.txt
+ro.frp.pst=/dev/block/by-name/frp
+persist.adb.nonblocking_ffs=0
+ro.vendor.camera3.zsl.default=260
+ro.vendor.mediatek.platform=MT6789
+dalvik.vm.heapstartsize=16m
+dalvik.vm.heapgrowthlimit=256m
+dalvik.vm.heapsize=512m
+dalvik.vm.heaptargetutilization=0.75
+dalvik.vm.heapminfree=8m
+dalvik.vm.heapmaxfree=32m
+ro.vendor.mtk_ovl_bringup=0
+ro.vendor.jpeg_decode_sw_opt=1
+ro.vendor.smvr.p2batch.vga=8
+ro.vendor.smvr.p2batch.hd=4
+ro.vendor.mtk_slow_motion_support=1
+debug.mediatek.disp_decompress=1
+debug.mediatek.appgamepq_compress=1
+ro.vendor.mtk_video_hevc_enc_support=1
+ro.surface_flinger.has_HDR_display=false
+persist.vendor.mdrsra_v2_support=1
+persist.vendor.xfrm_support=1
+persist.log.tag.RILMUXD=I
+ro.vendor.mtk_prefer_64bit_proc=1
+ro.vendor.mtk_pq_support=2
+persist.vendor.sys.pq.oddmr_dbi_support=0
+ro.vendor.pq.mtk_pq_video_whitelist_support=0
+ro.vendor.pq.mtk_video_transition=0
+ro.vendor.mtk_backlight_hwc_support=0
+ro.vendor.mtk_support_stylus=1
+ro.vendor.pq.mtk_scltm_support=0
+ro.vendor.mml.mtk_mml_support=0
+ro.vendor.pq.mtk_ai_scence_pq_support=0
+ro.vendor.pq.mtk_hdr10_plus_recording_support=0
+ro.vendor.pq.mtk_mdp_lite_pq_support=0
+ro.vendor.pq.mtk_ai_sdr_to_hdr_support=0
+ro.vendor.pq.mtk_ai_region_pq_support=0
+ro.vendor.pq.mtk_skia_pq_support=0
+ro.vendor.pq.mtk_cv_based_sdr_support=0
+ro.vendor.pq.mtk_ai_hdr_model_dq=0
+ro.vendor.pq.mtk_dc_support=1
+ro.vendor.pq.mtk_mml_c3d_support=0
+ro.vendor.pq.mtk_ds_support=1
+ro.vendor.pq.mtk_ultra_resolution_support=1
+ro.vendor.mtk_pq_color_mode=1
+ro.vendor.pq.mtk_hfg_support=1
+ro.vendor.pq.mtk_caltm_support=1
+ro.vendor.pq.mtk_clearzoom_support=1
+ro.vendor.pq.mtk_mdp_ccorr_support=0
+ro.vendor.pq.mtk_pq_interface_support=0
+ro.vendor.pq.mtk_hdr10_panel_dtmo_support=0
+ro.vendor.pq.mtk_hdr10p_panel_dtmo_support=0
+ro.vendor.pq.mtk_hlg_panel_dtmo_support=0
+ro.vendor.pq.mtk_hdrvivid_panel_dtmo_support=0
+ro.vendor.pq.mtk_airegionpq_panel_dtmo_support=0
+ro.vendor.pq.mtk_sdr_panel_dtmo_support=0
+ro.vendor.pq.mtk_mml_color_adaptive_support=1
+ro.vendor.pq.mtk_disp_c3d_support=0
+ro.vendor.pq.mtk_disp_tdshp_support=0
+ro.vendor.pq.mtk_disp_color_support=1
+ro.vendor.pq.mtk_disp_ccorr_support=1
+ro.vendor.pq.mtk_disp_gamma_support=1
+ro.vendor.pq.mtk_aal_support=1
+ro.vendor.mtk_aal_support=1
+ro.vendor.pq.mtk_dre_cap=0
+ro.vendor.pq.mtk_dre30_support=0
+ro.vendor.pq.mtk_disp_game_pq_support=0
+ro.vendor.pq.mtk_backlight_smooth_support=0
+ro.vendor.pq.mtk_ultra_dimming_support=0
+ro.vendor.pq.mtk_blulight_def_support=1
+ro.vendor.pq.mtk_smart_bluelight_def_support=0
+ro.vendor.pq.mtk_smart_true_tone_support=0
+persist.vendor.sys.pq.mtk_disp_clarity_support=0
+ro.vendor.mtk_mvpu_support=0
+ro.vendor.mtk_mvpu_security_support=0
+ro.vendor.mtk_hdr10p_adaptive_support=0
+ro.vendor.mtk_hdr10_adaptive_support=0
+ro.vendor.mtk_hlg_adaptive_support=0
+ro.vendor.mtk_hdrvivid_adaptive_support=0
+ro.vendor.mtk_airegionpq_adaptive_support=0
+ro.vendor.mtk_sdr_adaptive_support=0
+ro.vendor.mtk_single_bin_modem_support=1
+ro.vendor.connsys.dedicated.log.port=bt,wifi,gps,mcu
+persist.vendor.connsys.chipid=-1
+persist.vendor.connsys.patch.version=-1
+persist.vendor.connsys.dynamic.dump=0
+vendor.connsys.driver.ready=no
+ro.vendor.connsys.dedicated.log=1
+ro.vendor.gps.chrdev=gps_drv_stp
+persist.vendor.connsys.fm_chipid=mt6631_6635
+ro.vendor.fm.platform=mt6631_6635
+ro.vendor.wlan.chrdev=wmt_chrdev_wifi
+ro.vendor.wlan.gen=gen4m_6789
+ro.vendor.wlan.standalone.log=y
+ro.vendor.bt.platform=connac1x
+ro.vendor.bt.connac3=no
+ro.vendor.mtk_wapi_support=1
+bluetooth.profile.sap.server.enabled=true
+vendor.bluetooth.ldac.abr=true
+ro.vendor.mtk_sim_card_onoff=3
+persist.vendor.mims_support=1
+ro.vendor.mtk_camera_app_version=3
+ro.vendor.pref_scale_enable_cfg=1
+vendor.boostfwk.scroll.policy.mode=1
+ro.vendor.mtk_widevine_drm_l1_support=1
+ro.vendor.mtk_protocol1_rat_config=Lf/Lt/W/G
+ro.vendor.mtk_c2k_lte_mode=0
+ro.telephony.default_network=9,9,9,9
+ro.vendor.mtk_ps1_rat=Lf/Lt/W/G
+ro.vendor.mtk_lte_support=1
+persist.vendor.radio.mtk_ps2_rat=L/W/G
+persist.vendor.radio.mtk_ps3_rat=G
+persist.vendor.mtk_sim_switch_policy=2
+ro.vendor.mtk_world_phone_policy=0
+ro.vendor.mtk_rild_read_imsi=1
+persist.vendor.mtk_sim_switch_policy=2
+ro.vendor.sim_me_lock_mode=3
+# Removed by post_process_props.py because overridden by ro.hardware.egl?=meow
+#ro.hardware.egl?=meow
+ro.hardware.egl=meow
+ro.vendor.mtk_external_sim_only_slots=0
+ro.vendor.mtk_mobile_management=1
+persist.vendor.duraspeed.support=1
+ro.lmk.downgrade_pressure=60
+persist.vendor.duraspeed.app.on=1
+persist.vendor.duraspeed.lowmemory.enable=1
+persist.vendor.factory.GB2312=yes
+ro.vendor.mtk_fast_charging_support=1
+ro.vendor.mtk.sensor.support=yes
+dalvik.vm.heapgrowthlimit=256m
+dalvik.vm.heapsize=512m
+dalvik.vm.thread-suspend-timeout-ms=20000
+ro.vendor.camera.insensorzoom.support=0
+ro.vendor.camera.isp.support.colorspace=0
+ro.camera.disableHeicUltraHDR=true
+ro.vendor.mtk_sec_video_path_support=1
+ro.vendor.mtk_tee_gp_support=1
+ro.vendor.mtk_wfd_support=1
+ro.vendor.mtk_thermal_2_0=1
+ro.vendor.efuse_writer_enable=1
+ro.vendor.mtk_cam_security_support=0
+ro.vendor.mtk_cam_security_support_normal_preview=0
+ro.vendor.usb.kpoc_adb=0
+vendor.aovstream.bypass=0
+vendor.aovstream.scp_pwr_sensor=0
+persist.vendor.mtk_dc_call_capability=0
+persist.vendor.mtk.dch.enable=0
+persist.vendor.mtk.dch.enable.2=0
+ro.vendor.mtk.is_rkp_only=0
+debug.hwui.initialize_gl_always=1
+ro.boot.perf_state=1
+media.c2.hal.selection=aidl
+ro.vendor.mtk.c2.vdec.fmt.support.level=1
+ro.vendor.mtk_svp_on_mtee_support=2
+vendor.boostfwk.version=3
+vendor.boostfwk.frameprefetcher=0
+vendor.boostfwk.scroll.interrupt.touchboost=1
+vendor.boostfwk.scroll.floor=1
+vendor.media.heif.highThreshold=20
+vendor.media.heif.feature.off=1
+ro.netflix.bsp_rev=MTK6789-35965-1
+media.c2.hal.selection=aidl
+ro.boot.hypervisor.version=GenieZone
+ro.boot.hypervisor.vm.supported=1
+avf.remote_attestation.enabled=0
+bluetooth.profile.a2dp.sink.enabled=true
+bluetooth.a2dp.src_sink_coexist.enabled=true
+bluetooth.profile.avrcp.controller.enabled=true
+ro.vendor.mgk_name=mgk_64_entry_level_wifi_k612
+ro.vendor.dolby.dax.version=DAX3_3.14.0.10_r1
+ro.vendor.com.zui.version=17.5
+ro.vendor.storage.dynamicdata=enable
+# end of file
+####################################
+# from generate-common-build-props
+# These properties identify this partition image.
+####################################
+ro.product.odm.brand=Lenovo
+ro.product.odm.device=TB351FU
+ro.product.odm.manufacturer=LENOVO
+ro.product.odm.model=TB351FU
+ro.odm.product.cpu.abilist=arm64-v8a
+ro.odm.product.cpu.abilist32=
+ro.odm.product.cpu.abilist64=arm64-v8a
+ro.odm.build.date=Fri Feb 13 21:04:01 CST 2026
+ro.odm.build.date.utc=1770987841
+ro.odm.build.id=BP2A.250605.031.A3
+ro.odm.build.tags=release-keys
+ro.odm.build.type=user
+ro.odm.build.version.incremental=17.5.10.073_260213
+ro.odm.build.version.release=16
+ro.odm.build.version.release_or_codename=16
+ro.odm.build.version.sdk=36
+ro.odm.build.version.sdk_full=36.0
+####################################
+# from variable PRODUCT_ODM_PROPERTIES
+####################################
+# end of file
+####################################
+# from generate-common-build-props
+# These properties identify this partition image.
+####################################
+ro.product.product.brand=Lenovo
+ro.product.product.device=TB351FU
+ro.product.product.manufacturer=LENOVO
+ro.product.product.model=TB351FU
+ro.product.product.name=TB351FU
+ro.product.build.date=Fri Feb 13 21:04:01 CST 2026
+ro.product.build.date.utc=1770987841
+ro.product.build.fingerprint=Lenovo/TB351FU/TB351FU:16/BP2A.250605.031.A3/ZUI_17.5.10.073_260213_ROW:user/release-keys
+ro.product.build.id=BP2A.250605.031.A3
+ro.product.build.tags=release-keys
+ro.product.build.type=user
+ro.product.build.version.incremental=17.5.10.073_260213
+ro.product.build.version.release=16
+ro.product.build.version.release_or_codename=16
+ro.product.build.version.sdk=36
+ro.product.build.version.sdk_full=36.0
+####################################
+# from variable ADDITIONAL_PRODUCT_PROPERTIES
+####################################
+ro.product.build.16k_page.enabled=false
+ro.product.page_size=4096
+ro.build.characteristics=tablet
+ro.product.ab_ota_partitions=boot,product,system,vendor
+ro.product.cpu.pagesize.max=16384
+ro.product.build.no_bionic_page_size_macro=true
+# Value overridden by post_process_props.py. Original value: default
+ro.dalvik.vm.enable_uffd_gc=true
+####################################
+# from variable PRODUCT_PRODUCT_PROPERTIES
+####################################
+ro.config.lgsi.sys.project=calla
+ro.config.lgsi.signoff=true
+ro.config.lgsi.ui.type=ZUI
+ro.config.lgsi.ui.version=17.5
+ro.config.lgsi.os.name=ZUI
+ro.config.lgsi.os.version=17.5
+ro.config.lgsi.region=row
+ro.config.lgsi.channel=consumer
+ro.config.lgsi.code.base=mtk
+ro.config.lgsi.code.version_fp=Lssi:16:36/MTK/BP2A.250605.031.A3/mssi_dev/20250815_145
+ro.config.lgsi.code.version_date=250815
+ro.config.lgsi.code.version_id=145
+ro.setupwizard.rotation_locked=false
+setupwizard.theme=glif_v3_light
+ro.opa.eligible_device=true
+ro.com.google.gmsversion=16_202510
+setupwizard.feature.baseline_setupwizard_enabled=true
+ro.apex.updatable=true
+ro.config.alarm_alert=Oxygen.ogg
+ro.config.notification_sound=Pollux.ogg
+ro.config.ringtone=Ring_Synth_04.ogg
+ro.sys.wechat.embedding.version=0
+persist.wm.extensions.activity_embedding_guard_with_android_15=false
+# end of file
+####################################
+# from generate-common-build-props
+# These properties identify this partition image.
+####################################
+ro.product.system_ext.brand=Lenovo
+ro.product.system_ext.device=TB351FU
+ro.product.system_ext.manufacturer=LENOVO
+ro.product.system_ext.model=TB351FU
+ro.system_ext.build.date=Fri Feb 13 21:04:01 CST 2026
+ro.system_ext.build.date.utc=1770987841
+ro.system_ext.build.id=BP2A.250605.031.A3
+ro.system_ext.build.tags=release-keys
+ro.system_ext.build.type=user
+ro.system_ext.build.version.incremental=17.5.10.073_260213
+ro.system_ext.build.version.release=16
+ro.system_ext.build.version.release_or_codename=16
+ro.system_ext.build.version.sdk=36
+ro.system_ext.build.version.sdk_full=36.0
+####################################
+# from variable PRODUCT_SYSTEM_EXT_PROPERTIES
+####################################
+ro.setupwizard.mode=ENABLED
+persist.settings.large_screen_opt.enabled=true
+# end of file
+#
+# RECOVERY UI BUILD PROPERTIES
+#
+#  end
+# sysprop.txt start
+ro.product.first_api_level=34
+# sysprop.txt end
+

@@ -1,0 +1,13 @@
+# MTK platform .rc configure
+on post-fs-data
+    # calibration
+    mkdir /data/vendor/sensor 0774 system system
+    # Sensor
+    #TN modified by ye.yuan/860593 20231129 OCALLA-377 begin
+    chmod 0666 /dev/hf_manager
+    #TN modified by ye.yuan/860593 20231129 OCALLA-377 end
+    chown system system /dev/hf_manager
+    #TN modified by ye.yuan/860593 20240407 OCALLA-11635 begin
+    chown system system /sys/bus/i2c/drivers/awinic_sar/3-0012/aot
+    chmod 0666 /sys/bus/i2c/drivers/awinic_sar/3-0012/aot
+    #TN modified by ye.yuan/860593 20240407 OCALLA-11635 end

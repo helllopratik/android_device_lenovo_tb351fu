@@ -1,0 +1,70 @@
+00:18:32 ************************************************************
+00:18:32 You are building on a machine with 15.5GB of RAM
+00:18:32 
+00:18:32 The minimum required amount of free memory is around 16GB,
+00:18:32 and even with that, some configurations may not work.
+00:18:32 
+00:18:32 If you run into segfaults or other errors, try reducing your
+00:18:32 -j value.
+00:18:32 ************************************************************
+Running product configuration...
+============================================
+PLATFORM_VERSION_CODENAME=Baklava
+PLATFORM_VERSION=Baklava
+LINEAGE_VERSION=23.2-20260413-UNOFFICIAL-TB351FU
+TARGET_PRODUCT=lineage_TB351FU
+TARGET_BUILD_VARIANT=userdebug
+TARGET_ARCH=arm64
+TARGET_ARCH_VARIANT=armv8-a
+TARGET_CPU_VARIANT=generic
+TARGET_2ND_ARCH=arm
+TARGET_2ND_ARCH_VARIANT=armv8-a
+TARGET_2ND_CPU_VARIANT=generic
+HOST_OS=linux
+HOST_OS_EXTRA=Linux-6.17.0-20-generic-x86_64-Zorin-OS-18
+HOST_CROSS_OS=windows
+BUILD_ID=BP4A.251205.006
+OUT_DIR=out
+PRODUCT_SOONG_NAMESPACES=vendor/lenovo/TB351FU
+SOONG_ONLY=false
+============================================
+[100% 1/1] bootstrap blueprint
+Running globs...
+[100% 2/2] analyzing Android.bp files and generating ninja file at out/soong/build.lineage_TB351FU.ninja
+FAILED: out/soong/build.lineage_TB351FU.ninja
+cd "$(dirname "out/host/linux-x86/bin/soong_build")" && BUILDER="$PWD/$(basename "out/host/linux-x86/bin/soong_build")" && cd / && env -i  "$BUILDER"     --top "$TOP"     --soong_out "out/soong"     --out "out"     --soong_variables out/soong/soong.lineage_TB351FU.variables -o out/soong/build.lineage_TB351FU.ninja --kati_suffix -lineage_TB351FU --kati_enabled -l out/.module_paths/Android.bp.list --available_env out/soong/soong.environment.available --used_env out/soong/soong.environment.used.lineage_TB351FU.build Android.bp
+error: external/libjxl/Android.bp:17:1: dependency "libskia_skcms" of "libjxl" missing variant:
+  os:android,image:vendor,link:static
+available variants:
+  os:linux_glibc,arch:x86_64,link:static
+  os:linux_glibc,arch:x86,link:static
+  os:windows,arch:x86,link:static
+  os:windows,arch:x86_64,link:static
+  os:android,arch:arm64_armv8-a,link:static
+  os:android,arch:arm64_armv8-a,sdk:sdk,link:static
+  os:android,arch:arm_armv8-a,link:static
+  os:android,arch:arm_armv8-a,sdk:sdk,link:static
+error: external/libjxl/Android.bp:17:1: dependency "libhwy" of "libjxl" missing variant:
+  os:android,image:vendor,link:static
+available variants:
+  os:linux_glibc,arch:x86_64,link:static
+  os:linux_glibc,arch:x86_64,link:shared
+  os:linux_glibc,arch:x86,link:static
+  os:linux_glibc,arch:x86,link:shared
+  os:windows,arch:x86,link:static
+  os:windows,arch:x86,link:shared
+  os:windows,arch:x86_64,link:static
+  os:windows,arch:x86_64,link:shared
+  os:android,arch:arm64_armv8-a,link:static
+  os:android,arch:arm64_armv8-a,link:shared
+  os:android,arch:arm64_armv8-a,sdk:sdk,link:static
+  os:android,arch:arm64_armv8-a,sdk:sdk,link:shared
+  os:android,arch:arm_armv8-a,link:static
+  os:android,arch:arm_armv8-a,link:shared
+  os:android,arch:arm_armv8-a,sdk:sdk,link:static
+  os:android,arch:arm_armv8-a,sdk:sdk,link:shared
+00:18:51 soong bootstrap failed with: exit status 1
+ninja: build stopped: subcommand failed.
+
+[0;31m#### failed to build some targets (20 seconds) ####[00m
+

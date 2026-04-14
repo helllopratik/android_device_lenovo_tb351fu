@@ -1,0 +1,19 @@
+on post-fs-data
+    #TN Begin modify by yukh 20231128 TIAIAA-4
+    # Bind mount of a persist partition
+    mkdir /mnt/vendor/persist/misc 0775 system system
+    mkdir /mnt/persist 0775 system system
+    mkdir /mnt/persist/misc 0775 system system
+    mount none /mnt/vendor/persist/misc /mnt/persist/misc bind
+    restorecon_recursive /mnt/persist/misc
+    chmod 0775 /mnt/persist/misc/FTM_APP
+    chmod 0775 /mnt/persist/misc/FTM_APP/FTM_report
+    #TN End modify by yukh 20231128 TIAIAA-4
+
+    #TN Begin for  modify elabel by yukh 20231130 TIAIAA-4
+    chown system system /mnt/elabel/regulatory_info.png
+    chmod 0664 /mnt/elabel/regulatory_info.png
+
+    restorecon_recursive /mnt/elabel
+    #TN End for  modify elabel by yukh 20231130 TIAIAA-4
+

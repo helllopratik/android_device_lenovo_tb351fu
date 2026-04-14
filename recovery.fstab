@@ -1,0 +1,20 @@
+# Mount point    FStype    Device                                 Flags
+/system          erofs     system                                 flags=display="System";logical;first_stage_mount
+/vendor          erofs     vendor                                 flags=display="Vendor";logical;first_stage_mount
+/product         erofs     product                                flags=display="Product";logical;first_stage_mount
+/system_ext      erofs     system_ext                             flags=display="System Ext";logical;first_stage_mount
+/vendor_dlkm     erofs     vendor_dlkm                            flags=display="Vendor DLKM";logical;first_stage_mount
+/odm_dlkm        erofs     odm_dlkm                               flags=display="ODM DLKM";logical;first_stage_mount
+
+/data            f2fs      /dev/block/by-name/userdata            flags=display="Data";fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption,fsverity
+/metadata        ext4      /dev/block/by-name/metadata            flags=display="Metadata"
+/persist         ext4      /dev/block/by-name/persist             flags=display="Persist"
+
+/boot            emmc      /dev/block/by-name/boot                flags=display="Boot"
+/init_boot       emmc      /dev/block/by-name/init_boot           flags=display="Init Boot"
+/vendor_boot     emmc      /dev/block/by-name/vendor_boot         flags=display="Vendor Boot"
+/dtbo            emmc      /dev/block/by-name/dtbo                flags=display="DTBO"
+/vbmeta          emmc      /dev/block/by-name/vbmeta              flags=display="VBMeta"
+
+/external_sd     vfat      /dev/block/mmcblk0p1 /dev/block/mmcblk0 flags=display="External SD";storage;wipeui;removable
+/usb_otg         vfat      /dev/block/sdd1      /dev/block/sdd     flags=display="USB-OTG";storage;wipeui;removable

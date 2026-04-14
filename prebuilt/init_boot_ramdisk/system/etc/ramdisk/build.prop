@@ -1,0 +1,19 @@
+####################################
+# from generate-common-build-props
+# These properties identify this partition image.
+####################################
+ro.product.bootimage.brand=alps
+ro.product.bootimage.device=TB351FU
+ro.product.bootimage.manufacturer=alps
+ro.product.bootimage.model=mssi_t_64_cn_armv82_wifi
+ro.bootimage.build.date=Fri Feb 13 17:00:42 CST 2026
+ro.bootimage.build.date.utc=1770973242
+ro.bootimage.build.id=BP2A.250605.031.A3
+ro.bootimage.build.tags=release-keys
+ro.bootimage.build.type=user
+ro.bootimage.build.version.incremental=17.5.10.073_260213
+ro.bootimage.build.version.release=16
+ro.bootimage.build.version.release_or_codename=16
+ro.bootimage.build.version.sdk=36
+ro.bootimage.build.version.sdk_full=36.0
+# end of file
