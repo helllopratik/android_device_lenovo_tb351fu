@@ -1,0 +1,50 @@
+<svg width="1280" height="640" viewBox="0 0 1280 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="640" rx="36" fill="#07141C"/>
+  <rect width="1280" height="640" rx="36" fill="url(#bg)"/>
+  <circle cx="1072" cy="142" r="124" fill="url(#glow1)" opacity="0.34"/>
+  <circle cx="202" cy="518" r="168" fill="url(#glow2)" opacity="0.24"/>
+  <rect x="62" y="62" width="1156" height="516" rx="28" fill="rgba(6,12,18,0.58)" stroke="rgba(255,255,255,0.10)"/>
+
+  <rect x="752" y="120" width="354" height="380" rx="28" fill="#0D1C25" stroke="#2F5165"/>
+  <rect x="784" y="152" width="290" height="66" rx="20" fill="#122A37"/>
+  <rect x="784" y="236" width="290" height="84" rx="20" fill="#10222D" stroke="#3A6276"/>
+  <rect x="784" y="338" width="136" height="128" rx="20" fill="#10222D" stroke="#315365"/>
+  <rect x="938" y="338" width="136" height="128" rx="20" fill="#10222D" stroke="#315365"/>
+
+  <path d="M808 186H920" stroke="#6DE0C3" stroke-width="10" stroke-linecap="round"/>
+  <path d="M808 268H1040" stroke="#69C9FF" stroke-width="10" stroke-linecap="round"/>
+  <path d="M808 293H1006" stroke="#F1B56B" stroke-width="10" stroke-linecap="round"/>
+  <path d="M808 386H880" stroke="#69C9FF" stroke-width="10" stroke-linecap="round"/>
+  <path d="M808 411H850" stroke="#6DE0C3" stroke-width="10" stroke-linecap="round"/>
+  <path d="M962 386H1040" stroke="#F1B56B" stroke-width="10" stroke-linecap="round"/>
+  <path d="M962 411H1020" stroke="#69C9FF" stroke-width="10" stroke-linecap="round"/>
+
+  <text x="108" y="184" fill="#8AD5FF" font-family="Space Grotesk, Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="2">LENOVO TAB PLUS / TB351FU</text>
+  <text x="108" y="270" fill="#F7FBFF" font-family="Space Grotesk, Arial, sans-serif" font-size="64" font-weight="700">Android Device Tree</text>
+  <text x="108" y="332" fill="#C7D7E4" font-family="IBM Plex Sans, Arial, sans-serif" font-size="30">LineageOS-targeted bring-up for Android 16</text>
+  <text x="108" y="385" fill="#C7D7E4" font-family="IBM Plex Sans, Arial, sans-serif" font-size="30">with mt6789 platform, VINTF, recovery, and product wiring.</text>
+
+  <rect x="108" y="434" width="174" height="56" rx="18" fill="#10222C" stroke="#294B5D"/>
+  <rect x="298" y="434" width="182" height="56" rx="18" fill="#10222C" stroke="#294B5D"/>
+  <rect x="496" y="434" width="164" height="56" rx="18" fill="#10222C" stroke="#294B5D"/>
+
+  <text x="149" y="470" fill="#6DE0C3" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" font-weight="700">mt6789</text>
+  <text x="333" y="470" fill="#69C9FF" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" font-weight="700">LineageOS</text>
+  <text x="545" y="470" fill="#F1B56B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" font-weight="700">A16 Bring-up</text>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08131A"/>
+      <stop offset="0.54" stop-color="#102029"/>
+      <stop offset="1" stop-color="#0A151D"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1072 142) rotate(90) scale(124)">
+      <stop stop-color="#6ED7FF"/>
+      <stop offset="1" stop-color="#6ED7FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(202 518) rotate(90) scale(168)">
+      <stop stop-color="#F7B86D"/>
+      <stop offset="1" stop-color="#F7B86D" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
