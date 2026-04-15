@@ -1,4 +1,4 @@
-# Proprietary files list for Lenovo TB351FU
+# Proprietary files list for Lenovo tb351fu
 # Generated automatically
 
 
@@ -308,7 +308,6 @@ vendor/etc/audio_param/Codec_ParamUnitDesc.xml
 vendor/etc/audio_param/USBCall_AudioParam.xml
 vendor/etc/audio_param/Record_AudioParam.xml
 vendor/etc/audio_param/VoWHwVad_AudioParam.xml
-vendor/etc/vintf/compatibility_matrix.xml
 vendor/etc/vintf/manifest.xml
 vendor/etc/gralloc/gpu.xml
 vendor/etc/gralloc/vpu.xml
@@ -3156,7 +3155,6 @@ product/etc/sysconfig/initial-package-stopped-states-aosp.xml
 product/etc/sysconfig/asi_features.xml
 product/etc/sysconfig/d2d_cable_migration_feature.xml
 product/etc/sysconfig/com.motorola.mobiledesktop-powersave.xml
-product/etc/vintf/compatibility_matrix.xml
 product/etc/permissions/com.motorola.mobiledesktop.xml
 product/etc/permissions/initial-stopped-states-com.motorola.mobiledesktop.xml
 product/etc/permissions/com.android.settings.intelligence.xml

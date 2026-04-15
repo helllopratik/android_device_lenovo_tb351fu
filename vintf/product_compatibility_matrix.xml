@@ -1,0 +1,13 @@
+<!--
+    Input:
+        vendor/dolby/ds/service/aidl/impl/dax_framework_compatibility_matrix_aidl.xml
+-->
+<compatibility-matrix version="9.0" type="framework">
+    <hal format="aidl">
+        <name>vendor.dolby.dms</name>
+        <interface>
+            <name>IDms</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+</compatibility-matrix>

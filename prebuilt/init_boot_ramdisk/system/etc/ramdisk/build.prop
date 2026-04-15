@@ -3,7 +3,7 @@
 # These properties identify this partition image.
 ####################################
 ro.product.bootimage.brand=alps
-ro.product.bootimage.device=TB351FU
+ro.product.bootimage.device=tb351fu
 ro.product.bootimage.manufacturer=alps
 ro.product.bootimage.model=mssi_t_64_cn_armv82_wifi
 ro.bootimage.build.date=Fri Feb 13 17:00:42 CST 2026

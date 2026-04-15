@@ -2,7 +2,7 @@
 # BoardConfig.mk
 #
 
-DEVICE_PATH := device/lenovo/TB351FU
+DEVICE_PATH := device/lenovo/tb351fu
 
 # Architecture
 TARGET_ARCH := arm64
@@ -33,7 +33,7 @@ BOARD_TAGS_OFFSET := 0x07c80000
 BOARD_KERNEL_TAGS_OFFSET := 0x07c80000
 BOARD_DTB_OFFSET := 0x07c80000
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 bootconfig androidboot.force_normal_boot=0
-TARGET_KERNEL_SOURCE := kernel/lenovo/TB351FU
+TARGET_KERNEL_SOURCE := kernel/lenovo/tb351fu
 TARGET_KERNEL_CONFIG := t808aa_defconfig
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt
@@ -55,6 +55,13 @@ DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/vintf/lights-mtk-default.xml
 DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/vintf/power-mediatek.xml
 DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/vintf/thermal-mediatek.xml
 DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/vintf/vibrator-mtk-default.xml
+DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/vintf/android.hardware.security.keymint-service.beanpod.xml
+DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/vintf/android.hardware.gatekeeper-service.beanpod.xml
+DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/vintf/android.hardware.sensors-multihal.xml
+DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/vintf/vendor.lenovo.hardware.touchscreen-service.xml
+
+DEVICE_VENDOR_COMPATIBILITY_MATRIX_FILE += $(DEVICE_PATH)/vintf/vendor_compatibility_matrix.xml
+DEVICE_PRODUCT_COMPATIBILITY_MATRIX_FILE += $(DEVICE_PATH)/vintf/product_compatibility_matrix.xml
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144

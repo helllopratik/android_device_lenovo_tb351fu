@@ -2,7 +2,7 @@
 # device.mk
 #
 
-DEVICE_PATH := device/lenovo/TB351FU
+DEVICE_PATH := device/lenovo/tb351fu
 
 # Enable A/B update support
 AB_OTA_UPDATER := true
@@ -56,16 +56,13 @@ PRODUCT_COPY_FILES += \
 
 # Dolby Atmos Config
 # Includes blobs from vendor tree
-$(call inherit-product-if-exists, vendor/lenovo/TB351FU/TB351FU-vendor.mk)
+$(call inherit-product-if-exists, vendor/lenovo/tb351fu/tb351fu-vendor.mk)
 
 # CN Features (Study App, etc.)
-$(call inherit-product, device/lenovo/TB351FU/cn_features.mk)
+$(call inherit-product, device/lenovo/tb351fu/cn_features.mk)
 
 # Audio
 PRODUCT_PACKAGES += \
-    audio.a2dp.default \
-    audio.usb.default \
-    audio.r_submix.default \
     libaudiopreprocessing \
     libbundlewrapper \
     libdownmix \
