@@ -1,0 +1,233 @@
+<compatibility-matrix version="9.0" type="framework">
+    <hal format="aidl" optional="true">
+        <name>android.hardware.radio.data</name>
+        <version>4</version>
+        <interface>
+            <name>IRadioData</name>
+            <instance>slot4</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>android.hardware.radio.ims</name>
+        <version>3</version>
+        <interface>
+            <name>IRadioIms</name>
+            <instance>slot4</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>android.hardware.radio.messaging</name>
+        <version>4</version>
+        <interface>
+            <name>IRadioMessaging</name>
+            <instance>slot4</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>android.hardware.radio.modem</name>
+        <version>4</version>
+        <interface>
+            <name>IRadioModem</name>
+            <instance>slot4</instance>
+            <regex-instance>imsSlot[1-4]</regex-instance>
+            <regex-instance>se[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>android.hardware.radio.network</name>
+        <version>4</version>
+        <interface>
+            <name>IRadioNetwork</name>
+            <instance>slot4</instance>
+            <regex-instance>imsSlot[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>android.hardware.radio.sap</name>
+        <interface>
+            <name>ISap</name>
+            <instance>slot4</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>android.hardware.radio.sim</name>
+        <version>4</version>
+        <interface>
+            <name>IRadioSim</name>
+            <instance>slot4</instance>
+            <regex-instance>imsSlot[1-4]</regex-instance>
+            <regex-instance>se[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>android.hardware.radio.voice</name>
+        <version>4</version>
+        <interface>
+            <name>IRadioVoice</name>
+            <instance>slot4</instance>
+            <regex-instance>imsSlot[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.lenovo.hardware.touchscreen</name>
+        <version>2</version>
+        <interface>
+            <name>ITouchscreen</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.apmonitor</name>
+        <interface>
+            <name>IApmService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.atci</name>
+        <interface>
+            <name>IAtcid</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.audio</name>
+        <interface>
+            <name>IMtkAudio</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.camera.atms</name>
+        <interface>
+            <name>IATMs</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.camera.bgservice</name>
+        <interface>
+            <name>IBGService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.composer_ext</name>
+        <interface>
+            <name>IComposerExt</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.dmc</name>
+        <interface>
+            <name>IDmcService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mmagent</name>
+        <interface>
+            <name>IMMAgent</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mms</name>
+        <interface>
+            <name>IMms</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mtkradioex.data</name>
+        <version>3</version>
+        <interface>
+            <name>IMtkRadioExData</name>
+            <regex-instance>slot[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mtkradioex.dch</name>
+        <version>2</version>
+        <interface>
+            <name>IMtkRadioExDc</name>
+            <regex-instance>slot[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mtkradioex.ims</name>
+        <version>3</version>
+        <interface>
+            <name>IMtkRadioExIms</name>
+            <regex-instance>slot[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mtkradioex.messaging</name>
+        <interface>
+            <name>IMtkRadioExMessaging</name>
+            <regex-instance>slot[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mtkradioex.modem</name>
+        <version>5</version>
+        <interface>
+            <name>IMtkRadioExModem</name>
+            <regex-instance>slot[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mtkradioex.network</name>
+        <interface>
+            <name>IMtkRadioExNetwork</name>
+            <regex-instance>slot[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mtkradioex.ntn</name>
+        <interface>
+            <name>IMtkRadioExNtn</name>
+            <regex-instance>slot[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mtkradioex.rcs</name>
+        <version>2</version>
+        <interface>
+            <name>IMtkRadioExRcs</name>
+            <regex-instance>slot[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mtkradioex.sim</name>
+        <version>2</version>
+        <interface>
+            <name>IMtkRadioExSim</name>
+            <regex-instance>slot[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mtkradioex.voice</name>
+        <interface>
+            <name>IMtkRadioExVoice</name>
+            <regex-instance>slot[1-4]</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.nvram</name>
+        <interface>
+            <name>INvram</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.pq_aidl</name>
+        <version>7</version>
+        <interface>
+            <name>IPictureQuality_AIDL</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+</compatibility-matrix>

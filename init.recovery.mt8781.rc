@@ -1,0 +1,35 @@
+#
+# init.recovery.mt8781.rc - Lenovo Tab Plus (TB351FU)
+# V27 Golden Logic Integration
+#
+
+on init
+    # Force ADB early start
+    start adbd
+
+on fs
+    # Ensure USB controller is ready
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 18d1
+    write /sys/class/android_usb/android0/idProduct d001
+    write /sys/class/android_usb/android0/functions mtp,adb
+    write /sys/class/android_usb/android0/enable 1
+
+on boot
+    # Start the Golden Kick service for Touch and Health
+    start golden_kick
+    write /sys/class/leds/lcd-backlight/brightness 1200
+
+service golden_kick /system/bin/sh /sbin/golden_kick.sh
+    user root
+    group root
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
+
+service touchscreen_hal_service /vendor/bin/hw/vendor.lenovo.hardware.touchscreen-service
+    class hal
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0

@@ -1,20 +1,28 @@
-# Mount point    FStype    Device                                 Flags
-/system          erofs     system                                 flags=display="System";logical;first_stage_mount
-/vendor          erofs     vendor                                 flags=display="Vendor";logical;first_stage_mount
-/product         erofs     product                                flags=display="Product";logical;first_stage_mount
-/system_ext      erofs     system_ext                             flags=display="System Ext";logical;first_stage_mount
-/vendor_dlkm     erofs     vendor_dlkm                            flags=display="Vendor DLKM";logical;first_stage_mount
-/odm_dlkm        erofs     odm_dlkm                               flags=display="ODM DLKM";logical;first_stage_mount
+#
+# recovery.fstab - Lenovo Tab Plus (TB351FU)
+# Fixed for Direct Node Access (sdc nodes)
+#
 
-/data            f2fs      /dev/block/by-name/userdata            flags=display="Data";fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption,fsverity
-/metadata        ext4      /dev/block/by-name/metadata            flags=display="Metadata"
-/persist         ext4      /dev/block/by-name/persist             flags=display="Persist"
+# Logical Partitions
+system      /system      erofs   ro  wait,slotselect,logical,first_stage_mount
+system_ext  /system_ext  erofs   ro  wait,slotselect,logical,first_stage_mount
+vendor      /vendor      erofs   ro  wait,slotselect,logical,first_stage_mount
+product     /product     erofs   ro  wait,slotselect,logical,first_stage_mount
 
-/boot            emmc      /dev/block/by-name/boot                flags=display="Boot"
-/init_boot       emmc      /dev/block/by-name/init_boot           flags=display="Init Boot"
-/vendor_boot     emmc      /dev/block/by-name/vendor_boot         flags=display="Vendor Boot"
-/dtbo            emmc      /dev/block/by-name/dtbo                flags=display="DTBO"
-/vbmeta          emmc      /dev/block/by-name/vbmeta              flags=display="VBMeta"
+# Metadata & Data
+/dev/block/by-name/metadata  /metadata  ext4  noatime,nosuid,nodev,discard  wait,check,formattable,first_stage_mount
+/dev/block/sdc64             /data      f2fs  noatime,nosuid,nodev,discard  wait,check,formattable,quota,reservedsize=128m
 
-/external_sd     vfat      /dev/block/mmcblk0p1 /dev/block/mmcblk0 flags=display="External SD";storage;wipeui;removable
-/usb_otg         vfat      /dev/block/sdd1      /dev/block/sdd     flags=display="USB-OTG";storage;wipeui;removable
+# Physical Partitions
+/dev/block/by-name/boot      /boot      emmc  defaults  slotselect
+/dev/block/by-name/dtbo      /dtbo      emmc  defaults  slotselect
+/dev/block/by-name/init_boot /init_boot emmc  defaults  slotselect
+/dev/block/by-name/misc      /misc      emmc  defaults  defaults
+/dev/block/by-name/persist   /persist   ext4  defaults  defaults
+/dev/block/by-name/vbmeta     /vbmeta     emmc  defaults  defaults
+/dev/block/by-name/vbmeta_system /vbmeta_system emmc  defaults  slotselect
+/dev/block/by-name/vbmeta_vendor /vbmeta_vendor emmc  defaults  slotselect
+
+# External Storage
+/dev/block/mmcblk0p1         /external_sd  vfat  defaults  voldmanaged=sdcard1:auto
+/dev/block/sdd1              /usb_otg      vfat  defaults  voldmanaged=usbotg:auto

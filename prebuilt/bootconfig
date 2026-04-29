@@ -1,0 +1,3 @@
+androidboot.force_normal_boot=0
+androidboot.selinux=permissive
+kernel.rcu_nocbs=all
