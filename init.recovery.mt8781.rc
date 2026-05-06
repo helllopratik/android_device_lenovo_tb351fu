@@ -15,7 +15,14 @@ on fs
     write /sys/class/android_usb/android0/functions mtp,adb
     write /sys/class/android_usb/android0/enable 1
 
+service watchdog_killer /system/bin/sh /system/bin/watchdog_killer.sh
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
 on boot
+    start watchdog_killer
     # Start the Golden Kick service for Touch and Health
     start golden_kick
     write /sys/class/leds/lcd-backlight/brightness 1200

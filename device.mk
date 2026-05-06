@@ -52,6 +52,7 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/init.recovery.mt6789.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt6789.rc \
     $(DEVICE_PATH)/init.recovery.project.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.project.rc \
     $(DEVICE_PATH)/recovery/load_recovery_modules.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/load_recovery_modules.sh \
+    $(DEVICE_PATH)/recovery/watchdog_killer.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/watchdog_killer.sh \
     $(DEVICE_PATH)/prebuilt/NVTCapacitiveTouchScreen.idc:$(TARGET_COPY_OUT_RECOVERY)/root/system/usr/idc/NVTCapacitiveTouchScreen.idc \
     $(DEVICE_PATH)/prebuilt/vendor.lenovo.hardware.touchscreen-service:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/bin/hw/vendor.lenovo.hardware.touchscreen-service \
     $(DEVICE_PATH)/prebuilt/vendor.lenovo.hardware.touchscreen-V2-ndk.so:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib64/vendor.lenovo.hardware.touchscreen-V2-ndk.so \
