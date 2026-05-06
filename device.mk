@@ -1,3 +1,4 @@
+PRODUCT_RELEASE_CONFIG_MAPS += device/lenovo/tb351fu/release/release_config_map.textproto
 DEVICE_PATH := device/lenovo/tb351fu
 
 # Get non-open-source specific aspects
@@ -62,7 +63,18 @@ TARGET_RECOVERY_FSTYPE_MOUNT_LIST := erofs,f2fs,ext4
 
 # Shipping API Level
 PRODUCT_SHIPPING_API_LEVEL := 34
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+
+# VINTF
+PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
+
+# Force vendor_ramdisk creation
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/manifest.xml:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/manifest.xml
 
 # Screen Density
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.sf.lcd_density=480
+PRODUCT_APEX_SYSTEM_SERVER_JARS += com.android.crashrecovery:service-crashrecovery
+WITH_DEXPREOPT := false
+WITH_DEXPREOPT_DEBUG_INFO := false
