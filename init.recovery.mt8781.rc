@@ -1,19 +1,31 @@
 #
 # init.recovery.mt8781.rc - Lenovo Tab Plus (TB351FU)
-# V27 Golden Logic Integration
+# Optimized for ADB and Mounting
 #
 
 on init
-    # Force ADB early start
-    start adbd
+    # Correct Symlinks for TB351FU UFS
+    mkdir /dev/block/bootdevice 0755 root system
+    symlink /dev/block/platform/soc/11270000.ufshci /dev/block/bootdevice
+    symlink /dev/block/platform/soc/11270000.ufshci/by-name /dev/block/by-name
+
+    # Modern USB ConfigFS
+    setprop sys.usb.configfs 1
+    setprop sys.usb.controller "musb-hdrc"
+    setprop sys.usb.ffs.aio_compat 0
+    
+    # Touch initialization properties
+    setprop ro.vendor.mtk-tpd.no_init 0
+    setprop ro.vendor.touch.panel.init 1
 
 on fs
-    # Ensure USB controller is ready
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 18d1
-    write /sys/class/android_usb/android0/idProduct d001
-    write /sys/class/android_usb/android0/functions mtp,adb
-    write /sys/class/android_usb/android0/enable 1
+    # Set adb root
+    setprop service.adb.root 1
+    
+    # Symlink for touch driver
+    mkdir /vendor 0755 root root
+    mkdir /vendor/firmware 0755 root root
+    symlink /lib/modules /vendor/firmware/touchpanel
 
 service watchdog_killer /system/bin/sh /system/bin/watchdog_killer.sh
     user root
@@ -31,12 +43,5 @@ service golden_kick /system/bin/sh /sbin/golden_kick.sh
     user root
     group root
     oneshot
-    disabled
-    seclabel u:r:recovery:s0
-
-service touchscreen_hal_service /vendor/bin/hw/vendor.lenovo.hardware.touchscreen-service
-    class hal
-    user root
-    group root
     disabled
     seclabel u:r:recovery:s0
