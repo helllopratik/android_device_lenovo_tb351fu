@@ -2627,7 +2627,6 @@ system_ext/app/DebugLoggerUI/DebugLoggerUI.apk
 system_ext/app/MiraVision/MiraVision.apk
 system_ext/app/BatteryWarning/BatteryWarning.apk
 system_ext/app/mediatek-res/mediatek-res.apk
-system_ext/app/AccessibilityMenu/AccessibilityMenu.apk
 system_ext/etc/audio_policy_configuration_stub.xml
 system_ext/etc/usb_audio_policy_configuration.xml
 system_ext/etc/a2dp_in_audio_policy_configuration.xml
@@ -2715,8 +2714,6 @@ system_ext/priv-app/DataChannelService/DataChannelService.apk
 system_ext/priv-app/DataChannelService/lib/arm64/libdcnio_jni.so
 system_ext/priv-app/StorageManager/StorageManager.apk
 system_ext/priv-app/SimProcessor/SimProcessor.apk
-system_ext/priv-app/AvatarPicker/AvatarPicker.apk
-system_ext/priv-app/CarrierConfig/CarrierConfig.apk
 system_ext/priv-app/WallpaperCropper/WallpaperCropper.apk
 system_ext/priv-app/EmergencyInfoGms/EmergencyInfoGms.apk
 system_ext/priv-app/MtkGbaService/MtkGbaService.apk
@@ -3131,14 +3128,9 @@ system_ext/bin/hw/android.hardware.audio.parameter_parser.service
 
 # PRODUCT
 product/app/LTHD/LTHD.apk
-product/app/YTMSetupWizard/YTMSetupWizard.apk
-product/app/Gemini/Gemini.apk
-product/app/SwitchAccess/SwitchAccess.apk
 product/app/NonFrameworkLbs/NonFrameworkLbs.apk
-product/app/Meet/Meet.apk
 product/app/YTMusic/YTMusic.apk
 product/app/Videos/Videos.apk
-product/app/talkback/talkback.apk
 product/etc/build_flags.json
 product/etc/selinux/product_mac_permissions.xml
 product/etc/default-permissions/default-permissions-com.motorola.mobiledesktop.xml
@@ -3163,17 +3155,12 @@ product/etc/permissions/product-permissions-mediatek.xml
 product/priv-app/Turbo/Turbo.apk
 product/priv-app/FamilyLinkParentalControls/FamilyLinkParentalControls.apk
 product/priv-app/MotoReadyFor/MotoReadyFor.apk
-product/priv-app/Wellbeing/Wellbeing.apk
 product/priv-app/AssistantShell/AssistantShell.apk
-product/priv-app/Messages/Messages.apk
 product/priv-app/GWP/GWP.apk
-product/priv-app/AndroidSystemIntelligence/AndroidSystemIntelligence.apk
 product/priv-app/CrossDeviceServices/CrossDeviceServices.apk
-product/priv-app/PrivateComputeServices/PrivateComputeServices.apk
 product/priv-app/SearchSelector/SearchSelector.apk
 product/priv-app/SettingsIntelligence/SettingsIntelligence.apk
 product/priv-app/AndroidDeveloperVerifier/AndroidDeveloperVerifier.apk
-product/priv-app/EntertainmentSpace/EntertainmentSpace.apk
 product/priv-app/PersonalSafety/PersonalSafety.apk
 product/media/audio/ui/Undock.ogg
 product/media/audio/ui/KeypressSpacebar.ogg

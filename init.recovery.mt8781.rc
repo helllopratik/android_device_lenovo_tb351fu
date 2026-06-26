@@ -4,12 +4,13 @@
 #
 
 on init
+
     # Correct Symlinks for TB351FU UFS
     mkdir /dev/block/bootdevice 0755 root system
     symlink /dev/block/platform/soc/11270000.ufshci /dev/block/bootdevice
     symlink /dev/block/platform/soc/11270000.ufshci/by-name /dev/block/by-name
 
-    # Modern USB ConfigFS
+    # Modern USB ConfigFS (Restored to 1 for AOSP compatibility)
     setprop sys.usb.configfs 1
     setprop sys.usb.controller "musb-hdrc"
     setprop sys.usb.ffs.aio_compat 0
@@ -22,6 +23,10 @@ on fs
     # Set adb root
     setprop service.adb.root 1
     
+    # Fastboot FunctionFS Endpoints
+    mkdir /dev/usb-ffs/fastboot 0770 system system
+    mount functionfs fastboot /dev/usb-ffs/fastboot rmode=0770,fmode=0660,uid=1000,gid=1000
+    
     # Symlink for touch driver
     mkdir /vendor 0755 root root
     mkdir /vendor/firmware 0755 root root
@@ -33,11 +38,22 @@ service watchdog_killer /system/bin/sh /system/bin/watchdog_killer.sh
     disabled
     seclabel u:r:recovery:s0
 
+service disable_selinux /system/bin/sh /system/bin/disable_selinux.sh
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
 on boot
+    start disable_selinux
     start watchdog_killer
     # Start the Golden Kick service for Touch and Health
     start golden_kick
     write /sys/class/leds/lcd-backlight/brightness 1200
+    
+    # Fastboot ConfigFS Endpoint
+    mkdir /config/usb_gadget/g1/functions/ffs.fastboot
 
 service golden_kick /system/bin/sh /sbin/golden_kick.sh
     user root
@@ -45,3 +61,13 @@ service golden_kick /system/bin/sh /sbin/golden_kick.sh
     oneshot
     disabled
     seclabel u:r:recovery:s0
+
+# Lenovo Proprietary Fastboot ConfigFS Trigger
+on property:sys.usb.config=fastboot && property:sys.usb.ffs.ready=1 && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/UDC "none"
+    rm /config/usb_gadget/g1/configs/b.1/f1
+    write /config/usb_gadget/g1/idProduct 0x4EE0
+    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "fastboot"
+    symlink /config/usb_gadget/g1/functions/ffs.fastboot /config/usb_gadget/g1/configs/b.1/f1
+    write /config/usb_gadget/g1/UDC ${sys.usb.controller}
+    setprop sys.usb.state ${sys.usb.config}

@@ -10,6 +10,12 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
 # Enable A/B update support
 AB_OTA_UPDATER := true
 
+# Fastbootd
+PRODUCT_PACKAGES += \
+    fastbootd \
+    android.hardware.fastboot@1.1-impl-mock
+
+# Dynamic Partitions List
 # Mandatory A/B Partition List
 AB_OTA_PARTITIONS := \
     boot \
@@ -22,7 +28,6 @@ AB_OTA_PARTITIONS := \
     vbmeta_system \
     vbmeta_vendor \
     vendor \
-    vendor_boot \
     vendor_dlkm \
     odm_dlkm \
     system_dlkm
@@ -44,9 +49,14 @@ PRODUCT_PACKAGES += \
 # Force Recovery Binary & UI
 PRODUCT_PACKAGES += \
     recovery \
+    splice_vendor_boot \
     librecovery_ui_default \
     librecovery_utils \
     otacerts
+
+# SELinux Bypass Script
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/disable_selinux.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/disable_selinux.sh
 
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/init.recovery.mt8781.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt8781.rc \
@@ -80,3 +90,14 @@ PRODUCT_PRODUCT_PROPERTIES += \
 PRODUCT_APEX_SYSTEM_SERVER_JARS += com.android.crashrecovery:service-crashrecovery
 WITH_DEXPREOPT := false
 WITH_DEXPREOPT_DEBUG_INFO := false
+
+# Input Device Configurations (Active Stylus)
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/idc/Vendor_17ef_Product_612b.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_17ef_Product_612b.idc \
+    $(DEVICE_PATH)/idc/Vendor_17ef_Product_617f.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_17ef_Product_617f.idc \
+    $(DEVICE_PATH)/idc/Vendor_17ef_Product_61A1.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_17ef_Product_61A1.idc \
+    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_612b.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Vendor_17ef_Product_612b.kl \
+    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_617f.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Vendor_17ef_Product_617f.kl \
+    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_619e.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Vendor_17ef_Product_619e.kl \
+    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_61a1.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Vendor_17ef_Product_61a1.kl
+

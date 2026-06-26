@@ -59,7 +59,6 @@ BOARD_KERNEL_PAGESIZE := 4096
 
 # Kernel Offsets & Name
 TARGET_NO_KERNEL := false
-BOARD_KERNEL_IMAGE_NAME := Image.gz
 BOARD_KERNEL_BASE := 0x40000000
 BOARD_KERNEL_OFFSET := 0x00000000
 BOARD_RAMDISK_OFFSET := 0x26f00000
@@ -68,17 +67,18 @@ BOARD_KERNEL_TAGS_OFFSET := 0x07c80000
 BOARD_DTB_OFFSET := 0x07c80000
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 bootconfig androidboot.selinux=permissive
 
-# Kernel Build from Source
-TARGET_KERNEL_SOURCE := kernel/lenovo/tb351fu
-TARGET_KERNEL_CONFIG := gki_defconfig t808aa_defconfig
-TARGET_KERNEL_ADDITIONAL_FLAGS := LLVM_IAS=1 KCFLAGS="-Wno-error" HOSTCFLAGS="-Wno-error" HOSTLDFLAGS="-fuse-ld=lld"
+# Kernel
+#
+# Stock ZUI 17 uses a Google-derived 4 KiB Android 16 6.12 GKI. The proprietary
+# vendor modules were built for KMI 6.12-android16-5, so they must not be
+# paired with the legacy Lenovo 5.10 source tree or a different GKI KMI
+# generation.  Android platform upgrades do not require a new kernel KMI.
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_KERNEL_CLANG_COMPILE := true
-TARGET_KERNEL_NO_GCC := false
-BOARD_KERNEL_LLVM_BINUTILS := true
-LLVM_IAS := 1
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt
+BOARD_PREBUILT_DTBIMAGE := $(DEVICE_PATH)/prebuilt/dtb.dtb
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
 BOARD_DTBOIMG_PARTITION_SIZE := 8388608
 
@@ -90,6 +90,11 @@ BOARD_AVB_ROLLBACK_INDEX := 0
 BOARD_AVB_VBMETA_PARTITION_SIZE := 8388608
 
 BOARD_AVB_VBMETA_SYSTEM := system
+
+# Fragment 0 / Platform Support
+BOARD_RAMDISK_FRAGMENT_0_NAME := platform
+BOARD_RAMDISK_FRAGMENT_0_TYPE := platform
+BOARD_RAMDISK_FRAGMENT_0_FMT := lz4_legacy
 BOARD_AVB_VBMETA_SYSTEM_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
 BOARD_AVB_VBMETA_SYSTEM_ALGORITHM := SHA256_RSA4096
 BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := 0
@@ -108,7 +113,7 @@ BOARD_BOOTCONFIG := kernel.rcu_nocbs=all kernel.rcutree.enable_rcu_lazy=1 kernel
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144
-BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
+BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
 BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 67108864
 BOARD_HAS_NO_RECOVERY := false
@@ -180,9 +185,9 @@ TW_INCLUDE_REPACKTOOLS := true
 TW_HAS_MTP := true
 
 # Fragment 0 / Platform Support
-# We use the prebuilt vendor ramdisk as the primary ramdisk
-# to satisfy bootloader checks.
-BOARD_PREBUILT_VENDOR_RAMDISK := $(DEVICE_PATH)/prebuilt/vendor_ramdisk.cpio.lz4
+# Fragment 0 / Platform Support
+# Note: Multiple ramdisk fragments crash the Soong compiler in Android 16.
+# We will use an Android Make Hook to construct the multi-fragment vendor_boot natively.
 
 # Brightness
 TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
@@ -253,3 +258,8 @@ FOX_USE_XZ_UTILS := 1
 FOX_REPLACE_BUSYBOX_UTILS := 1
 
 include vendor/lineage/config/BoardConfigLineage.mk
+
+# Recovery Graphics Fixes
+TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
+TARGET_RECOVERY_OUI_PIXEL_FORMAT := BGRA_8888
+RECOVERY_GRAPHICS_FORCE_USE_LINELENGTH := true

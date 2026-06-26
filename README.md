@@ -6,13 +6,13 @@
 
 This repository contains the public AOSP / LineageOS device tree currently being used for Lenovo Tab Plus `TB351FU` bring-up work.
 
-The tree is focused on making the device boot and behave correctly on a modern aftermarket Android stack, with current work aimed at Android 16 and LineageOS-based development. It is a bring-up tree, so some parts are still evolving alongside the kernel, vendor, and recovery work.
+The tree is focused on making the device boot and behave correctly on a modern aftermarket Android stack, with current work aimed at Android 16/17 and LineageOS-based development. It is a bring-up tree, so some parts are still evolving alongside the kernel, vendor, and recovery work.
 
 ## Status
 
 - Device codename: `TB351FU`
 - Product target: `lineage_TB351FU`
-- ROM direction: Android 16 / LineageOS bring-up
+- ROM direction: Android 16/17 / LineageOS bring-up
 - Board platform: `mt6789`
 - Bootloader board name: `t808aa`
 - Current dependencies: matching kernel tree, vendor tree, and extracted proprietary blobs
@@ -29,8 +29,8 @@ The tree is focused on making the device boot and behave correctly on a modern a
 | Platform | MediaTek `MT6789` |
 | Board name | `t808aa` |
 | Architecture | `arm64` with `arm` secondary support |
-| Kernel source path | `kernel/lenovo/TB351FU` |
-| Kernel defconfig | `t808aa_defconfig` |
+| Kernel | Stock Google-derived GKI 6.12 prebuilt |
+| Vendor module KMI | `6.12-android16-5` (4 KiB pages) |
 | Boot image format | Header v4 |
 | Partition details | Virtual A/B, vendor boot, metadata partition, super partition |
 | Filesystems in-tree | `erofs` for system images, `f2fs` for userdata |
@@ -60,7 +60,7 @@ The tree is focused on making the device boot and behave correctly on a modern a
 
 ## Build Notes
 
-The tree is set up like a standard LineageOS device tree. Once the matching kernel and vendor trees are present in your source checkout, the usual product target is:
+The tree is set up like a standard LineageOS device tree. Once the matching vendor tree is present in your source checkout, the usual product target is:
 
 ```bash
 lunch lineage_TB351FU-userdebug
@@ -68,9 +68,24 @@ lunch lineage_TB351FU-userdebug
 
 Current in-tree expectations include:
 
-- `TARGET_KERNEL_SOURCE := kernel/lenovo/TB351FU`
-- `TARGET_KERNEL_CONFIG := t808aa_defconfig`
-- `$(call inherit-product-if-exists, vendor/lenovo/TB351FU/TB351FU-vendor.mk)`
+- `TARGET_PREBUILT_KERNEL := device/lenovo/tb351fu/prebuilt/kernel`
+- the stock DTB and DTBO from the same firmware family
+- proprietary modules with KMI `6.12-android16-5`
+- `vendor/lenovo/tb351fu/tb351fu-vendor.mk`
+
+The Lenovo open-source release in `kernel/lenovo/tb351fu` is Linux 5.10 and
+does not correspond to the 6.12 GKI used by current stock firmware. It is not
+used to build the Android 16/17 boot image. Porting its drivers into Google
+6.12 is also unnecessary for normal boot: hardware-specific MediaTek and
+Lenovo support is delivered by the stock `vendor_dlkm` modules and stock DTB.
+
+Do not replace the kernel with an arbitrary newer 6.12 image. In particular,
+`6.12-android16-6` is a different KMI generation from the stock modules. Run
+the compatibility check before building or testing another GKI:
+
+```bash
+device/lenovo/tb351fu/tools/verify-kmi.sh
+```
 
 ## Blob Extraction Notes
 
@@ -83,7 +98,7 @@ Those scripts are part of the normal LineageOS extraction flow and are used to g
 
 ## Current Bring-Up Focus
 
-- stabilizing Android 16 device configuration
+- stabilizing Android 16/17 device configuration
 - matching kernel and vendor expectations
 - improving recovery compatibility
 - validating partition, AVB, and boot flow behavior
