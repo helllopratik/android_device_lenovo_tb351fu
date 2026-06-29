@@ -91,13 +91,106 @@ PRODUCT_APEX_SYSTEM_SERVER_JARS += com.android.crashrecovery:service-crashrecove
 WITH_DEXPREOPT := false
 WITH_DEXPREOPT_DEBUG_INFO := false
 
+PRODUCT_SYSTEM_EXT_BOOT_JARS += mediatek-common
+
 # Input Device Configurations (Active Stylus)
 PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/idc/Vendor_17ef_Product_612b.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_17ef_Product_612b.idc \
-    $(DEVICE_PATH)/idc/Vendor_17ef_Product_617f.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_17ef_Product_617f.idc \
-    $(DEVICE_PATH)/idc/Vendor_17ef_Product_61A1.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_17ef_Product_61A1.idc \
-    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_612b.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Vendor_17ef_Product_612b.kl \
-    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_617f.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Vendor_17ef_Product_617f.kl \
-    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_619e.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Vendor_17ef_Product_619e.kl \
-    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_61a1.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Vendor_17ef_Product_61a1.kl
+    $(DEVICE_PATH)/idc/Vendor_17ef_Product_612b.idc:vendor/usr/idc/Vendor_17ef_Product_612b.idc \
+    $(DEVICE_PATH)/idc/Vendor_17ef_Product_617f.idc:vendor/usr/idc/Vendor_17ef_Product_617f.idc \
+    $(DEVICE_PATH)/idc/Vendor_17ef_Product_61A1.idc:vendor/usr/idc/Vendor_17ef_Product_61A1.idc \
+    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_612b.kl:vendor/usr/keylayout/Vendor_17ef_Product_612b.kl \
+    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_617f.kl:vendor/usr/keylayout/Vendor_17ef_Product_617f.kl \
+    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_619e.kl:vendor/usr/keylayout/Vendor_17ef_Product_619e.kl \
+    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_61a1.kl:vendor/usr/keylayout/Vendor_17ef_Product_61a1.kl
+
+PRODUCT_COPY_FILES += $(LOCAL_PATH)/rootdir/etc/debug_logger.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/debug_logger.rc
+
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/audio/audio_policy_configuration.xml:vendor/etc/audio_policy_configuration.xml \
+    $(DEVICE_PATH)/configs/audio/audio_policy_volumes.xml:vendor/etc/audio_policy_volumes.xml
+
+-include $(LOCAL_PATH)/vndk34.mk
+
+
+
+PRODUCT_SYSTEM_EXT_PROPERTIES += ro.control_privapp_permissions=log
+
+
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.mt6789:vendor/etc/fstab.mt6789
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.mt6789:vendor/etc/fstab.mt8781
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/debug_logger.rc:vendor/etc/init/hw/debug_logger.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/factory_init.connectivity.common.rc:vendor/etc/init/hw/factory_init.connectivity.common.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/factory_init.connectivity.rc:vendor/etc/init/hw/factory_init.connectivity.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/factory_init.dcxo_nvram.rc:vendor/etc/init/hw/factory_init.dcxo_nvram.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/factory_init.project.rc:vendor/etc/init/hw/factory_init.project.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/factory_init.rc:vendor/etc/init/hw/factory_init.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.aee.rc:vendor/etc/init/hw/init.aee.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.cgroup.rc:vendor/etc/init/hw/init.cgroup.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.connectivity.common.rc:vendor/etc/init/hw/init.connectivity.common.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.connectivity.rc:vendor/etc/init/hw/init.connectivity.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init_connectivity.rc:vendor/etc/init/hw/init_connectivity.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.mt6789.rc:vendor/etc/init/hw/init.mt6789.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.mt6789.usb.rc:vendor/etc/init/hw/init.mt6789.usb.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.mt8781.rc:vendor/etc/init/hw/init.mt8781.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.mtkgki.rc:vendor/etc/init/hw/init.mtkgki.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.project.rc:vendor/etc/init/hw/init.project.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.sensor_2_0.rc:vendor/etc/init/hw/init.sensor_2_0.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/meta_init.connectivity.common.rc:vendor/etc/init/hw/meta_init.connectivity.common.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/meta_init.connectivity.rc:vendor/etc/init/hw/meta_init.connectivity.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/meta_init.dcxo_nvram.rc:vendor/etc/init/hw/meta_init.dcxo_nvram.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/meta_init.project.rc:vendor/etc/init/hw/meta_init.project.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/meta_init.rc:vendor/etc/init/hw/meta_init.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/meta_init.vendor.rc:vendor/etc/init/hw/meta_init.vendor.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/multi_init.rc:vendor/etc/init/hw/multi_init.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/teei_daemon.rc:vendor/etc/init/teei_daemon.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/tinno_t808aa.init.rc:vendor/etc/init/hw/tinno_t808aa.init.rc
+$(call inherit-product, vendor/lenovo/tb351fu/tb351fu-vendor-blobs.mk)
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/0102030405060708090a0b0c0d0e0f10.ta:vendor/thh/ta/0102030405060708090a0b0c0d0e0f10.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/020f0000000000000000000000000000.ta:vendor/thh/ta/020f0000000000000000000000000000.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/08030000000000000000000000000000.ta:vendor/thh/ta/08030000000000000000000000000000.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/08110000000000000000000000000000.ta:vendor/thh/ta/08110000000000000000000000000000.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/3bb8ce3f62e044b2926f3f10339ca6d7.ta:vendor/thh/ta/3bb8ce3f62e044b2926f3f10339ca6d7.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/40188311faf343488db888ad39496f9a.ta:vendor/thh/ta/40188311faf343488db888ad39496f9a.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/5020170115e016302017012521300000.ta:vendor/thh/ta/5020170115e016302017012521300000.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/5f7a5b3b29b041bca249524a031a00e3.ta:vendor/thh/ta/5f7a5b3b29b041bca249524a031a00e3.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/797e5bec0aa546dbb1d388f2b4250241.ta:vendor/thh/ta/797e5bec0aa546dbb1d388f2b4250241.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/abcd270ea5c44c58bcd3384a2fa2539e.ta:vendor/thh/ta/abcd270ea5c44c58bcd3384a2fa2539e.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/c09c9c5daa504b78b0e46eda61556c3a.ta:vendor/thh/ta/c09c9c5daa504b78b0e46eda61556c3a.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/c1882f2d885e4e13a8c8e2622461b2fa.ta:vendor/thh/ta/c1882f2d885e4e13a8c8e2622461b2fa.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/d91f322ad5a441d5955110eda3272fc0.ta:vendor/thh/ta/d91f322ad5a441d5955110eda3272fc0.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/e97c270ea5c44c58bcd3384a2fa2539e.ta:vendor/thh/ta/e97c270ea5c44c58bcd3384a2fa2539e.ta
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/isee_model.json:vendor/thh/ta/isee_model.json
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/bin/hw/mt6789/android.hardware.graphics.allocator-V2-service-mediatek.mt6789:vendor/bin/hw/android.hardware.graphics.allocator-V2-service-mediatek
+PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/bin/hw/mt6789/camerahalserver:vendor/bin/hw/camerahalserver
+
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.hardware.hwcomposer=mtk_common \
+    ro.hardware.kmsetkey=beanpod \
+    ro.hardware.gatekeeper=beanpod \
+    ro.hardware.gralloc=common \
+    ro.hardware.vulkan=mali \
+    ro.hardware.egl=meow \
+    dalvik.vm.heapstartsize=16m \
+    dalvik.vm.heapgrowthlimit=384m \
+    dalvik.vm.heapsize=512m \
+    dalvik.vm.heaptargetutilization=0.75 \
+    dalvik.vm.heapminfree=2m \
+    dalvik.vm.heapmaxfree=8m
+
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.vendor.rc=/vendor/etc/init/hw/ \
+    ro.vendor.init.sensor.rc=init.sensor_2_0.rc \
+    ro.vendor.mtk.sensor.support=yes \
+    ro.vendor.wlan.chrdev=wmt_chrdev_wifi \
+    ro.vendor.wlan.gen=gen4m_6789 \
+    ro.vendor.bt.platform=connac1x \
+    ro.vendor.mediatek.platform=MT6789 \
+    ro.vendor.mtk_camera_app_version=3 \
+    ro.vendor.pref_scale_enable_cfg=1 \
+    vendor.mtk.camera.app.fd.video=1 \
+    camera.disable_zsl_mode=1 \
+    media.c2.dmabuf.padding=3072 \
+    media.c2.hal.selection=aidl \
+    media.stagefright.thumbnail.prefer_hw_codecs=true
+
 

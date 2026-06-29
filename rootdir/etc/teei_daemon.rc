@@ -1,0 +1,9 @@
+service teei_daemon /vendor/bin/teei_daemon
+    class core
+    user system
+    group system readproc
+    seclabel u:r:tee:s0
+
+on post-fs-data
+    mkdir /data/vendor/thh 0770 system system
+    start teei_daemon

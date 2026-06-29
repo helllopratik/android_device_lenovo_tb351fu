@@ -3572,3 +3572,11 @@ product/priv-app/LFHTianjiaoTablet/lib/arm64/libauthentication.so
 product/priv-app/LFHTianjiaoTablet/lib/arm64/libnative-lib-ts.so
 product/etc/permissions/privapp-permissions-com.lenovo.lfh.tianjiao.tablet.xml
 product/priv-app/ZuiGameHelper/ZuiGameHelper.apk
+
+# Stylus & Pen Service
+system/priv-app/PenService/PenService.apk
+system/etc/pen/pen_config.xml
+system/etc/pen/ai/stylus_ml_model.tflite
+system/etc/motorola/bgintents/com.lenovo.penservice.bgintents.xml
+system/etc/sysconfig/initial-stopped-states-com.lenovo.penservice.xml
+
