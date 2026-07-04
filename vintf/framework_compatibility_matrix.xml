@@ -230,4 +230,147 @@
             <instance>default</instance>
         </interface>
     </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.lenovo.hardware.battery</name>
+        <version>5</version>
+        <interface>
+            <name>IBattery</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.lenovo.hardware.display</name>
+        <version>1</version>
+        <interface>
+            <name>IDisplay</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.lenovo.hardware.factory</name>
+        <version>2</version>
+        <interface>
+            <name>IFactory</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.lenovo.hardware.hyperschedule</name>
+        <version>2</version>
+        <interface>
+            <name>IHyperschedule</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.lenovo.hardware.keyboard</name>
+        <version>1</version>
+        <interface>
+            <name>IKeyboard</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.lenovo.hardware.misc</name>
+        <version>1</version>
+        <interface>
+            <name>IMisc</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.lenovo.hardware.performance</name>
+        <version>1</version>
+        <interface>
+            <name>IPerformance</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.lenovo.hardware.usb</name>
+        <version>1</version>
+        <interface>
+            <name>IUsb</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.camera.isphal</name>
+        <version>1</version>
+        <interface>
+            <name>IISPModule</name>
+            <instance>internal/1</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.gnss</name>
+        <version>3</version>
+        <interface>
+            <name>IMtkGnss</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.gnss.batching</name>
+        <version>1</version>
+        <interface>
+            <name>IMtkGnssBatching</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.lbs</name>
+        <version>1</version>
+        <interface>
+            <name>ILbs</name>
+            <regex-instance>AgpsDebugInterface</regex-instance>
+            <regex-instance>AgpsInterface</regex-instance>
+            <regex-instance>mtk_agps2framework</regex-instance>
+            <regex-instance>mtk_agps2gnssAidl</regex-instance>
+            <regex-instance>mtk_agpsd2debugService</regex-instance>
+            <regex-instance>mtk_debugService2agpsd</regex-instance>
+            <regex-instance>mtk_debugService2mnld</regex-instance>
+            <regex-instance>mtk_framework2agps</regex-instance>
+            <regex-instance>mtk_gnssAidl2agps</regex-instance>
+            <regex-instance>mtk_jam2mnl</regex-instance>
+            <regex-instance>mtk_lbs_log_v2s</regex-instance>
+            <regex-instance>mtk_lppe_socket_agps</regex-instance>
+            <regex-instance>mtk_lppe_socket_bt</regex-instance>
+            <regex-instance>mtk_lppe_socket_ipaddr</regex-instance>
+            <regex-instance>mtk_lppe_socket_lbs</regex-instance>
+            <regex-instance>mtk_lppe_socket_network</regex-instance>
+            <regex-instance>mtk_lppe_socket_sensor</regex-instance>
+            <regex-instance>mtk_lppe_socket_wlan</regex-instance>
+            <regex-instance>mtk_meta2mnld</regex-instance>
+            <regex-instance>mtk_mnl2jam</regex-instance>
+            <regex-instance>mtk_mnld2debugService</regex-instance>
+            <regex-instance>mtk_mnld2mtklogger</regex-instance>
+            <regex-instance>mtk_mnld2nlputils</regex-instance>
+            <regex-instance>mtk_mtklogger2mnld</regex-instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mtkpower</name>
+        <version>3</version>
+        <interface>
+            <name>IMtkPowerService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.mtkpower_applist</name>
+        <version>3</version>
+        <interface>
+            <name>IMtkpower_applist</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.mediatek.hardware.netdagent</name>
+        <version>1</version>
+        <interface>
+            <name>INetdagents</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
 </compatibility-matrix>

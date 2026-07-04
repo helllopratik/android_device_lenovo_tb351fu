@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Device configuration overlay for TB351FU -->
+<resources>
+    <!-- Force software navigation bar (tablet has no hardware nav keys) -->
+    <bool name="config_showNavigationBar">true</bool>
+
+    <!-- Enable auto-brightness -->
+    <bool name="config_automatic_brightness_available">true</bool>
+
+    <!-- Enable stylus/pen support -->
+    <bool name="config_stylusGesturesEnabled">true</bool>
+
+    <!-- Tablet-specific configs -->
+    <bool name="config_ui_enableWifiOverlay">true</bool>
+    <bool name="config_deviceHasVariableButtonBacklight">false</bool>
+    <integer name="config_screenBrightnessSettingDefault">120</integer>
+    <integer name="config_screenBrightnessSettingMinimum">5</integer>
+    <integer name="config_screenBrightnessSettingMaximum">255</integer>
+    <bool name="config_enableScreenshotChord">true</bool>
+    <bool name="config_hasRemovableLid">false</bool>
+
+    <!-- Sensor configurations -->
+    <bool name="config_sensor_adjustable">true</bool>
+    <bool name="config_setColorTransformAccelerated">true</bool>
+</resources>

@@ -1,0 +1,32 @@
+LOCAL_PATH := $(call my-dir)
+TB351FU_DEVICE_PATH := $(LOCAL_PATH)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := splice_vendor_boot
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_SYSTEM)/base_rules.mk
+
+$(LOCAL_BUILT_MODULE): $(PRODUCT_OUT)/vendor_boot.img
+	bash $(TB351FU_DEVICE_PATH)/rebuild_vendor_boot.sh $(PRODUCT_OUT) $(TB351FU_DEVICE_PATH) out/host/linux-x86/bin/mkbootimg out/host/linux-x86/bin/mkbootfs out/host/linux-x86/bin/lz4
+	touch $@
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := patch_framework_res
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_SYSTEM)/base_rules.mk
+
+$(LOCAL_BUILT_MODULE): $(PRODUCT_OUT)/system/framework/framework-res.apk
+	python3 $(TB351FU_DEVICE_PATH)/patches/patch_framework_res.py \
+		--apk $(PRODUCT_OUT)/system/framework/framework-res.apk \
+		--out $(PRODUCT_OUT)/system/framework/framework-res_patched.apk
+	java -Djava.library.path=$(PRODUCT_OUT)/../../../host/linux-x86/lib64 \
+		-jar $(PRODUCT_OUT)/../../../host/linux-x86/framework/signapk.jar \
+		build/make/target/product/security/platform.x509.pem \
+		build/make/target/product/security/platform.pk8 \
+		$(PRODUCT_OUT)/system/framework/framework-res_patched.apk \
+		$(PRODUCT_OUT)/system/framework/framework-res.apk
+	rm -f $(PRODUCT_OUT)/system/framework/framework-res_patched.apk
+	touch $@
+

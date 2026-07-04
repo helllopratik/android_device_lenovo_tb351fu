@@ -4,6 +4,8 @@ DEVICE_PATH := device/lenovo/tb351fu
 # Get non-open-source specific aspects
 $(call inherit-product, vendor/lenovo/tb351fu/tb351fu-vendor.mk)
 
+UNSAFE_DISABLE_APEX_ALLOWED_DEPS_CHECK := true
+
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
     $(DEVICE_PATH)/vintf/framework_compatibility_matrix.xml
 
@@ -93,6 +95,9 @@ WITH_DEXPREOPT_DEBUG_INFO := false
 
 PRODUCT_SYSTEM_EXT_BOOT_JARS += mediatek-common
 
+# Device overlay (nav bar, auto-brightness, etc.)
+DEVICE_PACKAGE_OVERLAYS += $(DEVICE_PATH)/overlay
+
 # Input Device Configurations (Active Stylus)
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/idc/Vendor_17ef_Product_612b.idc:vendor/usr/idc/Vendor_17ef_Product_612b.idc \
@@ -109,11 +114,29 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/audio/audio_policy_configuration.xml:vendor/etc/audio_policy_configuration.xml \
     $(DEVICE_PATH)/configs/audio/audio_policy_volumes.xml:vendor/etc/audio_policy_volumes.xml
 
+# Trebuchet Launcher and PenService privapp permissions
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/permissions/privapp-permissions-lineage.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-lineage.xml \
+    $(DEVICE_PATH)/configs/permissions/privapp-permissions-penservice.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-penservice.xml
+
+# Platform permissions fix: android.permission.RANGING (required by OP_RANGING app op 151)
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/permissions/platform-permissions.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/platform-permissions.xml
+
 -include $(LOCAL_PATH)/vndk34.mk
 
 
 
-PRODUCT_SYSTEM_EXT_PROPERTIES += ro.control_privapp_permissions=log
+# Force nav bar and disable LineageOS taskbar
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    ro.control_privapp_permissions=log \
+    persist.sys.sf.nav_bar_overlay=1 \
+    ro.sysui.nav_bar.enable=1
+
+# Disable LineageOS taskbar for tablets (interferes with nav bar)
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.control_privapp_permissions=log \
+    ro.lineage.taskbar.enable=false
 
 
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.mt6789:vendor/etc/fstab.mt6789
@@ -144,6 +167,8 @@ PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/meta_init.vendor.rc:vendor/etc/
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/multi_init.rc:vendor/etc/init/hw/multi_init.rc
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/teei_daemon.rc:vendor/etc/init/teei_daemon.rc
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/tinno_t808aa.init.rc:vendor/etc/init/hw/tinno_t808aa.init.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.stylus.rc:vendor/etc/init/hw/init.stylus.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/vendor/bin/stylus-pm.sh:vendor/bin/stylus-pm.sh
 $(call inherit-product, vendor/lenovo/tb351fu/tb351fu-vendor-blobs.mk)
 PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/0102030405060708090a0b0c0d0e0f10.ta:vendor/thh/ta/0102030405060708090a0b0c0d0e0f10.ta
 PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/020f0000000000000000000000000000.ta:vendor/thh/ta/020f0000000000000000000000000000.ta
@@ -175,7 +200,8 @@ PRODUCT_VENDOR_PROPERTIES += \
     dalvik.vm.heapsize=512m \
     dalvik.vm.heaptargetutilization=0.75 \
     dalvik.vm.heapminfree=2m \
-    dalvik.vm.heapmaxfree=8m
+    dalvik.vm.heapmaxfree=8m \
+    qemu.hw.mainkeys=0
 
 PRODUCT_VENDOR_PROPERTIES += \
     ro.vendor.rc=/vendor/etc/init/hw/ \
@@ -193,4 +219,61 @@ PRODUCT_VENDOR_PROPERTIES += \
     media.c2.hal.selection=aidl \
     media.stagefright.thumbnail.prefer_hw_codecs=true
 
+# Camera buffer properties (stock - required by P1StreamInfoBuilder)
+PRODUCT_VENDOR_PROPERTIES += \
+    persist.vendor.camera3.pipeline.bufnum.min.high_ram.imgo=6 \
+    persist.vendor.camera3.pipeline.bufnum.min.low_ram.imgo=5 \
+    persist.vendor.camera3.pipeline.bufnum.base.imgo=3 \
+    persist.vendor.camera3.pipeline.bufnum.min.high_ram.rrzo=5 \
+    persist.vendor.camera3.pipeline.bufnum.min.low_ram.rrzo=5 \
+    persist.vendor.camera3.pipeline.bufnum.base.rrzo=3 \
+    persist.vendor.camera3.pipeline.bufnum.min.high_ram.lcso=7 \
+    persist.vendor.camera3.pipeline.bufnum.min.low_ram.lcso=6 \
+    persist.vendor.camera3.pipeline.bufnum.base.lcso=4 \
+    persist.vendor.camera3.pipeline.bufnum.min.high_ram.rsso=6 \
+    persist.vendor.camera3.pipeline.bufnum.min.low_ram.rsso=5 \
+    persist.vendor.camera3.pipeline.bufnum.base.rsso=4 \
+    persist.vendor.camera3.pipeline.bufnum.min.high_ram.fdyuv=5 \
+    persist.vendor.camera3.pipeline.bufnum.min.low_ram.fdyuv=5 \
+    persist.vendor.camera3.pipeline.bufnum.min.high_ram.ai3AYuv=3 \
+    persist.vendor.camera3.pipeline.bufnum.min.low_ram.ai3AYuv=3 \
+    vendor.camera.mdp.dre.enable=0 \
+    vendor.camera.mdp.cz.enable=0 \
+    ro.vendor.camera3.zsl.default=260 \
+    ro.vendor.camera.insensorzoom.support=0 \
+    ro.vendor.camera.isp.support.colorspace=0
+
+# Additional camera HAL stability props
+PRODUCT_VENDOR_PROPERTIES += \
+    vendor.mtk.camera.hidl.service=1 \
+    vendor.camera.hal1.multires=1 \
+    persist.vendor.camera.hal3.enable=1 \
+    persist.vendor.camera.preview.ubwc=0 \
+    vendor.camera.mdp.cz.enable=0 \
+    ro.vendor.camera.wfd.enable=0
+
+# Sensor HAL and auto-brightness
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.vendor.sensors.multihal=1 \
+    ro.vendor.sensors.mtk.subhal=1 \
+    persist.vendor.sensors.enable=1 \
+    ro.vendor.sensors.gravity=1 \
+    ro.vendor.sensors.proximity=1 \
+    ro.vendor.sensors.light=1 \
+    ro.vendor.sensors.pressure=0 \
+    ro.vendor.sensors.humidity=0 \
+    ro.vendor.sensors.temperature=0
+
+# Stylus power management - prevent auto-disconnect
+PRODUCT_VENDOR_PROPERTIES += \
+    persist.vendor.input.pen.dc_avoid=1 \
+    persist.vendor.stylus.power_save=false \
+    vendor.input.pen.wakeup=1 \
+    persist.vendor.nt36xxx.pen.dc_block=1
+
+# Dolby audio stability
+PRODUCT_VENDOR_PROPERTIES += \
+    persist.vendor.dolby.dax.debug=false \
+    ro.vendor.dolby.dax.version=3 \
+    persist.vendor.audio.awinic.enable=1
 

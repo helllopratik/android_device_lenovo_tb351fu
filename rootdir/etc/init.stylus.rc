@@ -1,0 +1,11 @@
+# Stylus power management - prevent touch controller auto-suspend
+# This keeps the Novatek touch controller active so the pen doesn't disconnect
+
+on boot
+    # Disable USB autosuspend for the touch controller
+    write /sys/module/usbcore/parameters/autosuspend 0
+    # Set input wakeup timeout to avoid disconnect
+    write /sys/module/drm_kms_helper/parameters/poll 0
+
+on post-fs-data
+    exec u:r:init:s0 -- /system/bin/sh /vendor/bin/stylus-pm.sh

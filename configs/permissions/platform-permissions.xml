@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <!-- Missing permission definitions required by AppOpService.createPermissionAppOpMapping() -->
+    <permission name="android.permission.RANGING" protectionLevel="dangerous" />
+    <permission name="android.permission.WRITE_SYSTEM_PREFERENCES" protectionLevel="signature|appop" />
+    <permission name="android.permission.ACCESS_LOCAL_NETWORK" protectionLevel="dangerous" />
+    <permission name="android.permission.POST_PROMOTED_NOTIFICATIONS" protectionLevel="signature|appop" />
+    <permission name="android.permission.SYSTEM_APPLICATION_OVERLAY" protectionLevel="signature|appop" />
+    <permission name="android.permission.EYE_TRACKING_COARSE" protectionLevel="dangerous" />
+    <permission name="android.permission.EYE_TRACKING_FINE" protectionLevel="dangerous" />
+    <permission name="android.permission.FACE_TRACKING" protectionLevel="dangerous" />
+    <permission name="android.permission.HAND_TRACKING" protectionLevel="dangerous" />
+    <permission name="android.permission.HEAD_TRACKING" protectionLevel="dangerous" />
+    <permission name="android.permission.SCENE_UNDERSTANDING_COARSE" protectionLevel="dangerous" />
+    <permission name="android.permission.SCENE_UNDERSTANDING_FINE" protectionLevel="dangerous" />
+</permissions>

@@ -9,7 +9,6 @@
 /lib/modules/device-apc-common.ko: /lib/modules/aee_aed.ko
 /lib/modules/aee_hangdet.ko: /lib/modules/mrdump.ko
 /lib/modules/i2c-mt65xx.ko: /lib/modules/pinctrl-mtk-common-v2_debug.ko /lib/modules/pinctrl-mtk-v2.ko
-/lib/modules/musb_main.ko: /lib/modules/musb_hdrc.ko /lib/modules/phy-generic.ko /lib/modules/aee_aed.ko
 /lib/modules/panel-boe-nt36523n-vdo.ko: /lib/modules/mtk_panel_ext.ko /lib/modules/dev-info.ko
 /lib/modules/rpmb-mtk.ko: /lib/modules/ufs-mediatek-mod.ko /lib/modules/rpmb.ko /lib/modules/ufs-mediatek-dbg.ko /lib/modules/mcDrvModule.ko /lib/modules/blocktag.ko /lib/modules/irq-dbg.ko /lib/modules/mrdump.ko /lib/modules/dev-info.ko /lib/modules/aee_aed.ko
 /lib/modules/leds-mtk.ko:

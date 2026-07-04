@@ -32,9 +32,9 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.board.platform=mt6789 \
     ro.boot.dynamic_partitions=true \
     ro.boot.selinux=permissive \
-    ro.secure=1 \
-    ro.debuggable=0 \
-    ro.adb.secure=1 \
+    ro.secure=0 \
+    ro.debuggable=1 \
+    ro.adb.secure=0 \
     ro.orangefox.no_apex_mount=1 \
     ro.crypto.state=unencrypted \
     ro.crypto.type=none \
@@ -213,6 +213,7 @@ BOARD_USES_METADATA_PARTITION := true
 TW_LOAD_VENDOR_BOOT_MODULES := true
 
 # Fixes
+BOARD_GENFS_LABELS_VERSION := 202604
 SELINUX_IGNORE_NEVERALLOWS := true
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_ERRORS := true

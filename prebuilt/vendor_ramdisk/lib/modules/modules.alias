@@ -144,7 +144,6 @@ alias of:N*T*Cmediatek,mt6877-i2c i2c_mt65xx
 alias of:N*T*Cmediatek,mt6877-i2cC* i2c_mt65xx
 alias of:N*T*Cmediatek,mt6765-i2c i2c_mt65xx
 alias of:N*T*Cmediatek,mt6765-i2cC* i2c_mt65xx
-alias platform:musb-hdrc musb_main
 alias of:N*T*Cboe,nt36523n,vdo panel_boe_nt36523n_vdo
 alias of:N*T*Cboe,nt36523n,vdoC* panel_boe_nt36523n_vdo
 alias of:N*T*Crichtek,rt5133 rt5133_regulator

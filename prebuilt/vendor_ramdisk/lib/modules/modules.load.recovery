@@ -90,7 +90,6 @@ aee_rs.ko
 phy-generic.ko
 phy-mtk-tphy.ko
 musb_hdrc.ko
-musb_main.ko
 usb_meta.ko
 mtk-pmic-wrap.ko
 mt635x-auxadc.ko
