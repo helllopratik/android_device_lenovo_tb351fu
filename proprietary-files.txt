@@ -2703,7 +2703,6 @@ system_ext/priv-app/ReadyForCore/ReadyForCore.apk
 system_ext/priv-app/ZuiSystemUI/ZuiSystemUI.apk
 system_ext/priv-app/daxService/daxService.apk
 system_ext/priv-app/GeofenceService/GeofenceService.apk
-system_ext/priv-app/SetupWizard/SetupWizard.apk
 system_ext/priv-app/MtkSettingsProvider/MtkSettingsProvider.apk
 system_ext/priv-app/VoiceCommand/VoiceCommand.apk
 system_ext/priv-app/VoiceCommand/lib/arm64/libvoicerecognition_jni.so
@@ -3128,9 +3127,6 @@ system_ext/bin/hw/android.hardware.audio.parameter_parser.service
 
 # PRODUCT
 product/app/LTHD/LTHD.apk
-product/app/NonFrameworkLbs/NonFrameworkLbs.apk
-product/app/YTMusic/YTMusic.apk
-product/app/Videos/Videos.apk
 product/etc/build_flags.json
 product/etc/selinux/product_mac_permissions.xml
 product/etc/default-permissions/default-permissions-com.motorola.mobiledesktop.xml
@@ -3152,16 +3148,7 @@ product/etc/permissions/initial-stopped-states-com.motorola.mobiledesktop.xml
 product/etc/permissions/com.android.settings.intelligence.xml
 product/etc/permissions/afw-com.motorola.mobiledesktop.xml
 product/etc/permissions/product-permissions-mediatek.xml
-product/priv-app/Turbo/Turbo.apk
-product/priv-app/FamilyLinkParentalControls/FamilyLinkParentalControls.apk
 product/priv-app/MotoReadyFor/MotoReadyFor.apk
-product/priv-app/AssistantShell/AssistantShell.apk
-product/priv-app/GWP/GWP.apk
-product/priv-app/CrossDeviceServices/CrossDeviceServices.apk
-product/priv-app/SearchSelector/SearchSelector.apk
-product/priv-app/SettingsIntelligence/SettingsIntelligence.apk
-product/priv-app/AndroidDeveloperVerifier/AndroidDeveloperVerifier.apk
-product/priv-app/PersonalSafety/PersonalSafety.apk
 product/media/audio/ui/Undock.ogg
 product/media/audio/ui/KeypressSpacebar.ogg
 product/media/audio/ui/NFCTransferInitiated.ogg
