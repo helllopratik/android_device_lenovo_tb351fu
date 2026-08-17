@@ -10,6 +10,14 @@ set -e
 DEVICE=tb351fu
 VENDOR=lenovo
 
+# Optional first argument: path to a local stock system dump.
+# If omitted, blobs are pulled from a connected device over adb.
+if [ "$1" ]; then
+    SRC="$1"
+else
+    SRC=adb
+fi
+
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "${MY_DIR}" ]]; then MY_DIR="${PWD}"; fi
@@ -26,7 +34,7 @@ source "${HELPER}"
 # Initialize the helper
 setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}" true
 
-# Extract the device-specific blobs
-extract "${MY_DIR}/proprietary-files.txt" "/home/hellopratik/Desktop/new_updated/TB351FU_ROW_OPEN_USER_M15125.2_A16_ZUI_17.5.10.073_ST_260213/LineageOS_Build/system_dump" "${KANG}" --section "${SECTION}"
+# Extract the device-specific blobs (from dump dir if given, otherwise adb)
+extract "${MY_DIR}/proprietary-files.txt" "${SRC}" "${KANG}" --section "${SECTION}"
 
 "${MY_DIR}/setup-makefiles.sh"

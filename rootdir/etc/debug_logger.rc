@@ -1,14 +1,6 @@
 on post-fs-data
-    start log_to_usb
     exec u:r:init:s0 -- /system/bin/insmod /vendor/lib/modules/wmt_chrdev_wifi.ko
     exec u:r:init:s0 -- /system/bin/insmod /vendor/lib/modules/wlan_drv_gen4m_6789.ko
     exec u:r:init:s0 -- /system/bin/insmod /vendor/lib/modules/bt_drv_connac1x.ko
     exec u:r:init:s0 -- /system/bin/insmod /vendor/lib/modules/gps_drv_stp.ko
     exec u:r:init:s0 -- /system/bin/insmod /vendor/lib/modules/gps_pwr.ko
-
-service log_to_usb /system/bin/logcat -b all -v threadtime -f /metadata/boot_log.txt
-    class core
-    user root
-    group root system log
-    capabilities DAC_OVERRIDE DAC_READ_SEARCH SYS_ADMIN SYSLOG
-    oneshot

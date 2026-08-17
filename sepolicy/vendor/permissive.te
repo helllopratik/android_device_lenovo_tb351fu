@@ -1,0 +1,20 @@
+# Define custom vendor domains
+type hal_lenovotouchscreen_default, domain;
+type mtk_hal_audio, domain;
+type ccci_mdinit, domain;
+type wmt_loader, domain;
+type teei_daemon, domain;
+type thermal, domain;
+
+# Set permissive attributes
+permissive hal_health_default;
+permissive hal_lenovotouchscreen_default;
+permissive mtk_hal_audio;
+permissive ccci_mdinit;
+permissive wmt_loader;
+permissive teei_daemon;
+permissive hal_camera_default;
+permissive hal_sensors_default;
+permissive hal_light_default;
+permissive hal_power_default;
+permissive thermal;

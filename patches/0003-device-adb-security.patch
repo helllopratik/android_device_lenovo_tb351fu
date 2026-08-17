@@ -1,0 +1,186 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: TB351FU <dev@tb351fu>
+Date: Thu Jul 9 00:00:00 2026
+Subject: [PATCH 3/5] Device tree customizations
+
+- Remove mtp,adb USB config (ADB now requires manual opt-in)
+- ro.adb.secure=1 forces RSA key auth when ADB is enabled
+- Enable sepolicy dirs
+- Various feature flags (freeform, taskbar, refresh rate, etc.)
+
+---
+ device/lenovo/tb351fu/BoardConfig.mk |  11 +-
+ device/lenovo/tb351fu/device.mk      | 108 +++++++++++++++++++++-----
+ 2 files changed, 96 insertions(+), 23 deletions(-)
+
+diff --git a/device/lenovo/tb351fu/BoardConfig.mk b/device/lenovo/tb351fu/BoardConfig.mk
+index a7b65f6..c6b6b78 100644
+--- a/device/lenovo/tb351fu/BoardConfig.mk
++++ b/device/lenovo/tb351fu/BoardConfig.mk
+@@ -34,13 +34,13 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
+     ro.boot.selinux=permissive \
+     ro.secure=0 \
+     ro.debuggable=1 \
+-    ro.adb.secure=0 \
++    ro.adb.secure=1 \
+     ro.orangefox.no_apex_mount=1 \
+     ro.crypto.state=unencrypted \
+     ro.crypto.type=none \
+     tw_include_crypto=false \
+-    persist.sys.usb.config=mtp,adb \
+-    sys.usb.config=mtp,adb \
++    persist.sys.usb.config=mtp \
++    sys.usb.config=mtp \
+     tw_brightness_path="/sys/class/leds/lcd-backlight/brightness" \
+     tw_max_brightness=2047 \
+     tw_default_brightness=1200 \
+@@ -231,9 +231,9 @@ SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += device/lineage/sepolicy/mosey/system_ext/publ
+ SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += device/lineage/sepolicy/mosey/system_ext/private
+ BOARD_VENDOR_SEPOLICY_DIRS += device/lineage/sepolicy/mosey/vendor
+ 
+-#BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
+-#SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/public
+-#SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
++BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
++SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/public
++SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
+ 
+ # MTK Specific
+ BOARD_MTK_ENABLE_GENERIC_HAL := true
+@@ -260,6 +260,9 @@ FOX_REPLACE_BUSYBOX_UTILS := 1
+ 
+ include vendor/lineage/config/BoardConfigLineage.mk
+ 
++# Lineage Health HAL — Charging Control
++# TOGGLE mode auto-detects /sys/class/power_supply/battery/charging_enabled
++
+ # Recovery Graphics Fixes
+ TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
+ TARGET_RECOVERY_OUI_PIXEL_FORMAT := BGRA_8888
+diff --git a/device/lenovo/tb351fu/device.mk b/device/lenovo/tb351fu/device.mk
+index c4ea875..c4a1d61 100644
+--- a/device/lenovo/tb351fu/device.mk
++++ b/device/lenovo/tb351fu/device.mk
+@@ -86,9 +86,8 @@ PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
+ PRODUCT_COPY_FILES += \
+     $(DEVICE_PATH)/manifest.xml:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/manifest.xml
+ 
+-# Screen Density
+ PRODUCT_PRODUCT_PROPERTIES += \
+-    ro.sf.lcd_density=480
++    ro.sf.lcd_density=320
+ PRODUCT_APEX_SYSTEM_SERVER_JARS += com.android.crashrecovery:service-crashrecovery
+ WITH_DEXPREOPT := false
+ WITH_DEXPREOPT_DEBUG_INFO := false
+@@ -100,13 +99,13 @@ DEVICE_PACKAGE_OVERLAYS += $(DEVICE_PATH)/overlay
+ 
+ # Input Device Configurations (Active Stylus)
+ PRODUCT_COPY_FILES += \
+-    $(DEVICE_PATH)/idc/Vendor_17ef_Product_612b.idc:vendor/usr/idc/Vendor_17ef_Product_612b.idc \
+-    $(DEVICE_PATH)/idc/Vendor_17ef_Product_617f.idc:vendor/usr/idc/Vendor_17ef_Product_617f.idc \
+-    $(DEVICE_PATH)/idc/Vendor_17ef_Product_61A1.idc:vendor/usr/idc/Vendor_17ef_Product_61A1.idc \
+-    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_612b.kl:vendor/usr/keylayout/Vendor_17ef_Product_612b.kl \
+-    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_617f.kl:vendor/usr/keylayout/Vendor_17ef_Product_617f.kl \
+-    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_619e.kl:vendor/usr/keylayout/Vendor_17ef_Product_619e.kl \
+-    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_61a1.kl:vendor/usr/keylayout/Vendor_17ef_Product_61a1.kl
++    $(DEVICE_PATH)/idc/Vendor_17ef_Product_612b.idc:system/usr/idc/Vendor_17ef_Product_612b.idc \
++    $(DEVICE_PATH)/idc/Vendor_17ef_Product_617f.idc:system/usr/idc/Vendor_17ef_Product_617f.idc \
++    $(DEVICE_PATH)/idc/Vendor_17ef_Product_61A1.idc:system/usr/idc/Vendor_17ef_Product_61A1.idc \
++    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_612b.kl:system/usr/keylayout/Vendor_17ef_Product_612b.kl \
++    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_617f.kl:system/usr/keylayout/Vendor_17ef_Product_617f.kl \
++    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_619e.kl:system/usr/keylayout/Vendor_17ef_Product_619e.kl \
++    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_61a1.kl:system/usr/keylayout/Vendor_17ef_Product_61a1.kl
+ 
+ PRODUCT_COPY_FILES += $(LOCAL_PATH)/rootdir/etc/debug_logger.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/debug_logger.rc
+ 
+@@ -123,20 +122,53 @@ PRODUCT_COPY_FILES += \
+ PRODUCT_COPY_FILES += \
+     $(DEVICE_PATH)/configs/permissions/platform-permissions.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/platform-permissions.xml
+ 
++# Enable Freeform Window Management feature
++PRODUCT_COPY_FILES += \
++    frameworks/native/data/etc/android.software.freeform_window_management.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.freeform_window_management.xml
++
+ -include $(LOCAL_PATH)/vndk34.mk
+ 
+ 
+ 
+-# Force nav bar and disable LineageOS taskbar
+ PRODUCT_SYSTEM_EXT_PROPERTIES += \
+     ro.control_privapp_permissions=log \
+     persist.sys.sf.nav_bar_overlay=1 \
+-    ro.sysui.nav_bar.enable=1
+-
+-# Disable LineageOS taskbar for tablets (interferes with nav bar)
++    ro.sysui.nav_bar.enable=1 \
++    ro.surface_flinger.refresh_rate_switching=true \
++    ro.surface_flinger.use_content_detection_for_refresh_rate=true \
++    ro.surface_flinger.set_idle_timer_ms=2000 \
++    ro.surface_flinger.set_launcher_timer_ms=30000 \
++    ro.surface_flinger.set_pen_timer_ms=10000 \
++    ro.surface_flinger.set_refresh_timer_ms=200 \
++    ro.surface_flinger.set_touch_timer_ms=2000 \
++    bluetooth.profile.hid.host.enabled=true \
++    bluetooth.profile.a2dp.source.enabled=true \
++    bluetooth.profile.avrcp.target.enabled=true \
++    bluetooth.profile.bas.client.enabled=true \
++    bluetooth.profile.gatt.enabled=true \
++    bluetooth.profile.opp.enabled=true \
++    bluetooth.profile.pan.nap.enabled=true \
++    bluetooth.profile.pan.panu.enabled=true \
++    bluetooth.profile.pbap.server.enabled=true
++
++# USB configuration
++PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
++    ro.adb.secure=1
++
++# Enable LineageOS taskbar for tablets
+ PRODUCT_PRODUCT_PROPERTIES += \
+     ro.control_privapp_permissions=log \
+-    ro.lineage.taskbar.enable=false
++    ro.lineage.taskbar.enable=true
++
++# Freeform / multi-window: enable pop-up and resizable windows like stock
++PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
++    persist.wm.extensions.enabled=true
++
++PRODUCT_SYSTEM_EXT_PROPERTIES += \
++    ro.config.desktop_mode_supported=true
+ 
+ 
+ PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.mt6789:vendor/etc/fstab.mt6789
+@@ -168,6 +200,7 @@ PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/multi_init.rc:vendor/etc/init/h
+ PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/teei_daemon.rc:vendor/etc/init/teei_daemon.rc
+ PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/tinno_t808aa.init.rc:vendor/etc/init/hw/tinno_t808aa.init.rc
+ PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.stylus.rc:vendor/etc/init/hw/init.stylus.rc
++PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.battery_protection.rc:vendor/etc/init/hw/init.battery_protection.rc
+ PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/vendor/bin/stylus-pm.sh:vendor/bin/stylus-pm.sh
+ $(call inherit-product, vendor/lenovo/tb351fu/tb351fu-vendor-blobs.mk)
+ PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/0102030405060708090a0b0c0d0e0f10.ta:vendor/thh/ta/0102030405060708090a0b0c0d0e0f10.ta
+@@ -277,3 +310,26 @@ PRODUCT_VENDOR_PROPERTIES += \
+     ro.vendor.dolby.dax.version=3 \
+     persist.vendor.audio.awinic.enable=1
+ 
++# Inherit MindTheGapps if present
++ifneq ($(wildcard vendor/gapps/arm64/arm64-vendor.mk),)
++    $(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
++endif
++
++# MyScript prebuilt apps
++PRODUCT_PACKAGES += \
++    MyScript_Nebo \
++    MyScript_Calculator
++
++# Lineage Health HAL (Charging Control)
++PRODUCT_PACKAGES += \
++    vendor.lineage.health-service.default
++
++PRODUCT_SOONG_NAMESPACES += device/lenovo/tb351fu
++
++
++
++# Include prebuilt JNI libraries for Nebo and Calculator
++include device/lenovo/tb351fu/prebuilt/apps/prebuilt_libs.mk
++
++
++

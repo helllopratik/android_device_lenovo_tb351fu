@@ -1,8 +1,9 @@
-on init
-    exec u:r:init:s0 -- /system/bin/sh -c 'dmesg > /metadata/boot_dmesg.txt 2>&1; echo boot_dmesg_captured > /metadata/boot_logger_status.txt'
-    start boot_logcat_service
-
-service boot_logcat_service /system/bin/logcat -b all -v threadtime -r 512 -n 2 -f /metadata/boot_logcat.txt
-    class core
-    user root
-    group root system log
+# Disabled: automatic boot log collection to /metadata/
+# on init
+#     exec u:r:init:s0 -- /system/bin/sh -c 'dmesg > /metadata/boot_dmesg.txt 2>&1; echo boot_dmesg_captured > /metadata/boot_logger_status.txt'
+#     start boot_logcat_service
+# 
+# service boot_logcat_service /system/bin/logcat -b all -v threadtime -r 512 -n 2 -f /metadata/boot_logcat.txt
+#     class core
+#     user root
+#     group root system log

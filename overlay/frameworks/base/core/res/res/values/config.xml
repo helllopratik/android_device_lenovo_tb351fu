@@ -22,4 +22,70 @@
     <!-- Sensor configurations -->
     <bool name="config_sensor_adjustable">true</bool>
     <bool name="config_setColorTransformAccelerated">true</bool>
+
+    <!-- Configure the light sensor type expected by AOSP display controller -->
+    <!-- ZUI stock RRO uses "defaultlightsensor". Since we use the raw sensor list, setting it empty defaults to Sensor.TYPE_LIGHT, which binds to mn29xxx_l -->
+    <string name="config_displayLightSensorType" translatable="false"></string>
+
+    <!-- Array of light consumer (lux) levels to define brightness steps -->
+    <integer-array name="config_autoBrightnessLevels">
+        <item>10</item>
+        <item>60</item>
+        <item>210</item>
+        <item>350</item>
+        <item>420</item>
+        <item>1000</item>
+    </integer-array>
+
+    <!-- Array of output nits values corresponding to the lux levels -->
+    <array name="config_autoBrightnessDisplayValuesNits">
+        <item>40</item>
+        <item>40</item>
+        <item>100</item>
+        <item>150</item>
+        <item>300</item>
+        <item>420</item>
+        <item>490</item>
+    </array>
+
+    <!-- Array of backlight values (0-255) corresponding to the nits values -->
+    <integer-array name="config_screenBrightnessBacklight">
+        <item>0</item>
+        <item>32</item>
+        <item>51</item>
+        <item>77</item>
+        <item>153</item>
+        <item>214</item>
+        <item>255</item>
+    </integer-array>
+
+    <!-- Array of screen brightness nits values -->
+    <array name="config_screenBrightnessNits">
+        <item>0</item>
+        <item>40</item>
+        <item>100</item>
+        <item>150</item>
+        <item>300</item>
+        <item>420</item>
+        <item>490</item>
+    </array>
+
+    <!-- Default peak refresh rate (90Hz) -->
+    <integer name="config_defaultPeakRefreshRate">90</integer>
+
+    <!-- Use input events for headphone jack detection -->
+    <bool name="config_useDevInputEventForAudioJack">true</bool>
+
+    <!-- Device is not voice capable (WiFi-only tablet) -->
+    <bool name="config_voice_capable">false</bool>
+    <bool name="config_sms_capable">false</bool>
+
+    <!-- Enable freeform window management and multi-window support -->
+    <bool name="config_freeformWindowManagement">true</bool>
+    <bool name="config_supportsMultiWindow">true</bool>
+
+    <!-- Desktop Mode support (Android 15+) -->
+    <bool name="config_isDesktopModeSupported">true</bool>
+    <bool name="config_isDesktopModeDevOptionSupported">true</bool>
+    <bool name="config_canInternalDisplayHostDesktops">true</bool>
 </resources>

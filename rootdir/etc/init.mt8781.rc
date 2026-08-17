@@ -11,6 +11,7 @@ import /vendor/etc/init/hw/init.volte.rc
 import /vendor/etc/init/hw/init.mal.rc
 import /vendor/etc/init/hw/${ro.vendor.init.sensor.rc}
 import /vendor/etc/init/hw/init.cgroup.rc
+import /vendor/etc/init/hw/init.battery_protection.rc
 
 # init.modem.rc must be the LAST rc file because vold.post_fs_data_done is set in it
 import /vendor/etc/init/hw/init.modem.rc

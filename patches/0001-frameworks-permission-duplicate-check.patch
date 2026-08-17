@@ -1,0 +1,39 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: TB351FU <dev@tb351fu>
+Date: Thu Jul 9 00:00:00 2026
+Subject: [PATCH 1/5] Skip duplicate permission check for android package
+
+framework-res.apk contains feature-flag-gated duplicate permission
+declarations (e.g., SET_DEFAULT_ACCOUNT_FOR_CONTACTS) that are
+intentional -- the runtime evaluates the aconfig flag to activate the
+correct variant. The binary patcher that strips these attributes
+breaks APK v2/v3 signing, so we fix this at runtime instead.
+
+Upstream added EventLog logging (b/213323615) but still returns true
+unconditionally.  We guard the return with a package-name check so
+the android package's feature-flagged duplicates are allowed.
+
+---
+ .../pm/pkg/component/ParsedPermissionUtils.java    | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/frameworks/base/core/java/com/android/internal/pm/pkg/component/ParsedPermissionUtils.java b/frameworks/base/core/java/com/android/internal/pm/pkg/component/ParsedPermissionUtils.java
+index 0000000..0000000
+--- a/frameworks/base/core/java/com/android/internal/pm/pkg/component/ParsedPermissionUtils.java
++++ b/frameworks/base/core/java/com/android/internal/pm/pkg/component/ParsedPermissionUtils.java
+@@ -367,8 +367,12 @@ public class ParsedPermissionUtils {
+                 final ParsedPermission perm = checkDuplicatePerm.get(name);
+                 if (isMalformedDuplicate(parsedPermission, perm)) {
+-                    // Fix for b/213323615
+-                    EventLog.writeEvent(0x534e4554, "213323615");
+-                    return true;
++                    // b/213323615 — featureFlag-gated duplicates are intentional in
++                    // the platform package and should not prevent the APK from loading.
++                    // The runtime will evaluate the feature flag to activate the correct variant.
++                    if (!"android".equals(pkg.getPackageName())) {
++                        EventLog.writeEvent(0x534e4554, "213323615");
++                        return true;
++                    }
+                 }
+                 checkDuplicatePerm.put(name, parsedPermission);
+             }

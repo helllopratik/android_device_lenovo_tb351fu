@@ -1,7 +1,7 @@
-key usage 0x0c0601   PEN_TWO_CLICK
-key usage 0x0c0610   PEN_360_THREE_CLICK
-key usage 0x0c0611   PEN_D_LONG_PRESS
-key usage 0x0c0612   PEN_D_SLIDE_DOWN
-key usage 0x0c0613   PEN_D_SLIDE_UP
-key usage 0x0c0614   PEN_D_CLICK
+key usage 0x0c0601   STYLUS_BUTTON_SECONDARY
+key usage 0x0c0610   STYLUS_BUTTON_TERTIARY
+key usage 0x0c0611   STYLUS_BUTTON_TAIL
+key usage 0x0c0612   BUTTON_5
+key usage 0x0c0613   BUTTON_6
+key usage 0x0c0614   STYLUS_BUTTON_PRIMARY
 

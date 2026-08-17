@@ -34,13 +34,13 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.boot.selinux=permissive \
     ro.secure=0 \
     ro.debuggable=1 \
-    ro.adb.secure=0 \
+    ro.adb.secure=1 \
     ro.orangefox.no_apex_mount=1 \
     ro.crypto.state=unencrypted \
     ro.crypto.type=none \
     tw_include_crypto=false \
-    persist.sys.usb.config=mtp,adb \
-    sys.usb.config=mtp,adb \
+    persist.sys.usb.config=mtp \
+    sys.usb.config=mtp \
     tw_brightness_path="/sys/class/leds/lcd-backlight/brightness" \
     tw_max_brightness=2047 \
     tw_default_brightness=1200 \
@@ -73,7 +73,19 @@ BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 bootconfig androidboot.selinux=pe
 # vendor modules were built for KMI 6.12-android16-5, so they must not be
 # paired with the legacy Lenovo 5.10 source tree or a different GKI KMI
 # generation.  Android platform upgrades do not require a new kernel KMI.
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+TARGET_KERNEL_SOURCE := kernel/lenovo/TB351FU
+TARGET_KERNEL_CONFIG := gki_defconfig
+TARGET_KERNEL_ADDITIONAL_CONFIGS := $(DEVICE_PATH)/kernel.config
+TARGET_KERNEL_CLANG_COMPILE := true
+TARGET_KERNEL_NO_GCC := true
+TARGET_KERNEL_LLVM_BINUTILS := true
+TARGET_KERNEL_RUST_VERSION := 1.88.0
+
+# Export required environment variables for Rust
+RUST_LIBSRC := $(abspath prebuilts/rust/linux-x86/1.88.0/lib/rustlib/src/rust/library)
+
+BOARD_KERNEL_IMAGE_NAME := Image.lz4
+
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
@@ -88,6 +100,27 @@ BOARD_AVB_ALGORITHM := SHA256_RSA4096
 BOARD_AVB_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
 BOARD_AVB_ROLLBACK_INDEX := 0
 BOARD_AVB_VBMETA_PARTITION_SIZE := 8388608
+
+# AVB Partition Signings
+BOARD_AVB_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+BOARD_AVB_BOOT_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_BOOT_ROLLBACK_INDEX := $(BOARD_AVB_ROLLBACK_INDEX)
+BOARD_AVB_BOOT_ROLLBACK_INDEX_LOCATION := 1
+
+BOARD_AVB_DTBO_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+BOARD_AVB_DTBO_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_DTBO_ROLLBACK_INDEX := $(BOARD_AVB_ROLLBACK_INDEX)
+BOARD_AVB_DTBO_ROLLBACK_INDEX_LOCATION := 3
+
+BOARD_AVB_VENDOR_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+BOARD_AVB_VENDOR_BOOT_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX := $(BOARD_AVB_ROLLBACK_INDEX)
+BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 5
+
+BOARD_AVB_INIT_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+BOARD_AVB_INIT_BOOT_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_INIT_BOOT_ROLLBACK_INDEX := $(BOARD_AVB_ROLLBACK_INDEX)
+BOARD_AVB_INIT_BOOT_ROLLBACK_INDEX_LOCATION := 6
 
 BOARD_AVB_VBMETA_SYSTEM := system
 
@@ -231,9 +264,9 @@ SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += device/lineage/sepolicy/mosey/system_ext/publ
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += device/lineage/sepolicy/mosey/system_ext/private
 BOARD_VENDOR_SEPOLICY_DIRS += device/lineage/sepolicy/mosey/vendor
 
-#BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
-#SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/public
-#SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
+BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
+SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/public
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
 
 # MTK Specific
 BOARD_MTK_ENABLE_GENERIC_HAL := true
@@ -260,7 +293,22 @@ FOX_REPLACE_BUSYBOX_UTILS := 1
 
 include vendor/lineage/config/BoardConfigLineage.mk
 
+# Lineage Health HAL — Charging Control (soong_config_set API, post-July 2026 vendor sync)
+# Confirmed live on device: /sys/devices/platform/charger/charging_enabled exists and reads "1"
+# The old TARGET_HEALTH_CHARGING_CONTROL_* Make variables were removed (commit 6e3765ec).
+# Use soong_config_set(lineage_health, ...) instead.
+#
+# charging_control_supports_toggle = true  → enables the charging control feature (ChargingControl HAL)
+# charging_control_charging_path          → sysfs node to write 0/1 to enable/disable charging
+# charging_control_charging_enabled       → value to write to ENABLE charging
+# charging_control_charging_disabled      → value to write to DISABLE/limit charging
+$(call soong_config_set,lineage_health,charging_control_charging_path,/sys/devices/platform/charger/charging_enabled)
+$(call soong_config_set,lineage_health,charging_control_charging_enabled,1)
+$(call soong_config_set,lineage_health,charging_control_charging_disabled,0)
+
 # Recovery Graphics Fixes
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 TARGET_RECOVERY_OUI_PIXEL_FORMAT := BGRA_8888
 RECOVERY_GRAPHICS_FORCE_USE_LINELENGTH := true
+
+

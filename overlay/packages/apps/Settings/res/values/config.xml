@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Show smooth display option in settings -->
+    <bool name="config_show_smooth_display">false</bool>
+</resources>

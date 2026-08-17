@@ -35,8 +35,6 @@ def find_build_output():
             return apk
     # Fallback: check cwd
     candidates = [
-        '/run/media/hellopratik/Nvme/new_update/lineage/out/target/product'
-        '/tb351fu/system/framework/framework-res.apk',
         'out/target/product/tb351fu/system/framework/framework-res.apk',
         'out/target/product/tb351fu/system/framework/framework-res.apk',
     ]

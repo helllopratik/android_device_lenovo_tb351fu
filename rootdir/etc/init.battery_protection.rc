@@ -1,0 +1,16 @@
+# Battery charge limiting via MTK hardware protection
+# protection_setting encoding: SSXXX (SS = stop %, XXX = additional param)
+# Default: stop at 80%
+on boot
+    write /sys/class/power_supply/battery/battery_protection 1
+    write /sys/class/power_supply/battery/protection_setting 80095
+    write /sys/class/power_supply/battery/recharge_setting 75
+
+# Override limit via persist property (set by user/service)
+on property:persist.sys.battery_protection_limit=*
+    write /sys/class/power_supply/battery/battery_protection 1
+    write /sys/class/power_supply/battery/protection_setting ${persist.sys.battery_protection_limit}
+
+# Disable protection
+on property:persist.sys.battery_protection_limit=0
+    write /sys/class/power_supply/battery/battery_protection 0

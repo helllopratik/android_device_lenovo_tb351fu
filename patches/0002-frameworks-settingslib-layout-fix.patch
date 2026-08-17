@@ -1,0 +1,40 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: TB351FU <dev@tb351fu>
+Date: Thu Jul 9 00:00:00 2026
+Subject: [PATCH 2/5] Fix Settings Language & Region crash
+
+The expressive preference text frame layout was missing
+android:layout_width and android:layout_height on its
+RelativeLayout and two TextView children (title and summary).
+This caused an InflateException when opening "Language & Region"
+in Settings.
+
+---
+ .../settingslib_expressive_preference_text_frame.xml      | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/frameworks/base/packages/SettingsLib/SettingsTheme/res/layout/settingslib_expressive_preference_text_frame.xml b/frameworks/base/packages/SettingsLib/SettingsTheme/res/layout/settingslib_expressive_preference_text_frame.xml
+index a987f69f6ad8..df22c55ce17e 100644
+--- a/frameworks/base/packages/SettingsLib/SettingsTheme/res/layout/settingslib_expressive_preference_text_frame.xml
++++ b/frameworks/base/packages/SettingsLib/SettingsTheme/res/layout/settingslib_expressive_preference_text_frame.xml
+@@ -17,14 +17,20 @@
+ 
+ <RelativeLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
+     android:filterTouchesWhenObscured="false"
+     style="?expressivePreferenceTextFrameStyle">
+ 
+     <TextView
+         android:id="@android:id/title"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
+         style="?expressivePreferenceTextFrameTitleStyle" />
+ 
+     <TextView
+         android:id="@android:id/summary"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
+         style="?expressivePreferenceTextFrameSummaryStyle" />
+ </RelativeLayout>

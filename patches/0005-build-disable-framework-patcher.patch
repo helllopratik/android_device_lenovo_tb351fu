@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: TB351FU <dev@tb351fu>
+Date: Thu Jul 9 00:00:00 2026
+Subject: [PATCH 5/5] Disable framework-res.apk binary patcher in build.sh
+
+The binary XML patcher for framework-res.apk invalidates APK
+Signature Scheme v2/v3, causing the package manager to reject
+the APK.  The runtime fix in ParsedPermissionUtils (patch 0001)
+makes this patcher unnecessary.
+
+---
+ build.sh | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/build.sh b/build.sh
+index 0000000..0000000
+--- a/build.sh
++++ b/build.sh
+@@ -28,8 +28,14 @@ export SKIP_ABI_CHECKS=true
+ #make bacon | tee log.txt
+ make systemimage productimage systemextimage vendorimage
+-#make framework-res -j$(nproc)
+-#make systemimage
+-
+-# Post-build: patch framework-res.apk
+-python3 device/lenovo/tb351fu/patches/patch_framework_res.py \
+-  --apk out/target/product/tb351fu/system/framework/framework-res.apk
+-#make systemimage
++
++# ── Post-build: patch framework-res.apk (DISABLED) ──────────────────────────
++# The runtime fix in ParsedPermissionUtils.declareDuplicatePermission() skips
++# the duplicate permission check for the android package, making the binary
++# XML patcher unnecessary.  The patcher also breaks APK v2/v3 signing.
++# See lineage.md section #4 for details.
++# python3 device/lenovo/tb351fu/patches/patch_framework_res.py \
++#   --apk out/target/product/tb351fu/system/framework/framework-res.apk
++# make systemimage

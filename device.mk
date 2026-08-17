@@ -86,9 +86,8 @@ PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/manifest.xml:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/manifest.xml
 
-# Screen Density
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.sf.lcd_density=480
+    ro.sf.lcd_density=320
 PRODUCT_APEX_SYSTEM_SERVER_JARS += com.android.crashrecovery:service-crashrecovery
 WITH_DEXPREOPT := false
 WITH_DEXPREOPT_DEBUG_INFO := false
@@ -100,13 +99,13 @@ DEVICE_PACKAGE_OVERLAYS += $(DEVICE_PATH)/overlay
 
 # Input Device Configurations (Active Stylus)
 PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/idc/Vendor_17ef_Product_612b.idc:vendor/usr/idc/Vendor_17ef_Product_612b.idc \
-    $(DEVICE_PATH)/idc/Vendor_17ef_Product_617f.idc:vendor/usr/idc/Vendor_17ef_Product_617f.idc \
-    $(DEVICE_PATH)/idc/Vendor_17ef_Product_61A1.idc:vendor/usr/idc/Vendor_17ef_Product_61A1.idc \
-    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_612b.kl:vendor/usr/keylayout/Vendor_17ef_Product_612b.kl \
-    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_617f.kl:vendor/usr/keylayout/Vendor_17ef_Product_617f.kl \
-    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_619e.kl:vendor/usr/keylayout/Vendor_17ef_Product_619e.kl \
-    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_61a1.kl:vendor/usr/keylayout/Vendor_17ef_Product_61a1.kl
+    $(DEVICE_PATH)/idc/Vendor_17ef_Product_612b.idc:system/usr/idc/Vendor_17ef_Product_612b.idc \
+    $(DEVICE_PATH)/idc/Vendor_17ef_Product_617f.idc:system/usr/idc/Vendor_17ef_Product_617f.idc \
+    $(DEVICE_PATH)/idc/Vendor_17ef_Product_61A1.idc:system/usr/idc/Vendor_17ef_Product_61A1.idc \
+    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_612b.kl:system/usr/keylayout/Vendor_17ef_Product_612b.kl \
+    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_617f.kl:system/usr/keylayout/Vendor_17ef_Product_617f.kl \
+    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_619e.kl:system/usr/keylayout/Vendor_17ef_Product_619e.kl \
+    $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_61a1.kl:system/usr/keylayout/Vendor_17ef_Product_61a1.kl
 
 PRODUCT_COPY_FILES += $(LOCAL_PATH)/rootdir/etc/debug_logger.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/debug_logger.rc
 
@@ -117,26 +116,66 @@ PRODUCT_COPY_FILES += \
 # Trebuchet Launcher and PenService privapp permissions
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/permissions/privapp-permissions-lineage.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-lineage.xml \
-    $(DEVICE_PATH)/configs/permissions/privapp-permissions-penservice.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-penservice.xml
+    $(DEVICE_PATH)/configs/permissions/privapp-permissions-penservice.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-penservice.xml
 
 # Platform permissions fix: android.permission.RANGING (required by OP_RANGING app op 151)
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/permissions/platform-permissions.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/platform-permissions.xml
 
+# Enable Freeform Window Management feature
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.software.freeform_window_management.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.freeform_window_management.xml
+
 -include $(LOCAL_PATH)/vndk34.mk
 
 
 
-# Force nav bar and disable LineageOS taskbar
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
     ro.control_privapp_permissions=log \
     persist.sys.sf.nav_bar_overlay=1 \
-    ro.sysui.nav_bar.enable=1
+    ro.sysui.nav_bar.enable=1 \
+    ro.surface_flinger.refresh_rate_switching=true \
+    ro.surface_flinger.use_content_detection_for_refresh_rate=true \
+    ro.surface_flinger.set_idle_timer_ms=2000 \
+    ro.surface_flinger.set_launcher_timer_ms=30000 \
+    ro.surface_flinger.set_pen_timer_ms=10000 \
+    ro.surface_flinger.set_refresh_timer_ms=200 \
+    ro.surface_flinger.set_touch_timer_ms=2000 \
+    bluetooth.profile.hid.host.enabled=true \
+    bluetooth.profile.a2dp.source.enabled=true \
+    bluetooth.profile.avrcp.target.enabled=true \
+    bluetooth.profile.bas.client.enabled=true \
+    bluetooth.profile.gatt.enabled=true \
+    bluetooth.profile.opp.enabled=true \
+    bluetooth.profile.pan.nap.enabled=true \
+    bluetooth.profile.pan.panu.enabled=true \
+    bluetooth.profile.pbap.server.enabled=true
 
-# Disable LineageOS taskbar for tablets (interferes with nav bar)
+# USB configuration
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.adb.secure=1
+
+# Enable LineageOS taskbar for tablets
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.control_privapp_permissions=log \
-    ro.lineage.taskbar.enable=false
+    ro.lineage.taskbar.enable=true
+
+# Freeform / multi-window: enable pop-up and resizable windows like stock
+# enable_freeform_support=1 activates the framework-level freeform stack
+# persist.wm.extensions.enabled enables window decoration chrome (drag, resize handles)
+# ro.config.desktop_mode_supported tells SystemUI to offer the desktop-mode entry in the taskbar
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    persist.wm.extensions.enabled=true \
+    ro.config.desktop_mode_supported=true
+
+# Offline Charger Animation
+# Tells the AOSP charger binary (healthd charger mode) to stay awake and show
+# the LineageOS battery animation instead of blanking the screen immediately.
+# ro.charger.enable_suspend=false → charger binary does NOT suspend display
+# ro.charger.animate=true         → plays the battery_scale.png frame animation
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.charger.enable_suspend=false \
+    ro.charger.animate=true
 
 
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.mt6789:vendor/etc/fstab.mt6789
@@ -168,6 +207,7 @@ PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/multi_init.rc:vendor/etc/init/h
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/teei_daemon.rc:vendor/etc/init/teei_daemon.rc
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/tinno_t808aa.init.rc:vendor/etc/init/hw/tinno_t808aa.init.rc
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.stylus.rc:vendor/etc/init/hw/init.stylus.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.battery_protection.rc:vendor/etc/init/hw/init.battery_protection.rc
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/vendor/bin/stylus-pm.sh:vendor/bin/stylus-pm.sh
 $(call inherit-product, vendor/lenovo/tb351fu/tb351fu-vendor-blobs.mk)
 PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/0102030405060708090a0b0c0d0e0f10.ta:vendor/thh/ta/0102030405060708090a0b0c0d0e0f10.ta
@@ -276,4 +316,35 @@ PRODUCT_VENDOR_PROPERTIES += \
     persist.vendor.dolby.dax.debug=false \
     ro.vendor.dolby.dax.version=3 \
     persist.vendor.audio.awinic.enable=1
+
+# Inherit MindTheGapps if present
+ifneq ($(wildcard vendor/gapps/arm64/arm64-vendor.mk),)
+    $(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
+endif
+
+# MyScript prebuilt apps
+PRODUCT_PACKAGES += \
+    MyScript_Nebo \
+    MyScript_Calculator
+
+# Lenovo PenService — must be in PRODUCT_PACKAGES so the build includes system_ext/priv-app/PenService/PenService.apk
+# The Android.bp in vendor/lenovo/tb351fu declares it as system_ext_specific: true,
+# certificate: "platform" (i.e. it is RE-SIGNED with platform cert, NOT preprocessed)
+# The privapp permissions file is shipped separately via PRODUCT_COPY_FILES.
+PRODUCT_PACKAGES += \
+    PenService
+
+# Lineage Health HAL (Charging Control)
+# soong_config_set for charging path is in BoardConfig.mk
+PRODUCT_PACKAGES += \
+    vendor.lineage.health-service.default
+
+PRODUCT_SOONG_NAMESPACES += device/lenovo/tb351fu
+
+
+
+# Include prebuilt JNI libraries for Nebo and Calculator
+include device/lenovo/tb351fu/prebuilt/apps/prebuilt_libs.mk
+
+
 

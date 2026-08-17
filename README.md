@@ -15,7 +15,7 @@ The tree is focused on making the device boot and behave correctly on a modern a
 - ROM direction: Android 16/17 / LineageOS bring-up
 - Board platform: `mt6789`
 - Bootloader board name: `t808aa`
-- Current dependencies: matching kernel tree, vendor tree, and extracted proprietary blobs
+- Current dependencies: matching kernel tree, and the vendor tree (proprietary blobs bundled)
 
 > [!NOTE]
 > This repository is shared for development and educational use. It combines original Lenovo device information from the stock software base with LineageOS-style bring-up structure and community work needed to make the tree usable in an aftermarket build environment.
@@ -45,7 +45,7 @@ The tree is focused on making the device boot and behave correctly on a modern a
 - DTBO / prebuilt kernel-side assets used by bring-up
 - recovery fstab and rootdir init configuration
 - VINTF manifests and compatibility declarations
-- extraction scaffolding for proprietary blobs
+- extraction scaffolding for proprietary blobs (reference only — blobs are bundled in the vendor tree)
 
 ## Important Files
 
@@ -87,14 +87,30 @@ the compatibility check before building or testing another GKI:
 device/lenovo/tb351fu/tools/verify-kmi.sh
 ```
 
-## Blob Extraction Notes
+## Blob Notes
 
-This repository includes the extraction manifest and helper scripts used during bring-up:
+Proprietary blobs are bundled directly in the matching vendor tree at `vendor/lenovo/tb351fu/proprietary/` — **no extraction step is required** to build this device. The vendor tree's `tb351fu-vendor-blobs.mk` and `Android.bp` reference the bundled payload directly.
 
-- [extract-files.sh](extract-files.sh)
-- [setup-makefiles.sh](setup-makefiles.sh)
+### Re-generating the blobs from a stock dump or a running device
 
-Those scripts are part of the normal LineageOS extraction flow and are used to generate / refresh vendor-side makefiles from a local stock dump. Proprietary blob redistribution should be handled carefully and with respect to applicable licensing and redistribution limits.
+The bundled payload was produced from a stock firmware dump. If you want to re-extract the vendor blobs yourself, the LineageOS extract-utils flow is included:
+
+```bash
+# From a running device (stock or custom ROM, adb root required):
+./extract-files.sh
+
+# From a local stock system dump:
+./extract-files.sh /path/to/system_dump
+```
+
+`extract-files.sh` pulls every file listed in `proprietary-files.txt` (either over `adb pull` from the connected device, or straight from the dump directory), copies it into `vendor/lenovo/tb351fu/proprietary/`, and then runs `setup-makefiles.sh` to regenerate the vendor-side `Android.bp` and `Android.mk` modules. It requires the standard `tools/extract-utils` repository in the same Android source checkout.
+
+The vendor tree also ships helper scripts to work with the extracted payload:
+
+- `generate_advanced_blobs.py` — regenerates `tb351fu-vendor-blobs.mk` (the `PRODUCT_COPY_FILES` wiring) from whatever is currently inside `proprietary/`
+- `purge_missing_blobs.py` — strips entries from `tb351fu-vendor.mk` whose source files no longer exist in `proprietary/`
+
+Proprietary blob redistribution should be handled carefully and with respect to applicable licensing and redistribution limits.
 
 ## Current Bring-Up Focus
 

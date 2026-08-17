@@ -11,3 +11,12 @@ release_config {
   flag_value_files: "flag_values/ap4a/RELEASE_BOARD_API_LEVEL.textproto"
   flag_value_files: "flag_values/ap4a/RELEASE_BOARD_API_LEVEL_FROZEN.textproto"
 }
+
+release_config {
+  flag_value_files: "flag_values/bp4a/RELEASE_AVF_ENABLE_EARLY_VM.textproto"
+  name: "bp4a"
+  flag_value_files: "flag_values/bp4a/RELEASE_TARGET_JAVA_21.textproto"
+  flag_value_files: "flag_values/bp4a/RELEASE_KOTLIN_LANG_VERSION.textproto"
+  flag_value_files: "flag_values/bp4a/RELEASE_BOARD_API_LEVEL.textproto"
+  flag_value_files: "flag_values/bp4a/RELEASE_BOARD_API_LEVEL_FROZEN.textproto"
+}
