@@ -166,21 +166,11 @@ index c4ea875..c4a1d61 100644
 +    $(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
 +endif
 +
-+# MyScript prebuilt apps
-+PRODUCT_PACKAGES += \
-+    MyScript_Nebo \
-+    MyScript_Calculator
-+
 +# Lineage Health HAL (Charging Control)
 +PRODUCT_PACKAGES += \
 +    vendor.lineage.health-service.default
 +
 +PRODUCT_SOONG_NAMESPACES += device/lenovo/tb351fu
-+
-+
-+
-+# Include prebuilt JNI libraries for Nebo and Calculator
-+include device/lenovo/tb351fu/prebuilt/apps/prebuilt_libs.mk
 +
 +
 +
