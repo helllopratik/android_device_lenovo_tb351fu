@@ -322,11 +322,6 @@ ifneq ($(wildcard vendor/gapps/arm64/arm64-vendor.mk),)
     $(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
 endif
 
-# MyScript prebuilt apps
-PRODUCT_PACKAGES += \
-    MyScript_Nebo \
-    MyScript_Calculator
-
 # Lenovo PenService — must be in PRODUCT_PACKAGES so the build includes system_ext/priv-app/PenService/PenService.apk
 # The Android.bp in vendor/lenovo/tb351fu declares it as system_ext_specific: true,
 # certificate: "platform" (i.e. it is RE-SIGNED with platform cert, NOT preprocessed)
@@ -340,11 +335,6 @@ PRODUCT_PACKAGES += \
     vendor.lineage.health-service.default
 
 PRODUCT_SOONG_NAMESPACES += device/lenovo/tb351fu
-
-
-
-# Include prebuilt JNI libraries for Nebo and Calculator
-include device/lenovo/tb351fu/prebuilt/apps/prebuilt_libs.mk
 
 
 
