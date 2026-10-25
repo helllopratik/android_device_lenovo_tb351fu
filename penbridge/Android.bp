@@ -1,0 +1,32 @@
+cc_library_shared {
+    name: "libpenraw_jni",
+    srcs: ["jni/penraw_jni.c"],
+    header_libs: ["jni_headers"],
+    sdk_version: "current",
+    stl: "none",
+    compile_multilib: "both",
+    target: {
+        android: {
+            cflags: ["-fvisibility=hidden"],
+        },
+        darwin: {
+            enabled: false,
+        },
+    },
+    visibility: ["//visibility:public"],
+}
+
+android_app {
+    name: "PenBridge",
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+    jni_libs: ["libpenraw_jni"],
+    certificate: "platform",
+    system_ext_specific: true,
+    privileged: true,
+    manifest: "AndroidManifest.xml",
+    sdk_version: "system_current",
+    optimize: {
+        enabled: false,
+    },
+}

@@ -6,6 +6,31 @@ on boot
     write /sys/module/usbcore/parameters/autosuspend 0
     # Set input wakeup timeout to avoid disconnect
     write /sys/module/drm_kms_helper/parameters/poll 0
+    # Enable Novatek active pen & palm rejection nodes
+    chmod 0666 /proc/support_pen
+    chmod 0666 /proc/game_mode
+    chmod 0666 /proc/fw_pen_state
+    chmod 0666 /proc/gesture_mode
+    chmod 0666 /dev/lenovo_penraw
+    write /proc/support_pen 1
+    write /proc/game_mode 1
 
 on post-fs-data
+    chmod 0666 /proc/support_pen
+    chmod 0666 /proc/game_mode
+    chmod 0666 /proc/fw_pen_state
+    chmod 0666 /proc/gesture_mode
+    chmod 0666 /dev/lenovo_penraw
+    write /proc/support_pen 1
+    write /proc/game_mode 1
+    exec u:r:init:s0 -- /system/bin/sh /vendor/bin/stylus-pm.sh
+
+on property:sys.boot_completed=1
+    chmod 0666 /proc/support_pen
+    chmod 0666 /proc/game_mode
+    chmod 0666 /proc/fw_pen_state
+    chmod 0666 /proc/gesture_mode
+    chmod 0666 /dev/lenovo_penraw
+    write /proc/support_pen 1
+    write /proc/game_mode 1
     exec u:r:init:s0 -- /system/bin/sh /vendor/bin/stylus-pm.sh

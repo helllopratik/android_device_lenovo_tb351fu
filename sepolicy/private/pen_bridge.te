@@ -1,0 +1,13 @@
+# PenBridge: /dev/lenovo_penraw device node (type defined in public/device.te)
+# PenBridge: read penraw surface device via ioctl
+allow priv_app lenovo_device:chr_file { open ioctl getattr };
+allow platform_app_36 lenovo_device:chr_file { open read write ioctl getattr };
+
+# PenBridge: pen palm-rejection toggle in the touchscreen driver (/proc/game_mode)
+allow priv_app proc:file { open read write getattr };
+allow platform_app_36 proc:file { open read write getattr };
+
+# PenBridge: detect pen input devices (/proc/bus/input/devices, labelled proc_bus_input)
+type proc_bus_input, proc_type;
+allow platform_app_36 proc_bus_input:dir search;
+allow platform_app_36 proc_bus_input:file { open read getattr };

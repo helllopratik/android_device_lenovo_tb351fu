@@ -13,6 +13,11 @@
 -->
 <manifest version="9.0" type="device" target-level="8">
     <hal format="aidl">
+        <name>android.hardware.health</name>
+        <version>3</version>
+        <fqname>IHealth/default</fqname>
+    </hal>
+    <hal format="aidl">
         <name>android.hardware.soundtrigger3</name>
         <version>3</version>
         <fqname>ISoundTriggerHw/default</fqname>

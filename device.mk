@@ -12,10 +12,24 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
 # Enable A/B update support
 AB_OTA_UPDATER := true
 
+# Disable root access (no su binary in system)
+WITH_SU := false
+PRODUCT_PACKAGES_DEBUG := $(filter-out su,$(PRODUCT_PACKAGES_DEBUG))
+
 # Fastbootd
 PRODUCT_PACKAGES += \
     fastbootd \
     android.hardware.fastboot@1.1-impl-mock
+
+# First-stage ramdisk (init_boot) tooling.
+# MediaTek WMT/connsys wifi bring-up and userspace VAB merging require the
+# standard first-stage tools inside the init_boot ramdisk; without them the
+# wlan driver never reaches "ready" and wifi fails to initialize. Both
+# modules are ramdisk-only (ramdisk: true), so listing them here stages them
+# into the init_boot ramdisk rather than /system.
+PRODUCT_PACKAGES += \
+    toolbox_ramdisk \
+    snapuserd_ramdisk
 
 # Dynamic Partitions List
 # Mandatory A/B Partition List
@@ -30,9 +44,28 @@ AB_OTA_PARTITIONS := \
     vbmeta_system \
     vbmeta_vendor \
     vendor \
+    vendor_boot \
     vendor_dlkm \
     odm_dlkm \
     system_dlkm
+
+# Copy prebuilt vendor_dlkm modules (180 MediaTek kernel drivers)
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,vendor/lenovo/tb351fu/proprietary/vendor_dlkm,$(TARGET_COPY_OUT_VENDOR_DLKM))
+PRODUCT_COPY_FILES += \
+    vendor/lenovo/tb351fu/proprietary/vendor_dlkm/lib/modules/modules.load:$(TARGET_COPY_OUT_VENDOR_DLKM)/lib/modules/modules.load
+
+# Copy prebuilt stock system_dlkm modules (82 GKI modules + modules.load/dep/alias/softdep)
+# Restores the stock /system_dlkm/lib/modules set that the EVOX build was missing;
+# the empty system_dlkm caused the WiFi regression (fixed by content parity with stock).
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,vendor/lenovo/tb351fu/proprietary/system_dlkm,$(TARGET_COPY_OUT_SYSTEM_DLKM))
+
+PRODUCT_SYSTEM_PROPERTIES += \
+    settings.global.restricted_networking_mode=0 \
+    ro.sf.blurs_are_expensive=1 \
+    persist.sys.sf.disable_blurs=1 \
+    ro.board.build.security_patch=2026-04-05
 
 # Force OTA Package Generation
 PRODUCT_BUILD_GENERIC_OTA_PACKAGE := true
@@ -56,10 +89,6 @@ PRODUCT_PACKAGES += \
     librecovery_utils \
     otacerts
 
-# SELinux Bypass Script
-PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/disable_selinux.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/disable_selinux.sh
-
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/init.recovery.mt8781.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt8781.rc \
     $(DEVICE_PATH)/init.recovery.mt6789.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt6789.rc \
@@ -69,6 +98,7 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/prebuilt/NVTCapacitiveTouchScreen.idc:$(TARGET_COPY_OUT_RECOVERY)/root/system/usr/idc/NVTCapacitiveTouchScreen.idc \
     $(DEVICE_PATH)/prebuilt/vendor.lenovo.hardware.touchscreen-service:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/bin/hw/vendor.lenovo.hardware.touchscreen-service \
     $(DEVICE_PATH)/prebuilt/vendor.lenovo.hardware.touchscreen-V2-ndk.so:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib64/vendor.lenovo.hardware.touchscreen-V2-ndk.so \
+    $(DEVICE_PATH)/disable_selinux.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/disable_selinux.sh \
     $(DEVICE_PATH)/golden_kick.sh:$(TARGET_COPY_OUT_RECOVERY)/root/sbin/golden_kick.sh
 
 # Enable EROFS support (Required for ZUI 17)
@@ -87,7 +117,7 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/manifest.xml:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/manifest.xml
 
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.sf.lcd_density=320
+    ro.sf.lcd_density=256
 PRODUCT_APEX_SYSTEM_SERVER_JARS += com.android.crashrecovery:service-crashrecovery
 WITH_DEXPREOPT := false
 WITH_DEXPREOPT_DEBUG_INFO := false
@@ -97,8 +127,10 @@ PRODUCT_SYSTEM_EXT_BOOT_JARS += mediatek-common
 # Device overlay (nav bar, auto-brightness, etc.)
 DEVICE_PACKAGE_OVERLAYS += $(DEVICE_PATH)/overlay
 
-# Input Device Configurations (Active Stylus)
+# Input Device Configurations (Active Stylus & Touchscreen)
 PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/prebuilt/NVTCapacitiveTouchScreen.idc:system/usr/idc/NVTCapacitiveTouchScreen.idc \
+    $(DEVICE_PATH)/idc/NVTCapacitivePen.idc:system/usr/idc/NVTCapacitivePen.idc \
     $(DEVICE_PATH)/idc/Vendor_17ef_Product_612b.idc:system/usr/idc/Vendor_17ef_Product_612b.idc \
     $(DEVICE_PATH)/idc/Vendor_17ef_Product_617f.idc:system/usr/idc/Vendor_17ef_Product_617f.idc \
     $(DEVICE_PATH)/idc/Vendor_17ef_Product_61A1.idc:system/usr/idc/Vendor_17ef_Product_61A1.idc \
@@ -107,7 +139,6 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_619e.kl:system/usr/keylayout/Vendor_17ef_Product_619e.kl \
     $(DEVICE_PATH)/keylayout/Vendor_17ef_Product_61a1.kl:system/usr/keylayout/Vendor_17ef_Product_61a1.kl
 
-PRODUCT_COPY_FILES += $(LOCAL_PATH)/rootdir/etc/debug_logger.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/debug_logger.rc
 
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/audio/audio_policy_configuration.xml:vendor/etc/audio_policy_configuration.xml \
@@ -116,17 +147,21 @@ PRODUCT_COPY_FILES += \
 # Trebuchet Launcher and PenService privapp permissions
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/permissions/privapp-permissions-lineage.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-lineage.xml \
-    $(DEVICE_PATH)/configs/permissions/privapp-permissions-penservice.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-penservice.xml
-
-# Platform permissions fix: android.permission.RANGING (required by OP_RANGING app op 151)
+    $(DEVICE_PATH)/configs/permissions/privapp-permissions-penservice.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-penservice.xml \
+    $(DEVICE_PATH)/configs/permissions/privapp-permissions-penbridge.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-penbridge.xml \
+# ZUI Key Mapping (game key-bind engine, com.zui.wifip2p)
+# Pre-signed with the platform key (c8a2e9bc...) so android.uid.system is granted.
 PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/configs/permissions/platform-permissions.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/platform-permissions.xml
+    vendor/lenovo/tb351fu/proprietary/system/priv-app/ZuiFileTransfer/ZuiFileTransfer.apk:$(TARGET_COPY_OUT_SYSTEM)/priv-app/ZuiFileTransfer/ZuiFileTransfer.apk \
+    vendor/lenovo/tb351fu/proprietary/system/etc/permissions/privapp-permissions-com.zui.wifip2p.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-com.zui.wifip2p.xml \
+    $(DEVICE_PATH)/configs/permissions/default-permissions-com.zui.wifip2p.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/default-permissions/default-permissions-com.zui.wifip2p.xml \
+    $(DEVICE_PATH)/configs/permissions/default-permissions-penbridge.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/default-permissions/default-permissions-penbridge.xml
+
+
 
 # Enable Freeform Window Management feature
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.freeform_window_management.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.freeform_window_management.xml
-
--include $(LOCAL_PATH)/vndk34.mk
 
 
 
@@ -150,10 +185,6 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
     bluetooth.profile.pan.nap.enabled=true \
     bluetooth.profile.pan.panu.enabled=true \
     bluetooth.profile.pbap.server.enabled=true
-
-# USB configuration
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.adb.secure=1
 
 # Enable LineageOS taskbar for tablets
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -179,8 +210,15 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 
 
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.mt6789:vendor/etc/fstab.mt6789
-PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.mt6789:vendor/etc/fstab.mt8781
-PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/debug_logger.rc:vendor/etc/init/hw/debug_logger.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.mt8781:vendor/etc/fstab.mt8781
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.mt6789dm:vendor/etc/fstab.mt6789dm
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.mt8781dm:vendor/etc/fstab.mt8781dm
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.emmc:vendor/etc/fstab.emmc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.enableswap:vendor/etc/fstab.enableswap
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/fstab.zram_wb:vendor/etc/fstab.zram_wb
+
+PRODUCT_VENDOR_LINKER_CONFIG_FRAGMENTS += $(DEVICE_PATH)/linker.config.json
+
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/factory_init.connectivity.common.rc:vendor/etc/init/hw/factory_init.connectivity.common.rc
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/factory_init.connectivity.rc:vendor/etc/init/hw/factory_init.connectivity.rc
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/factory_init.dcxo_nvram.rc:vendor/etc/init/hw/factory_init.dcxo_nvram.rc
@@ -207,8 +245,11 @@ PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/multi_init.rc:vendor/etc/init/h
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/teei_daemon.rc:vendor/etc/init/teei_daemon.rc
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/tinno_t808aa.init.rc:vendor/etc/init/hw/tinno_t808aa.init.rc
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.stylus.rc:vendor/etc/init/hw/init.stylus.rc
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.stylus.rc:vendor/etc/init/init.stylus.rc
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.battery_protection.rc:vendor/etc/init/hw/init.battery_protection.rc
 PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/vendor/bin/stylus-pm.sh:vendor/bin/stylus-pm.sh
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/bin/boot_logger.sh:vendor/bin/boot_logger.sh
+PRODUCT_COPY_FILES += $(DEVICE_PATH)/rootdir/etc/init.boot_logger.rc:vendor/etc/init/hw/init.boot_logger.rc
 $(call inherit-product, vendor/lenovo/tb351fu/tb351fu-vendor-blobs.mk)
 PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/0102030405060708090a0b0c0d0e0f10.ta:vendor/thh/ta/0102030405060708090a0b0c0d0e0f10.ta
 PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/020f0000000000000000000000000000.ta:vendor/thh/ta/020f0000000000000000000000000000.ta
@@ -228,6 +269,28 @@ PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/thh/ta/isee_model
 PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/bin/hw/mt6789/android.hardware.graphics.allocator-V2-service-mediatek.mt6789:vendor/bin/hw/android.hardware.graphics.allocator-V2-service-mediatek
 PRODUCT_COPY_FILES += vendor/lenovo/tb351fu/proprietary/vendor/bin/hw/mt6789/camerahalserver:vendor/bin/hw/camerahalserver
 
+# Widevine DRM & MediaTek OEMCrypto APEX packages
+PRODUCT_COPY_FILES += \
+    vendor/lenovo/tb351fu/proprietary/vendor/apex/com.google.android.widevine.nonupdatable.apex:$(TARGET_COPY_OUT_VENDOR)/apex/com.google.android.widevine.nonupdatable.apex \
+    vendor/lenovo/tb351fu/proprietary/vendor/apex/com.mediatek.oemcrypto.apex:$(TARGET_COPY_OUT_VENDOR)/apex/com.mediatek.oemcrypto.apex
+
+PRODUCT_VENDOR_PROPERTIES += \
+    drm.service.enabled=true \
+    ro.vendor.mtk_sec_video_path_support=1 \
+    ro.vendor.mtk_svp_on_mtee_support=2 \
+    ro.vendor.mtk.c2.vdec.fmt.support.level=1 \
+    vendor.mtk.vdec.waitkeyframeforplay=11 \
+    vendor.mtk.vdec.decode.error.handle.mode=3 \
+    ro.vendor.mtk_widevine_drm_l1_support=1 \
+    ro.surface_flinger.protected_contents=true \
+    ro.surface_flinger.force_hwc_copy_for_virtual_displays=true \
+    ro.surface_flinger.max_frame_buffer_acquired_buffers=3 \
+    ro.surface_flinger.has_HDR_display=false \
+    debug.stagefright.c2inputsurface=-1 \
+    ro.mtk_key_manager_support=1 \
+    ro.vendor.mtk_microtrust_tee_support=1 \
+    ro.vendor.mtk_tee_gp_support=1
+
 PRODUCT_VENDOR_PROPERTIES += \
     ro.hardware.hwcomposer=mtk_common \
     ro.hardware.kmsetkey=beanpod \
@@ -241,6 +304,8 @@ PRODUCT_VENDOR_PROPERTIES += \
     dalvik.vm.heaptargetutilization=0.75 \
     dalvik.vm.heapminfree=2m \
     dalvik.vm.heapmaxfree=8m \
+    ro.surface_flinger.set_pen_timer_ms=10000 \
+    ro.surface_flinger.set_touch_timer_ms=2000 \
     qemu.hw.mainkeys=0
 
 PRODUCT_VENDOR_PROPERTIES += \
@@ -250,6 +315,7 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.vendor.wlan.chrdev=wmt_chrdev_wifi \
     ro.vendor.wlan.gen=gen4m_6789 \
     ro.vendor.bt.platform=connac1x \
+    ro.vendor.bt.connac3=no \
     ro.vendor.mediatek.platform=MT6789 \
     ro.vendor.mtk_camera_app_version=3 \
     ro.vendor.pref_scale_enable_cfg=1 \
@@ -257,7 +323,15 @@ PRODUCT_VENDOR_PROPERTIES += \
     camera.disable_zsl_mode=1 \
     media.c2.dmabuf.padding=3072 \
     media.c2.hal.selection=aidl \
-    media.stagefright.thumbnail.prefer_hw_codecs=true
+    media.stagefright.thumbnail.prefer_hw_codecs=true \
+    ro.vendor.config.lgsi.pen.event.name=NVTCapacitivePen \
+    ro.vendor.config.lgsi.pen_info=0x617F:0x17EF:Lenovo Tab Pen Plus \
+    ro.vendor.config.lgsi.btpen.name.row=Lenovo Tab Pen Plus \
+    ro.vendor.config.lgsi.pen.bluetooth_key.support=1 \
+    ro.vendor.config.lgsi.pen.compat.project=1 \
+    ro.vendor.config.lgsi.project=calla \
+    ro.config.lgsi.sys.project=calla \
+    persist.device_config.input_native_boot.palm_rejection_enabled=1
 
 # Camera buffer properties (stock - required by P1StreamInfoBuilder)
 PRODUCT_VENDOR_PROPERTIES += \
@@ -311,16 +385,23 @@ PRODUCT_VENDOR_PROPERTIES += \
     vendor.input.pen.wakeup=1 \
     persist.vendor.nt36xxx.pen.dc_block=1
 
-# Dolby audio stability
+# Dolby Atmos and JBL 8-Speaker Audio Tuning
 PRODUCT_VENDOR_PROPERTIES += \
     persist.vendor.dolby.dax.debug=false \
-    ro.vendor.dolby.dax.version=3 \
-    persist.vendor.audio.awinic.enable=1
+    ro.vendor.dolby.dax.version=DAX3_3.14.0.10_r1 \
+    persist.vendor.audio.awinic.enable=1 \
+    ro.vendor.mtk_hifiaudio_support=1 \
+    ro.vendor.mtk_audio_tuning_tool_ver=V1
 
 # Inherit MindTheGapps if present
 ifneq ($(wildcard vendor/gapps/arm64/arm64-vendor.mk),)
     $(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
 endif
+
+# MyScript prebuilt apps
+PRODUCT_PACKAGES += \
+    MyScript_Nebo \
+    MyScript_Calculator
 
 # Lenovo PenService — must be in PRODUCT_PACKAGES so the build includes system_ext/priv-app/PenService/PenService.apk
 # The Android.bp in vendor/lenovo/tb351fu declares it as system_ext_specific: true,
@@ -329,12 +410,29 @@ endif
 PRODUCT_PACKAGES += \
     PenService
 
+# PenBridge — source-built pen support app (status bridge, hover cursor, palm rejection)
+PRODUCT_PACKAGES += \
+    PenBridge
+
 # Lineage Health HAL (Charging Control)
 # soong_config_set for charging path is in BoardConfig.mk
 PRODUCT_PACKAGES += \
     vendor.lineage.health-service.default
 
 PRODUCT_SOONG_NAMESPACES += device/lenovo/tb351fu
+
+
+
+# Include prebuilt JNI libraries for Nebo and Calculator
+include device/lenovo/tb351fu/prebuilt/apps/prebuilt_libs.mk
+
+# Official Stock Lenovo Tab Plus (TB351FU) Certification Fingerprint for Play Integrity & Vendor Patch Level
+PRODUCT_SYSTEM_PROPERTIES += \
+    ro.build.fingerprint=Lenovo/TB351FU/TB351FU:14/UKQ1.231011.002/S100045_240520_ROW:user/release-keys
+
+PRODUCT_VENDOR_PROPERTIES += \
+    ro.lineage.build.vendor_security_patch=2024-05-05
+
 
 
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 The Evolution X Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Enable LineageOS Charging Control (Battery Capping Option in Settings -> Battery) -->
+    <bool name="config_chargingControlEnabled">true</bool>
+
+    <!-- Default charging control mode: 3 = limit (cap at specified percentage) -->
+    <integer name="config_defaultChargingControlMode">3</integer>
+
+    <!-- Default charging limit: 80% cap -->
+    <integer name="config_defaultChargingControlLimit">80</integer>
+
+    <!-- Direct sysfs node configuration for MT6789 -->
+    <string name="config_chargingControlNode">/sys/class/power_supply/battery/charging_enabled</string>
+    <string name="config_chargingControlEnableValue">1</string>
+    <string name="config_chargingControlDisableValue">0</string>
+
+    <!-- Prevent accidental wake-up (keep option visible in Settings -> Display & Touch) -->
+    <bool name="config_proximityCheckOnWake">true</bool>
+    <bool name="config_proximityCheckOnWakeEnabledByDefault">false</bool>
+</resources>

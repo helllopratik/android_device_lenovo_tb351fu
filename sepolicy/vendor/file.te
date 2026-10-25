@@ -1,0 +1,9 @@
+# MediaTek Graphics Event Driver procfs node
+type proc_ged, fs_type, proc_type;
+
+# MediaTek / Widevine / Sensors device nodes
+type widevine_drv_device, dev_type;
+type mediadrm_vendor_data_file, file_type, data_file_type;
+type hf_manager_device, dev_type;
+type aw_smartpa_device, dev_type;
+type flashlight_device, dev_type;

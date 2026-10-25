@@ -1,6 +1,2 @@
-#
-# Lenovo pen
-#
-
-touch.orientationAware = 1
-touch.deviceType = touchScreen
+# Lenovo Pen (612b)
+device.type = externalStylus

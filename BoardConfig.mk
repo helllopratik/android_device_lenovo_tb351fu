@@ -27,35 +27,28 @@ BOARD_HAS_MTK_HARDWARE := true
 BOARD_USES_MTK_COMMON := true
 
 # Properties
+VENDOR_SECURITY_PATCH := 2024-05-05
+
 ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.hardware=mt8781 \
     ro.board.platform=mt6789 \
-    ro.boot.dynamic_partitions=true \
-    ro.boot.selinux=permissive \
-    ro.secure=0 \
-    ro.debuggable=1 \
-    ro.adb.secure=1 \
-    ro.orangefox.no_apex_mount=1 \
-    ro.crypto.state=unencrypted \
-    ro.crypto.type=none \
-    tw_include_crypto=false \
-    persist.sys.usb.config=mtp \
-    sys.usb.config=mtp \
-    tw_brightness_path="/sys/class/leds/lcd-backlight/brightness" \
-    tw_max_brightness=2047 \
-    tw_default_brightness=1200 \
-    ro.orangefox.boot=1
+    ro.boot.dynamic_partitions=true
 
 # Treble
 PRODUCT_FULL_TREBLE_OVERRIDE := true
 BOARD_VNDK_VERSION := current
+OVERRIDE_TARGET_FLATTEN_APEX := true
 
 # Boot Header
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_INIT_BOOT_HEADER_VERSION := 4
 BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+BOARD_MKBOOTIMG_INIT_ARGS += --header_version $(BOARD_INIT_BOOT_HEADER_VERSION)
 BOARD_KERNEL_PAGESIZE := 4096
+
+# Vendor Ramdisk Display Drivers for Recovery GUI
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(DEVICE_PATH)/prebuilt/vendor_ramdisk/lib/modules/*.ko)
 
 # Kernel Offsets & Name
 TARGET_NO_KERNEL := false
@@ -65,29 +58,23 @@ BOARD_RAMDISK_OFFSET := 0x26f00000
 BOARD_TAGS_OFFSET := 0x07c80000
 BOARD_KERNEL_TAGS_OFFSET := 0x07c80000
 BOARD_DTB_OFFSET := 0x07c80000
-BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 bootconfig androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive
 
-# Kernel
-#
-# Stock ZUI 17 uses a Google-derived 4 KiB Android 16 6.12 GKI. The proprietary
-# vendor modules were built for KMI 6.12-android16-5, so they must not be
-# paired with the legacy Lenovo 5.10 source tree or a different GKI KMI
-# generation.  Android platform upgrades do not require a new kernel KMI.
-TARGET_KERNEL_SOURCE := kernel/lenovo/TB351FU
+# Kernel Build from Source
+TARGET_KERNEL_SOURCE := kernel/lenovo/tb351fu
 TARGET_KERNEL_CONFIG := gki_defconfig
-TARGET_KERNEL_ADDITIONAL_CONFIGS := $(DEVICE_PATH)/kernel.config
-TARGET_KERNEL_CLANG_COMPILE := true
-TARGET_KERNEL_NO_GCC := true
-TARGET_KERNEL_LLVM_BINUTILS := true
-TARGET_KERNEL_RUST_VERSION := 1.88.0
-
-# Export required environment variables for Rust
-RUST_LIBSRC := $(abspath prebuilts/rust/linux-x86/1.88.0/lib/rustlib/src/rust/library)
-
-BOARD_KERNEL_IMAGE_NAME := Image.lz4
-
+TARGET_KERNEL_CONFIG_EXT := $(DEVICE_PATH)/kernel.config
+TARGET_KERNEL_ADDITIONAL_FLAGS := KCFLAGS="-Wno-error"
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
+TARGET_KERNEL_CLANG_COMPILE := true
+TARGET_KERNEL_CLANG_VERSION := r536225
+TARGET_KERNEL_CLANG_PATH := $(abspath .)/prebuilts/clang/host/linux-x86/clang-r536225
+TARGET_KERNEL_NO_GCC := false
+BOARD_KERNEL_LLVM_BINUTILS := true
+LLVM_IAS := 1
+
+BOARD_KERNEL_IMAGE_NAME := Image.lz4
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_PREBUILT_DTBIMAGE_DIR := $(DEVICE_PATH)/prebuilt
 BOARD_PREBUILT_DTBIMAGE := $(DEVICE_PATH)/prebuilt/dtb.dtb
@@ -121,6 +108,14 @@ BOARD_AVB_INIT_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
 BOARD_AVB_INIT_BOOT_ALGORITHM := SHA256_RSA4096
 BOARD_AVB_INIT_BOOT_ROLLBACK_INDEX := $(BOARD_AVB_ROLLBACK_INDEX)
 BOARD_AVB_INIT_BOOT_ROLLBACK_INDEX_LOCATION := 6
+
+# Built vbmeta images must boot on this Lenovo (locked) device with
+# testkey-signed custom partitions that never match stock dm-verity trees.
+# Flags 0x3 = HASHTREE_DISABLED | VERIFICATION_DISABLED, mirroring the
+# stock-signed "AVB kill" recipe that is known to boot these images.
+BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
+BOARD_AVB_MAKE_VBMETA_SYSTEM_IMAGE_ARGS += --flags 3
+BOARD_AVB_MAKE_VBMETA_VENDOR_IMAGE_ARGS += --flags 3
 
 BOARD_AVB_VBMETA_SYSTEM := system
 
@@ -197,6 +192,8 @@ TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
 TARGET_COPY_OUT_ODM_DLKM := odm_dlkm
 TARGET_COPY_OUT_SYSTEM_DLKM := system_dlkm
 
+# Vendor image is built directly from vendor tree (tb351fu-vendor-blobs.mk)
+
 # Graphics
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 RECOVERY_GRAPHICS_FORCE_USE_LINELENGTH := true
@@ -260,10 +257,6 @@ ADDITIONAL_DEFAULT_PROPERTIES += persist.sys.disable_rescue=true
 BOARD_RAMDISK_USE_LZ4 := true
 
 # SELinux
-SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += device/lineage/sepolicy/mosey/system_ext/public
-SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += device/lineage/sepolicy/mosey/system_ext/private
-BOARD_VENDOR_SEPOLICY_DIRS += device/lineage/sepolicy/mosey/vendor
-
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/public
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
@@ -302,7 +295,8 @@ include vendor/lineage/config/BoardConfigLineage.mk
 # charging_control_charging_path          → sysfs node to write 0/1 to enable/disable charging
 # charging_control_charging_enabled       → value to write to ENABLE charging
 # charging_control_charging_disabled      → value to write to DISABLE/limit charging
-$(call soong_config_set,lineage_health,charging_control_charging_path,/sys/devices/platform/charger/charging_enabled)
+$(call soong_config_set_bool,lineage_health,charging_control_supports_toggle,true)
+$(call soong_config_set,lineage_health,charging_control_charging_path,/sys/class/power_supply/battery/charging_enabled)
 $(call soong_config_set,lineage_health,charging_control_charging_enabled,1)
 $(call soong_config_set,lineage_health,charging_control_charging_disabled,0)
 
@@ -311,4 +305,17 @@ TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 TARGET_RECOVERY_OUI_PIXEL_FORMAT := BGRA_8888
 RECOVERY_GRAPHICS_FORCE_USE_LINELENGTH := true
 
+# Wi-Fi Configuration for MediaTek CONNSYS
+BOARD_HOSTAPD_DRIVER := NL80211
+BOARD_HOSTAPD_BES_SUPPORT := true
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+WIFI_DRIVER_STATE_CTRL_PARAM := "/dev/wmtWifi"
+WIFI_DRIVER_STATE_ON := "1"
+WIFI_DRIVER_STATE_OFF := "0"
+WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
+WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
+WIFI_AVOID_IFACE_RESET_WHEN_DRIVER_UNLOADS := true
+
+# Redirect 20+ GB OTA packaging temporary payload to HDD (/mnt/HDD/tmp) to prevent NVMe exhaustion
+OTA_FROM_TARGET_FILES := $(DEVICE_PATH)/ota_wrapper.sh
 

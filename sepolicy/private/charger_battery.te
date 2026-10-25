@@ -1,0 +1,2 @@
+allow system_app sysfs_batteryinfo:dir search;
+allow system_app sysfs_batteryinfo:file { open read write getattr append };

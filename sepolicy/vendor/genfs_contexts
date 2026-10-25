@@ -1,0 +1,2 @@
+# MediaTek GED (Graphics Event Driver)
+genfscon proc /ged u:object_r:proc_ged:s0

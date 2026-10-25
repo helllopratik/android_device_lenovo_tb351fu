@@ -1,0 +1,12 @@
+on init
+    # Redundant modules moved to mt8781.rc
+    # Only keep critical storage here
+    insmod /lib/modules/ufs-mediatek-mod.ko
+
+on boot
+    # Disable watchdog
+    write /sys/module/app_watchdog/parameters/enabled 0
+    
+    # Vibrator path fixes
+    symlink /sys/class/leds/vibrator/activate /sys/class/timed_output/vibrator/enable
+    symlink /sys/class/leds/vibrator/duration /sys/class/timed_output/vibrator/duration

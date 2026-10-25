@@ -3,14 +3,14 @@ exec > /dev/kmsg 2>&1
 echo "V27: Initializing Hardware..."
 sleep 5
 # Start Battery/Health
-start health-hal-2-1
+start vendor.health-default
 # Bind Touch Manifest
 mkdir -p /tmp/vintf
 cat << 'XML_EOF' > /tmp/vintf/manifest.xml
 <manifest version="8.0" type="device">
     <hal format="aidl">
         <name>android.hardware.health</name>
-        <version>4</version>
+        <version>3</version>
         <fqname>IHealth/default</fqname>
     </hal>
     <hal format="aidl">

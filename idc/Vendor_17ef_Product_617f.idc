@@ -1,6 +1,2 @@
-#
-# Lenovo pen
-#
-
-touch.orientationAware = 1
-touch.deviceType = touchScreen
+# Lenovo Tab Pen Plus (AP500U Picasso)
+device.type = externalStylus

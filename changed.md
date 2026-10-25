@@ -566,3 +566,25 @@ signatures don't match.
 
 ### Files Modified
 - `vendor/lenovo/tb351fu/Android.bp` — CrossDeviceServices module
+
+---
+
+## EvolutionX Android 17 Boot Hang & Connectivity Fixes (2026-10-03)
+
+See full documentation in [`BOOT_FIXES_GUIDE.md`](BOOT_FIXES_GUIDE.md).
+
+### Summary of Fixes:
+1. **MediaTek Boot HAL Fstab Crash Fix**: Added `fstab.mt8781`, `fstab.mt8781dm`, etc., to `device/lenovo/tb351fu/rootdir/etc/` and `device.mk` to satisfy `android.hardware.boot-service.mtk` querying `/vendor/etc/fstab.${ro.hardware}`. Unblocks `vold` and `late-fs`.
+2. **Vendor Boot Permissive Bootconfig**: Fixed `splice_header.py` to preserve offset `2124:2128` (`vendor_bootconfig_size`) so `androidboot.selinux=permissive` is passed to the kernel.
+3. **Bluetooth Driver Integration**: Added `bt_drv_connac1x.ko` to `vendor/lenovo/tb351fu/proprietary/vendor_dlkm/lib/modules/modules.load` and set `ro.vendor.bt.connac3=no` in `device.mk`. Creates `/dev/stpbt` character device and resolves `com.android.bluetooth` SIGABRT crash.
+4. **Wi-Fi Connectivity**: Co-dependent on CONNSYS stability. Once Bluetooth does not crash-loop, CONNSYS remains stable and Wi-Fi (`wlan_drv_gen4m_6789`) initializes and connects cleanly to 5GHz APs.
+5. **Lenovo Active Pen & Palm Rejection**:
+   - Kernel driver (`nt36xxx.c`): Probe defaults `pen_state = 1` and `game_mode_state = 1`, and queues `ts_restore_cmd_work` to enable active pen scanning (`0x7B 0x01`) and enhanced hardware palm rejection (`0x79 0x02`) on the Novatek touch controller at boot.
+   - Init scripts (`stylus-pm.sh`, `init.stylus.rc`): Added SPI controller autosuspend prevention and boot init for `/proc/support_pen` and `/proc/game_mode`.
+   - IDC files: Corrected `touch.deviceType = touchScreen` in `NVTCapacitivePen.idc` and `device.type = externalStylus` in `Vendor_17ef_Product_*.idc` so EventHub fuses the companion Bluetooth pen buttons/battery with the digitizer.
+   - PenBridge: Added missing `BLUETOOTH_CONNECT`, `BLUETOOTH_SCAN`, and `POST_NOTIFICATIONS` privapp permissions, updated `PalmGuard` to maintain palm rejection while pen is connected, and calibrated coordinate space to 12000x20000.
+   - Device configs: Set `persist.device_config.input_native_boot.palm_rejection_enabled=1` in `device.mk`.
+6. **Ninja Dependency Cycle Fix (`linker.config.pb`)**:
+   - Replaced illegal direct `PRODUCT_COPY_FILES` copy of `vendor/etc/linker.config.pb` with `PRODUCT_VENDOR_LINKER_CONFIG_FRAGMENTS += $(DEVICE_PATH)/linker.config.json`.
+   - This resolves the self-cycle error (`vendor/etc/linker.config.pb -> vendor/etc/linker.config.pb`) in ninja where `INTERNAL_VENDORIMAGE_FILES` depended on itself.
+

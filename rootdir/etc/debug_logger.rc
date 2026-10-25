@@ -1,6 +1,0 @@
-on post-fs-data
-    exec u:r:init:s0 -- /system/bin/insmod /vendor/lib/modules/wmt_chrdev_wifi.ko
-    exec u:r:init:s0 -- /system/bin/insmod /vendor/lib/modules/wlan_drv_gen4m_6789.ko
-    exec u:r:init:s0 -- /system/bin/insmod /vendor/lib/modules/bt_drv_connac1x.ko
-    exec u:r:init:s0 -- /system/bin/insmod /vendor/lib/modules/gps_drv_stp.ko
-    exec u:r:init:s0 -- /system/bin/insmod /vendor/lib/modules/gps_pwr.ko

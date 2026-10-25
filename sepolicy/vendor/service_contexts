@@ -1,0 +1,2 @@
+# Widevine DRM AIDL service
+android.hardware.drm.IDrmFactory/widevine    u:object_r:hal_drm_service:s0

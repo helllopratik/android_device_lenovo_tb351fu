@@ -1,0 +1,27 @@
+# MediaTek GED access rules
+allow {
+    surfaceflinger
+    hal_graphics_allocator
+    hal_graphics_composer
+    mediacodec
+    system_server
+    appdomain
+} proc_ged:file rw_file_perms;
+
+allow {
+    surfaceflinger
+    hal_graphics_allocator
+    hal_graphics_composer
+    mediacodec
+    system_server
+    appdomain
+} proc_ged:file { ioctl };
+
+allowxperm {
+    surfaceflinger
+    hal_graphics_allocator
+    hal_graphics_composer
+    mediacodec
+    system_server
+    appdomain
+} proc_ged:file ioctl { 0x6700-0x6711 0x6764-0x676b 0x67c8 };

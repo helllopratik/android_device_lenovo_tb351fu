@@ -1,7 +1,8 @@
-key usage 0x0c0601   STYLUS_BUTTON_SECONDARY
-key usage 0x0c0610   STYLUS_BUTTON_TERTIARY
-key usage 0x0c0611   STYLUS_BUTTON_TAIL
-key usage 0x0c0612   BUTTON_5
-key usage 0x0c0613   BUTTON_6
-key usage 0x0c0614   STYLUS_BUTTON_PRIMARY
-
+# Lenovo Precision Pen 3 (61a1) Bluetooth Keylayout
+# Mapped to standard Android BUTTON keycodes for PenBridge handling
+key usage 0x0c0601   BUTTON_2
+key usage 0x0c0610   BUTTON_3
+key usage 0x0c0611   BUTTON_4
+key usage 0x0c0612   PAGE_DOWN
+key usage 0x0c0613   PAGE_UP
+key usage 0x0c0614   BUTTON_1

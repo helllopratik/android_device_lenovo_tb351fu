@@ -1,6 +1,21 @@
-# Redefine the vendor vibrator service as disabled since this tablet does not have a vibrator motor
-service vendor.vibrator-default /vendor/bin/hw/android.hardware.vibrator-service.mediatek
-    class hal
-    user system
-    group system
-    disabled
+# Preserve boot crash logs & PStore into unencrypted /metadata partition for offline recovery analysis
+on post-fs
+    mkdir /metadata/bootloader_logs 0777 system system
+    copy /sys/fs/pstore/console-ramoops-0 /metadata/bootloader_logs/console-ramoops-0
+    copy /sys/fs/pstore/console-ramoops /metadata/bootloader_logs/console-ramoops
+    copy /sys/fs/pstore/pmsg-ramoops-0 /metadata/bootloader_logs/pmsg-ramoops-0
+    chmod 0666 /metadata/bootloader_logs/console-ramoops-0
+    chmod 0666 /metadata/bootloader_logs/console-ramoops
+    chmod 0666 /metadata/bootloader_logs/pmsg-ramoops-0
+
+on post-fs-data
+    mkdir /metadata/bootloader_logs 0777 system system
+    copy /sys/fs/pstore/console-ramoops-0 /metadata/bootloader_logs/console-ramoops-0
+    copy /sys/fs/pstore/pmsg-ramoops-0 /metadata/bootloader_logs/pmsg-ramoops-0
+    chmod 0666 /metadata/bootloader_logs/console-ramoops-0
+    chmod 0666 /metadata/bootloader_logs/pmsg-ramoops-0
+
+# Ensure unrestricted networking for all user app UIDs on boot
+on property:sys.boot_completed=1
+    exec - root root -- /system/bin/iptables -F bw_penalty_box
+    exec - root root -- /system/bin/iptables -F st_penalty_reject

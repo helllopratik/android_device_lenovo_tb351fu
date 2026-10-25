@@ -1,0 +1,2 @@
+# Ignore prebuilt recovery/vendor ramdisks from Soong globbing
+*

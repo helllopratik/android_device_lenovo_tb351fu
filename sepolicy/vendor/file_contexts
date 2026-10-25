@@ -1,0 +1,60 @@
+# Hardware devices
+/dev/lenovo_penraw                         u:object_r:lenovo_device:s0
+/dev/isee_tee[0-9]*                        u:object_r:tee_device:s0
+/dev/mali.*                                u:object_r:gpu_device:s0
+/dev/dri(/.*)?                             u:object_r:gpu_device:s0
+/dev/drm_wv                                u:object_r:widevine_drv_device:s0
+/data/vendor/mediadrm(/.*)?                u:object_r:mediadrm_vendor_data_file:s0
+/dev/hf_manager(/.*)?                      u:object_r:hf_manager_device:s0
+/dev/aw_smartpa                            u:object_r:aw_smartpa_device:s0
+/dev/flashlight                            u:object_r:flashlight_device:s0
+
+# TEE / Beanpod
+/(vendor|system/vendor)/bin/teei_daemon    u:object_r:tee_exec:s0
+
+# Lenovo Vendor Services
+/(vendor|system/vendor)/bin/hw/vendor\.lenovo\.hardware\.usb-service           u:object_r:hal_usb_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.lenovo\.hardware\.misc-service          u:object_r:vendor_file:s0
+/(vendor|system/vendor)/bin/hw/vendor\.lenovo\.hardware\.battery-service       u:object_r:hal_health_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.lenovo\.hardware\.display-service       u:object_r:hal_graphics_composer_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.lenovo\.hardware\.factory-service       u:object_r:vendor_file:s0
+/(vendor|system/vendor)/bin/hw/vendor\.lenovo\.hardware\.keyboard-service      u:object_r:hal_input_processor_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.lenovo\.hardware\.performance-service   u:object_r:hal_power_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.lenovo\.hardware\.touchscreen-service   u:object_r:hal_lenovotouchscreen_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.lenovo\.hardware\.hyperschedule-service u:object_r:hal_power_default_exec:s0
+
+# MediaTek & Partner Vendor HALs
+/(vendor|system/vendor)/bin/hw/android\.hardware\.audio\.service-aidl\.mediatek        u:object_r:hal_audio_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.bluetooth-service-mediatek           u:object_r:hal_bluetooth_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.bluetooth\.finder-service-mediatek   u:object_r:hal_bluetooth_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.bluetooth\.ranging-service\.mediatek u:object_r:hal_bluetooth_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.boot-service\.mtk                    u:object_r:hal_bootctl_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.gatekeeper-service\.beanpod           u:object_r:hal_gatekeeper_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.gnss-service\.mediatek               u:object_r:hal_gnss_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.graphics\.allocator.*                u:object_r:hal_graphics_allocator_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.lights-service\.mediatek             u:object_r:hal_light_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.memtrack-service\.mediatek           u:object_r:hal_memtrack_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.security\.keymint.*                  u:object_r:hal_keymint_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.thermal-service\.mediatek            u:object_r:hal_thermal_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.usb.*                                u:object_r:hal_usb_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.media\.c2.*                          u:object_r:mediacodec_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.dolby\.media\.c2.*                              u:object_r:mediacodec_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.dolby\.dms\.service                             u:object_r:hal_audio_default_exec:s0
+/(vendor|system/vendor)/bin/hw/camerahalserver                                         u:object_r:hal_camera_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.mediatek\.hardware\.mtkpower.*                  u:object_r:hal_power_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.mediatek\.hardware\.pq_aidl-service             u:object_r:hal_graphics_composer_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.mediatek\.hardware\.nvram-service               u:object_r:nvram_daemon_exec:s0
+
+# MediaTek Core Daemons
+/(vendor|system/vendor)/bin/fuelgauged.*    u:object_r:fuelgauged_exec:s0
+/(vendor|system/vendor)/bin/wmt_loader      u:object_r:wmt_loader_exec:s0
+/(vendor|system/vendor)/bin/wmt_launcher    u:object_r:wmt_loader_exec:s0
+/(vendor|system/vendor)/bin/ccci_mdinit     u:object_r:ccci_mdinit_exec:s0
+/(vendor|system/vendor)/bin/ccci_rpcd       u:object_r:ccci_rpcd_exec:s0
+/(vendor|system/vendor)/bin/fpsgo           u:object_r:thermal_exec:s0
+/(vendor|system/vendor)/bin/touch_boost     u:object_r:thermal_exec:s0
+/(vendor|system/vendor)/bin/thermald        u:object_r:thermal_exec:s0
+/(vendor|system/vendor)/bin/mnld            u:object_r:hal_gnss_default_exec:s0
+/(vendor|system/vendor)/bin/wlan_assistant  u:object_r:hal_wifi_default_exec:s0
+/(vendor|system/vendor)/bin/nvram_daemon    u:object_r:nvram_daemon_exec:s0
+

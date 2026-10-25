@@ -1,9 +1,11 @@
-service teei_daemon /vendor/bin/teei_daemon
-    class core
-    user system
-    group system readproc
-    seclabel u:r:tee:s0
-
+# Microtrust TEE daemon init triggers
 on post-fs-data
     mkdir /data/vendor/thh 0770 system system
     start teei_daemon
+    setprop vendor.soter.teei.crypto.state unencrypted
+
+on property:vold.post_fs_data_done=1
+    setprop vendor.soter.teei.crypto.state unencrypted
+
+on early-boot
+    setprop vendor.soter.teei.crypto.state unencrypted

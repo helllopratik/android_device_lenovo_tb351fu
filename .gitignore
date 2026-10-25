@@ -1,0 +1,9 @@
+logs/
+*.bak*
+*.saved
+prebuilt/vendor.img*
+prebuilt/vendor_dlkm.img
+prebuilt/vendor_ramdisk.cpio*
+prebuilt/framework-res_patched.apk
+prebuilt/kernel.bak*
+prebuilt/apps/

@@ -1,9 +1,37 @@
-# Disabled: automatic boot log collection to /metadata/
-# on init
-#     exec u:r:init:s0 -- /system/bin/sh -c 'dmesg > /metadata/boot_dmesg.txt 2>&1; echo boot_dmesg_captured > /metadata/boot_logger_status.txt'
-#     start boot_logcat_service
-# 
-# service boot_logcat_service /system/bin/logcat -b all -v threadtime -r 512 -n 2 -f /metadata/boot_logcat.txt
-#     class core
-#     user root
-#     group root system log
+# Persistent boot log collection to /metadata/
+on post-fs
+    mkdir /metadata/bootlogs 0777 root root
+    write /metadata/bootlogs/post_fs_checkpoint.txt "post-fs reached"
+    copy /proc/cmdline /metadata/bootlogs/cmdline.txt
+    copy /proc/version /metadata/bootlogs/version.txt
+    copy /proc/mounts /metadata/bootlogs/mounts_post_fs.txt
+    chmod 0666 /metadata/bootlogs/post_fs_checkpoint.txt
+    chmod 0666 /metadata/bootlogs/cmdline.txt
+    chmod 0666 /metadata/bootlogs/version.txt
+    chmod 0666 /metadata/bootlogs/mounts_post_fs.txt
+    start boot_logger
+
+on late-fs
+    write /metadata/bootlogs/late_fs_checkpoint.txt "late-fs reached"
+    copy /proc/mounts /metadata/bootlogs/mounts_late_fs.txt
+    chmod 0666 /metadata/bootlogs/late_fs_checkpoint.txt
+    chmod 0666 /metadata/bootlogs/mounts_late_fs.txt
+
+on post-fs-data
+    write /metadata/bootlogs/post_fs_data_checkpoint.txt "post-fs-data reached"
+    copy /proc/mounts /metadata/bootlogs/mounts_post_fs_data.txt
+    chmod 0666 /metadata/bootlogs/post_fs_data_checkpoint.txt
+    chmod 0666 /metadata/bootlogs/mounts_post_fs_data.txt
+
+on boot
+    write /metadata/bootlogs/boot_checkpoint.txt "boot reached"
+    chmod 0666 /metadata/bootlogs/boot_checkpoint.txt
+
+on property:sys.boot_completed=1
+    stop boot_logger
+
+service boot_logger /system/bin/sh /vendor/bin/boot_logger.sh
+    user root
+    group root system log
+    oneshot
+    disabled

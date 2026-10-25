@@ -1,7 +1,8 @@
-key usage 0x0c0600   STYLUS_BUTTON_PRIMARY
-key usage 0x0c0601   STYLUS_BUTTON_SECONDARY
-key usage 0x0c0602   STYLUS_BUTTON_TERTIARY
-key usage 0x0c0603   STYLUS_BUTTON_TAIL
+# Lenovo Active Pen / Tab Pen (Vendor 17ef Product 612b)
+# Mapped to BUTTON_* keycodes so Android dispatches KeyEvents to PenBridge / Accessibility
+key usage 0x0c0600   BUTTON_1
+key usage 0x0c0601   BUTTON_2
+key usage 0x0c0602   BUTTON_3
+key usage 0x0c0603   BUTTON_4
 key usage 0x0c0604   BUTTON_5
 key usage 0x0c0605   BUTTON_6
-

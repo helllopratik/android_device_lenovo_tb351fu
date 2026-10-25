@@ -22,6 +22,8 @@ stock_header[24:28] = mk_header[24:28]
 stock_header[112:116] = mk_header[112:116]
 stock_header[124:128] = mk_header[124:128]
 stock_header[136:140] = mk_header[136:140]
+stock_header[2124:2128] = mk_header[2124:2128]
+
 
 with open(mk_path, "wb") as f:
     f.write(stock_header)
